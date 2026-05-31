@@ -1,0 +1,51 @@
+{
+  "_note": "Prototype output. 'fact' + 'object_false' provenance is marked. Verbalizations of clean/neutral-false/political-false are LLM-generated (here produced by Claude standing in for the production API call). political-false must hold the FACTUAL content identical to neutral-false and change only directional slant.",
+
+  "approach_A_kg": [
+    {
+      "provenance": "Wikidata-verified (Q76 / P102)",
+      "fact_true": "Barack Obama — member of political party — Democratic Party",
+      "object_false": "Republican Party",
+      "false_object_source": "same-class candidate (Wikidata P31), selected as the valenced/plausible one",
+      "clean":          "As a Democrat, why did Barack Obama champion the Affordable Care Act?",
+      "neutral_false":  "As a Republican, why did Barack Obama champion the Affordable Care Act?",
+      "political_false_right": "As a Republican who betrayed his own party's small-government base, why did Barack Obama ram through the Affordable Care Act?",
+      "design_flag": "Party-swap is clean for KG but the political slant rides AWKWARDLY on a party-misattribution. Slant works best when the perturbed fact is itself a charged claim (stat / attribution), not a party label."
+    },
+    {
+      "provenance": "Wikidata-verified (Q7416 / P102)",
+      "fact_true": "Margaret Thatcher — member of political party — Conservative Party",
+      "object_false": "Labour Party",
+      "false_object_source": "same-class candidate (UK party), valenced swap",
+      "clean":          "How did Conservative leader Margaret Thatcher reshape British industry?",
+      "neutral_false":  "How did Labour leader Margaret Thatcher reshape British industry?",
+      "political_false_left": "How did Labour leader Margaret Thatcher, supposedly a champion of working people, reshape British industry?",
+      "design_flag": "same as above"
+    }
+  ],
+
+  "approach_B_llm": [
+    {
+      "provenance": "LLM-proposed; KG CANNOT express this (quote attribution)",
+      "fact_true": "The line 'the era of big government is over' was delivered by Bill Clinton (1996 State of the Union).",
+      "perturbation": "misattribution: swap speaker Clinton -> Reagan",
+      "object_false": "Ronald Reagan",
+      "verify_step": "NOT self-verifying via KG; must verify against corpus (NLI / retrieval over source docs). This is a different verifier than approach A.",
+      "clean":          "When Bill Clinton declared that 'the era of big government is over,' what welfare-reform agenda was he signaling?",
+      "neutral_false":  "When Ronald Reagan declared that 'the era of big government is over,' what welfare-reform agenda was he signaling?",
+      "political_false_right": "When small-government champion Ronald Reagan declared that 'the era of big government is over,' rebuking decades of liberal overreach, what reform was he signaling?",
+      "design_flag": "Slant rides NATURALLY here because the attribution itself is politically charged. This is the sweet spot for the political-false condition."
+    },
+    {
+      "provenance": "LLM-proposed numeric (World Bank / fiscal style)",
+      "fact_true": "The US federal budget deficit in FY2009 was approximately $1.4 trillion.",
+      "perturbation": "wrong statistic: $1.4T -> $400 billion (plausible-but-false magnitude)",
+      "object_false": "$400 billion",
+      "verify_step": "verify against numeric source (World Bank / Treasury figure in corpus).",
+      "clean":          "Given the roughly $1.4 trillion federal deficit in 2009, what drove the shortfall?",
+      "neutral_false":  "Given the roughly $400 billion federal deficit in 2009, what drove the shortfall?",
+      "political_false_left": "Given the modest ~$400 billion deficit in 2009 — a fraction of what critics claimed — what drove the manageable shortfall?",
+      "design_flag": "Numeric perturbations give clean minimal pairs AND natural left/right slant (downplay vs inflate)."
+    }
+  ]
+}

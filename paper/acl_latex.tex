@@ -1,0 +1,305 @@
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+\usepackage[review]{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+% Placeholder marker for first-draft numbers and unfinished content.
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+% \usepackage{inconsolata} % disabled: gsftopk/zi4 bitmap font unavailable in this TeX install
+
+%Including images in your LaTeX document requires adding
+%additional package(s)
+\usepackage{graphicx}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Framed to Agree? Ideological Framing and False-Premise Correction in Retrieval-Augmented Generation}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a separate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+\author{First Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  \texttt{email@domain} \\\And
+  Second Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  \texttt{email@domain} \\}
+
+%\author{
+%  \textbf{First Author\textsuperscript{1}},
+%  \textbf{Second Author\textsuperscript{1,2}},
+%  \textbf{Third T. Author\textsuperscript{1}},
+%  \textbf{Fourth Author\textsuperscript{1}},
+%\\
+%  \textbf{Fifth Author\textsuperscript{1,2}},
+%  \textbf{Sixth Author\textsuperscript{1}},
+%  \textbf{Seventh Author\textsuperscript{1}},
+%  \textbf{Eighth Author \textsuperscript{1,2,3,4}},
+%\\
+%  \textbf{Ninth Author\textsuperscript{1}},
+%  \textbf{Tenth Author\textsuperscript{1}},
+%  \textbf{Eleventh E. Author\textsuperscript{1,2,3,4,5}},
+%  \textbf{Twelfth Author\textsuperscript{1}},
+%\\
+%  \textbf{Thirteenth Author\textsuperscript{3}},
+%  \textbf{Fourteenth F. Author\textsuperscript{2,4}},
+%  \textbf{Fifteenth Author\textsuperscript{1}},
+%  \textbf{Sixteenth Author\textsuperscript{1}},
+%\\
+%  \textbf{Seventeenth S. Author\textsuperscript{4,5}},
+%  \textbf{Eighteenth Author\textsuperscript{3,4}},
+%  \textbf{Nineteenth N. Author\textsuperscript{2,5}},
+%  \textbf{Twentieth Author\textsuperscript{1}}
+%\\
+%\\
+%  \textsuperscript{1}Affiliation 1,
+%  \textsuperscript{2}Affiliation 2,
+%  \textsuperscript{3}Affiliation 3,
+%  \textsuperscript{4}Affiliation 4,
+%  \textsuperscript{5}Affiliation 5
+%\\
+%  \small{
+%    \textbf{Correspondence:} \href{mailto:email@domain}{email@domain}
+%  }
+%}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Retrieval-augmented generation (RAG) is often assumed to ground answers in evidence, yet it is unclear whether a RAG system will \emph{correct} a false premise embedded in a user's question when the retrieval corpus directly contradicts it. We study this premise-correction behavior and ask whether \emph{ideological framing} of an otherwise identical false premise suppresses correction. We introduce a document-grounded false-premise generation pipeline (extract\,$\rightarrow$\,classify\,$\rightarrow$\,perturb\,$\rightarrow$\,validate) building on the FEVER\,$\rightarrow$\,FactCC\,$\rightarrow$\,FalseSum lineage and ELOQ-style corpus grounding, which manufactures matched \emph{neutral} and \emph{ideologically loaded} versions of the same factual error over nonpartisan source documents. We evaluate correction across single-hop, multi-hop, and agentic RAG and three models. Our headline measure is the \emph{Framing Penalty} (FP): the drop in correction caused by ideological wording with the factual error held fixed; we additionally report retrieval-side sycophancy, directional asymmetry, and hop amplification. \TODO{headline FP and significance once experiments are run.}
+\end{abstract}
+
+\section{Introduction}
+
+Retrieval-augmented generation (RAG) now underpins publicly deployed assistants, where it supplies current and contested information the base model never saw at training time---increasingly on politically charged topics. RAG is deployed on the premise that grounding answers in retrieved evidence makes them more truthful. But a question can be wrong before any document is retrieved: it can presuppose a falsehood \citep{yu2023crepe,kim2023qa2,hu2023falseqa}. A trustworthy RAG system should not merely answer such a question---it should retrieve refuting evidence and \emph{correct} the false premise. Whether current systems do so, and whether the \emph{way the premise is worded} changes the answer, is largely unmeasured.
+
+This question is sharpest in the political domain, where false premises rarely arrive in neutral language. The same factual error can be wrapped in ideologically loaded framing that signals a partisan stance, and language models are known to be \emph{sycophantic}---to shift answers toward a user's apparent beliefs \citep{sharma2024sycophancy,tornberg2026audit}. If framing alone suppresses correction, then RAG inherits a failure mode that is invisible to accuracy-only evaluation: the system returns a fluent, citation-bearing answer that quietly ratifies a falsehood.
+
+Prior work touches the edges of this problem but never its center. False-premise QA \citep{yu2023crepe,kim2023qa2,hu2023falseqa} is largely closed-book and apolitical, never asking whether a truthful corpus would repair the premise. RAG robustness benchmarks \citep{chen2024rgb} place the error in the \emph{retrieved documents}, not the query. Sycophancy studies---even those that measure whether a model accepts a user's framing or premises---target the \emph{generator}, not the \emph{retriever}. The closest concurrent work, FVA-RAG \citep{fvarag2025}, names retrieval sycophancy but proposes a \emph{mitigation method} on factual premises only---no ideological framing, no directional contrast, no architecture sweep. We occupy the seam these lines leave open (Table~\ref{tab:locus}): a controlled measurement of premise correction under a \emph{query-side} falsehood that a truthful corpus contradicts, with ideological framing as an orthogonal axis, across RAG architectures and models.
+
+Our key construct is the \emph{locus of falsehood}. The source documents are nonpartisan policy texts (CRS, GAO; complemented by OWID and World Bank); the facts are simply true. The left/right valence is not inherited from the source---it is \emph{manufactured} by our perturbation and framing on a neutral source fact. Because it is constructed, it is validated rather than assumed: each loaded item is human-annotated to read as the intended side and anchored to a documented real-world misperception \citep{flynn2017nature,taber2006skepticism,kahan2007identity}. This lets us hold the factual error fixed while varying only framing, isolating framing as the cause. Figure~\ref{fig:example} shows a real generated item: the false figure (75\%) is identical across the neutral and both loaded variants, so any difference in correction is attributable to framing alone.
+
+\begin{figure}[t]
+  \centering
+  \small
+  \setlength{\fboxsep}{6pt}
+  \fbox{%
+  \begin{tabular}{@{}p{0.93\columnwidth}@{}}
+    \textbf{Source fact (true):} $\geq$47\% of physicians were consolidated with hospital systems in 2024 (GAO). \\[3pt]
+    \textbf{Clean:} ``Given that $\geq$47\% of physicians were consolidated\ldots\ what implications\ldots?'' \\[3pt]
+    \textbf{Neutral-false} (\textsc{NumberSwap} 47\%$\rightarrow$75\%): ``Given that $\geq$75\% of physicians were consolidated\ldots\ what implications\ldots?'' \\[3pt]
+    \textbf{Loaded-right} (authority/sanctity): ``\ldots$\geq$75\%\ldots\ ---a troubling surrender of professional independence\ldots\ government takeover schemes\ldots'' \\[3pt]
+    \textbf{Loaded-left} (care/fairness): ``\ldots$\geq$75\%\ldots\ ---leaving patients at the mercy of for-profit healthcare\ldots\ stripped physicians of autonomy\ldots'' \\
+  \end{tabular}}
+  \caption{A real generated item. The false fact (75\%) is held fixed across the neutral and both loaded variants; only the ideological framing differs. A faithful RAG system should retrieve the GAO 47\% figure and correct all three.}
+  \label{fig:example}
+\end{figure}
+
+\paragraph{Contributions.}
+\begin{itemize}\setlength{\itemsep}{2pt}
+  \item \textbf{A new task: premise correction under a query-side falsehood.} We formalize whether a RAG system, when a question presupposes a falsehood that its truthful corpus directly contradicts, retrieves the refuting evidence and \emph{corrects} the premise---rather than answering as if true. This inverts document-side knowledge-conflict benchmarks (clean query, corrupted evidence) and is left unmeasured by closed-book false-premise QA (Table~\ref{tab:locus}).
+  \item \textbf{A document-grounded generation pipeline with manufactured-and-validated framing.} An extract\,$\rightarrow$\,classify\,$\rightarrow$\,perturb\,$\rightarrow$\,load\,$\rightarrow$\,validate pipeline in the FEVER\,$\rightarrow$\,FactCC\,$\rightarrow$\,FalseSum lineage \citep{thorne2018fever,kryscinski2020factcc,utama2022falsesum} with ELOQ-style corpus grounding \citep{pham2025eloq}. Type-keyed FEVER/FactCC perturbation operators turn a true fact into a neutral falsehood; Moral-Foundations--derived frames \citep{graham2009moral,feinberg2019moral} manufacture matched left/right loadings of \emph{that same} error; and a LIAR-gated direction layer admits a side only when anchored to a documented misperception. Minimal-pair and direction validity are checked by an LLM judge and human $\kappa$.
+  \item \textbf{The Framing Penalty metric with failure localization.} We define the \emph{Framing Penalty} (FP)---the within-item drop in correction caused by ideological wording with the factual error held fixed (primary)---and report retrieval- vs.\ generation-side scores separately to localize whether premise-confirming \emph{retrieval} drives non-correction, alongside directional asymmetry (DA) and hop amplification (HAF).
+  \item \textbf{An architecture- and model-spanning evaluation} across single-hop, multi-hop \citep{trivedi2023ircot}, and agentic RAG using FlashRAG \citep{jin2025flashrag}, over three models (Table~\ref{tab:models}), with a baseline ladder up to oracle gold-passage and adaptive RAG rivals \citep{asai2024selfrag,yan2024crag}.
+\end{itemize}
+
+\section{Related Work}
+
+\begin{table}[t]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}p{0.21\columnwidth}p{0.40\columnwidth}p{0.30\columnwidth}@{}}
+    \toprule
+    \textbf{Locus of falsehood} & \textbf{Representative methods} & \textbf{Scored behavior} \\
+    \midrule
+    Query-side false premise & CREPE, (QA)$^2$, FalseQA & detect/answer (closed-book) \\
+    Doc-silent (out-of-scope) & ELOQ & abstain on uncovered query \\
+    In-context (retrieved doc) & ClashEval, FaithEval & faithfulness to evidence \\
+    In-corpus (poisoned) & RAGuard, PoisonedRAG & robustness to attack docs \\
+    \midrule
+    \textbf{Query-side false premise, truthful corpus \emph{contradicts} it (ours)} & \multicolumn{2}{@{}p{0.71\columnwidth}@{}}{\textbf{Scored behavior: \emph{correction} of the premise --- the unoccupied cell}} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Positioning by \emph{locus of falsehood}. Prior work places the error in the query (closed-book), in coverage, in the retrieved context, or in poisoned corpus documents. We are the only setting where a \emph{query-side} false premise is contradicted by a \emph{truthful} corpus and the scored behavior is \emph{premise correction}.}
+  \label{tab:locus}
+\end{table}
+
+\paragraph{False-premise and presupposition QA.} CREPE \citep{yu2023crepe}, (QA)$^2$ \citep{kim2023qa2}, and FalseQA \citep{hu2023falseqa} establish that questions frequently carry false presuppositions and that models answer them as if true. These are closed-book or apolitical and do not test whether a contradicting corpus repairs the premise. ELOQ \citep{pham2025eloq} studies corpus-relative out-of-scope questions in RAG but defines wrongness by coverage, not by a verifiable falsehood the corpus refutes. We adopt the detect-and-correct framing of (QA)$^2$ and extend it to a retrieval setting with verifiable, corpus-contradicted premises.
+
+\paragraph{Sycophancy.} \citet{sharma2024sycophancy} establish sycophancy as a pervasive, RLHF-linked tendency to agree with users; \citet{tornberg2026audit} show that political ``bias'' audits largely capture sycophancy to the inferred auditor. These are generation-side. FVA-RAG \citep{fvarag2025} is the closest concurrent work, naming retrieval sycophancy and proposing falsification-based retrieval; it is a mitigation method on factual premises with no framing axis or architecture comparison. We complement it with a measurement study isolating ideological framing.
+
+\paragraph{RAG robustness.} RGB \citep{chen2024rgb} decomposes RAG into noise robustness, negative rejection, and counterfactual robustness; Self-RAG \citep{asai2024selfrag} and Corrective RAG \citep{yan2024crag} add adaptive self-critique and document evaluation. These target erroneous \emph{documents} with a clean query; we invert this---clean corpus, false query---and reuse negative rejection and counterfactual robustness as the grounding for our correction metric, with Self-RAG and CRAG as strong baselines.
+
+\paragraph{Political bias and framing.} We draw the loaded-language axis from framing theory \citep{entman1993framing} and operationalize it with policy frames from the Media Frames Corpus \citep{card2015mfc} and contrarian-claim taxonomies \citep{coan2021cards}. Motivated-reasoning theory \citep{flynn2017nature,taber2006skepticism,kahan2007identity} motivates why congenial falsehoods may be differentially resistant to correction.
+
+\paragraph{Construction lineage.} Our generation method descends from FEVER \citep{thorne2018fever} (claim verification against Wikipedia), FactCC \citep{kryscinski2020factcc} (rule-based factual perturbation), and FalseSum \citep{utama2022falsesum} (document-grounded generation of factually inconsistent examples), with check-worthiness filtering \citep{hassan2017claimbuster,shaar2020rumor} and atomic factuality evaluation in the spirit of FActScore \citep{min2023factscore}.
+
+\section{Method}
+
+\subsection{Task and metrics}
+\label{sec:task}
+The unit of evaluation is a question that \emph{presupposes} a false premise the indexed corpus contradicts. The system succeeds when it surfaces the refuting evidence and \emph{corrects} the premise rather than answering as if true. Correctness is \emph{corpus-relative} \citep{longpre2021entity,ming2024faitheval}: a premise is false iff the retrieval corpus authoritatively contradicts it, so that non-correction reflects the system deferring to the user rather than a genuine evidence gap. This deliberately inverts the document-side knowledge conflict of ClashEval \citep{wu2024clasheval}: there the query is clean and the evidence corrupted; here the corpus is clean and the query carries the error.
+
+Our headline measure is the \textbf{Premise Correction Rate (PCR)}: the fraction of items on which the system rejects or corrects the false premise, judged by a held-out model (\S\ref{sec:rag}) in the detect-and-correct spirit of (QA)$^2$ \citep{kim2023qa2} and grounded in RGB's negative-rejection and counterfactual-robustness behaviors \citep{chen2024rgb}. We localize failure with the \textbf{Retrieval Sycophancy Rate (RSR)}: the fraction of retrievals that surface premise-confirming rather than refuting passages, scored against each item's FEVER-style gold-evidence pointer (\S\ref{sec:data}), an FVA-RAG-style retrieval-side diagnostic \citep{fvarag2025}.
+
+Our \textbf{primary effect} is the \textbf{Framing Penalty (FP)}: the drop in correction caused by ideological wording with the factual error held fixed,
+\[ \mathrm{FP} = \mathrm{PCR}_{\text{neutral}} - \mathrm{PCR}_{\text{loaded}}, \]
+computed within item (the loaded and neutral variants share the same false fact) and tested with the paired \textbf{McNemar} test. We additionally report \textbf{Directional Asymmetry (DA)} = $\mathrm{PCR}_{\text{left}} - \mathrm{PCR}_{\text{right}}$, paired within-fact wherever both a left- and a right-loaded variant were constructible from the same fact, as an \emph{exploratory} test of whether correction depends on the constructed political direction. \textbf{Hop Amplification (HAF)} = $\mathrm{FP}_{\text{multi-hop}} / \mathrm{FP}_{\text{single-hop}}$ asks whether iteration magnifies the penalty. Finally, a $\Delta$-correction (clean minus neutral-false) gives an answer-sycophancy analogue \citep{sharma2024sycophancy}. Retrieval- and generation-side scores are always reported separately so a generation failure is not confused with a retrieval miss.
+
+\subsection{Dataset construction}
+\label{sec:data}
+We build a single document-grounded pipeline---extract\,$\rightarrow$\,classify\,$\rightarrow$\,perturb\,$\rightarrow$\,load\,$\rightarrow$\,validate---over nonpartisan Congressional Research Service (CRS) and Government Accountability Office (GAO) reports, in the FEVER\,$\rightarrow$\,FactCC\,$\rightarrow$\,FalseSum construction lineage \citep{thorne2018fever,kryscinski2020factcc,utama2022falsesum}.
+
+\paragraph{Extraction.} A generator decomposes each source passage into atomic, independently verifiable claims (FActScore-style decomposition; \citealp{min2023factscore}) and emits a verbatim \emph{source quote} for each. We keep only claims that are check-worthy \citep{hassan2017claimbuster,shaar2020rumor} and \emph{factual-usable} (verifiable past/present facts; forecasts, recommendations, and opinions are dropped). Each kept claim is \textbf{grounded} to its source sentence by exact then fuzzy matching, yielding a FEVER-style \texttt{(doc\_id, sent\_idx)} gold-evidence pointer. Grounding both guards against extraction paraphrase and supplies the per-item gold evidence that makes RSR measurable.
+
+\paragraph{Perturbation.} Each kept fact is corrupted into a \texttt{neutral-false} premise by a \emph{deterministic, type-keyed} operator selected by claim type: \textsc{NumberSwap} for statistics and \textsc{DateSwap} for dated events \citep{kryscinski2020factcc}, relation substitution for comparisons \citep{thorne2018fever}, predicate-argument manipulation for causal claims \citep{utama2022falsesum}, and \textsc{EntitySwap} for attributions. The operator changes the minimum necessary to contradict the source while staying plausible. A matched \texttt{clean} (true) variant shares the identical question stem, and both presuppose---rather than ask whether---their respective claim.
+
+\paragraph{Ideological loading.} From each \texttt{neutral-false} premise we manufacture one or more \texttt{loaded-false} variants carrying a left or right valence, holding all numbers, entities, dates, and comparisons token-for-token identical so the factual error is unchanged. Loading applies a congenial policy frame from the Media Frames Corpus codebook \citep{card2015mfc}, at least two of Entman's framing functions---problem definition, causal attribution, moral evaluation, remedy \citep{entman1993framing}---and an issue/side lexicon. The frame-to-side mapping is \emph{derived from Moral Foundations Theory} rather than hand-asserted: the left appeals to individualizing foundations (care, fairness) and the right also to binding foundations (authority, loyalty, sanctity) \citep{graham2009moral}, following moral-reframing evidence that side-congenial moral framings are persuasive \citep{feinberg2019moral}.
+
+\paragraph{Direction grounding.} A direction is built for a fact only if it is \emph{documented}: we gate construction on a misperception inventory mined from LIAR (false/pants-fire/barely-true claims by party and subject), requiring a minimum number of real anchor claims on that \texttt{(issue, side)} before a side is constructed, and we attach one real claim as the misperception anchor. Left/right \emph{balance is therefore an empirical outcome, not forced}: whether both sides are equally constructible is itself a finding, consistent with directionally motivated reasoning \citep{flynn2017nature,taber2006skepticism,kahan2007identity}.
+
+\paragraph{Validation.} A held-out LLM judge (\texttt{gpt-5}) verifies, per loaded variant, the \emph{minimal-pair} property (it asserts the same false fact as its neutral counterpart) and the \emph{perceived direction} (it reads as the intended side). We then human-annotate a 150--200 item subset with two annotators on factuality, refutation-retrievability, minimal-pair, and framing-direction, reporting Cohen's $\kappa$ on each, following the GPT-4o-judge-plus-human-$\kappa$ validation protocol of ELEPHANT \citep{cheng2025elephant}. Apolitical FEVER REFUTES claims are reframed directly to form a factual backbone and retrieval-recall ground truth. The pipeline targets $\sim$300 base facts ($\sim$900--1{,}200 queries); preliminary validation on $\sim$30 items yields LLM-judged minimal-pair agreement of $\approx$88\% and perceived-direction agreement of $\approx$93\% (the generation run is still scaling). \TODO{final item counts, per-side yield, and human validation $\kappa$.}
+
+\subsection{RAG systems and models}
+\label{sec:rag}
+We build on FlashRAG \citep{jin2025flashrag} with a BM25\,$\cup$\,BGE-dense hybrid retriever over a \emph{single integrated index} (CRS\,$\cup$\,GAO\,$\cup$\,Wikipedia\,$\cup$\,World Bank): the refuting passage must win retrieval against cross-corpus distractors, as in deployment, rather than being isolated in a per-corpus index. We evaluate three architectures: \textbf{single-hop} (retrieve top-$k$\,$\rightarrow$\,answer); \textbf{multi-hop} (IRCoT, three hops with per-hop query reformulation; \citealp{trivedi2023ircot}); and an \textbf{agentic} preview (ReAct-style search loop; \citealp{yao2023react}) on one model over a small subset. Models under test are \texttt{gpt-5}, \texttt{claude-sonnet-4.6}, and \texttt{llama-3.3-70b} (Table~\ref{tab:models}). The generator (\texttt{claude-sonnet-4.6}) and the PCR/validation judge (\texttt{gpt-5}) are held out from each other to avoid self-preference.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Model} & \textbf{Role} & \textbf{Access} \\
+    \midrule
+    \texttt{gpt-5}             & system under test & closed \\
+    \texttt{claude-sonnet-4.6} & system under test & closed \\
+    \texttt{llama-3.3-70b}     & system under test & open \\
+    \bottomrule
+  \end{tabular}
+  \caption{Models evaluated as the RAG system under test. The item generator is \texttt{claude-sonnet-4.6} and the held-out PCR/validation judge is \texttt{gpt-5} (held out from each other to avoid self-preference); all models are served via OpenRouter.}
+  \label{tab:models}
+\end{table}
+
+\subsection{Baselines and ablations}
+\textbf{Baselines (ladder).} No-RAG (closed-book parametric floor) $\rightarrow$ standard hybrid RAG $\rightarrow$ strong adaptive rivals, Corrective RAG \citep{yan2024crag} and Astute RAG \citep{wang2024astute} (with Self-RAG \citep{asai2024selfrag} as a self-critique reference) $\rightarrow$ oracle gold-passage (correction ceiling). The full ladder runs on single-hop; headline models also run on multi-hop. \textbf{Ablations} (each mapped to a metric): retrieval on/off (isolates parametric vs.\ retrieved correction); corpus noise ratio (gold:distractor:misinfo); prompt (default vs.\ an explicit ``verify the premise'' instruction); and retriever swap (BM25 / dense / hybrid).
+
+\section{Experiments and Results}
+\TODO{Full results pending experiment runs. This section will report the metrics below.}
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Setting} & \textbf{PCR} & \textbf{RSR} & \textbf{FP} \\
+    \midrule
+    Single-hop & \TODO{} & \TODO{} & \TODO{} \\
+    Multi-hop  & \TODO{} & \TODO{} & \TODO{} \\
+    Agentic    & \TODO{} & \TODO{} & \TODO{} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Premise correction, retrieval sycophancy, and Framing Penalty across architectures (placeholder).}
+  \label{tab:main}
+\end{table}
+
+\paragraph{H1 (Framing Penalty).} \TODO{Report FP $>0$ with paired McNemar test and CI; expected $\sim$0.10--0.15 correction drop.}
+\paragraph{H2 (Retrieval localization).} \TODO{Report RSR and whether premise-confirming retrieval precedes non-correction.}
+\paragraph{H3 (Hop amplification).} \TODO{Report HAF; whether multi-hop amplifies FP and agentic recovers.}
+\paragraph{H4 (Directional asymmetry).} \TODO{Report within-fact DA and constructibility of both directions.}
+
+\section{Conclusion}
+We frame and operationalize a new question for RAG evaluation---whether systems correct corpus-contradicted false premises, and whether ideological framing suppresses correction---and provide a document-grounded pipeline and metric suite (FP, RSR, DA, HAF) to measure it across architectures and models. \TODO{Summarize findings once experiments complete.}
+
+\section*{Limitations}
+
+\paragraph{Synthetic data.} Items are LLM-generated; we mitigate with document grounding, the FEVER lineage, human-$\kappa$ validation, and prompt release, but residual generation artifacts may remain.
+\paragraph{Corpus-relative correctness.} ``Correct'' is defined relative to the indexed corpus; for non-FEVER facts we corroborate against external sources (WDI/IMF/UN) and never treat an institution's policy stance as fact, but single-source-of-truth risk persists.
+\paragraph{US-centric ideological axis.} The left/right axis is US-centric and may not transfer cross-culturally.
+\paragraph{Symmetry is empirical.} Whether congenial falsehoods are equally \emph{constructible} across the political spectrum is an empirical outcome we measure, not an assumption; directional results are conditional on the validated construction and may not generalize beyond it.
+\paragraph{Scope.} The agentic setting is a small preview and the international (World Bank) track is left to future work.
+
+
+
+\section*{Acknowledgments}
+
+This document has been adapted
+by Steven Bethard, Ryan Cotterell and Rui Yan
+from the instructions for earlier ACL and NAACL proceedings, including those for
+ACL 2019 by Douwe Kiela and Ivan Vuli\'{c},
+NAACL 2019 by Stephanie Lukin and Alla Roskovskaya,
+ACL 2018 by Shay Cohen, Kevin Gimpel, and Wei Lu,
+NAACL 2018 by Margaret Mitchell and Stephanie Lukin,
+Bib\TeX{} suggestions for (NA)ACL 2017/2018 from Jason Eisner,
+ACL 2017 by Dan Gildea and Min-Yen Kan,
+NAACL 2017 by Margaret Mitchell,
+ACL 2012 by Maggie Li and Michael White,
+ACL 2010 by Jing-Shin Chang and Philipp Koehn,
+ACL 2008 by Johanna D. Moore, Simone Teufel, James Allan, and Sadaoki Furui,
+ACL 2005 by Hwee Tou Ng and Kemal Oflazer,
+ACL 2002 by Eugene Charniak and Dekang Lin,
+and earlier ACL and EACL formats written by several people, including
+John Chen, Henry S. Thompson and Donald Walker.
+Additional elements were taken from the formatting instructions of the \emph{International Joint Conference on Artificial Intelligence} and the \emph{Conference on Computer Vision and Pattern Recognition}.
+
+% Bibliography entries for the entire Anthology, followed by custom entries
+%\bibliography{custom,anthology-overleaf-1,anthology-overleaf-2}
+
+% Custom bibliography entries only
+\bibliography{custom}
+
+\appendix
+
+\section{Example Appendix}
+\label{sec:appendix}
+
+This is an appendix.
+
+\end{document}

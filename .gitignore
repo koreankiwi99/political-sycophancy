@@ -1,0 +1,40 @@
+# Upstream papers - large PDFs, do not ship in git
+related_papers/
+
+# External datasets - large + redistribution-licensed, do not ship in git
+data/
+
+# LaTeX build artifacts (paper/ source is tracked, builds are not)
+paper/*.pdf
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.synctex.gz
+paper/*.toc
+paper/*.lof
+paper/*.lot
+
+# Python / venv (for the upcoming benchmark code)
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Vendored external repos (FlashRAG etc.) — too large for git
+external/
+
+# Per-pipeline caches (HTML/text fetched docs etc.)
+pipeline/rag/.cache/
+/tmp/

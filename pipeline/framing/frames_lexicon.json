@@ -1,0 +1,86 @@
+{
+  "_doc": "Ideological loading operationalization. policy_frames = Boydstun/Card Policy Frames Codebook (Card et al. 2015). entman_functions = Entman 1993. moral_foundation per side = Moral Foundations Theory (Graham, Haidt & Nosek 2009): liberals weight individualizing foundations (care, fairness); conservatives also weight binding foundations (authority, loyalty, sanctity). Feinberg & Willer (2019) moral reframing validates side-congenial framing. Frame-to-side assignment is MFT-derived (not hand-asserted) and human-validated.",
+  "policy_frames": [
+    "Economic", "Capacity_and_resources", "Morality", "Fairness_and_equality",
+    "Legality_constitutionality", "Policy_prescription", "Crime_and_punishment",
+    "Security_and_defense", "Health_and_safety", "Quality_of_life",
+    "Cultural_identity", "Public_opinion", "Political", "External_regulation"
+  ],
+  "entman_functions": ["problem_definition", "causal_attribution", "moral_evaluation", "remedy_promotion"],
+  "moral_foundation": {
+    "left": "individualizing foundations: care & fairness (Graham/Haidt/Nosek 2009)",
+    "right": "binding foundations: authority, loyalty, sanctity (Graham/Haidt/Nosek 2009)"
+  },
+  "issues": {
+    "immigration": {
+      "right": {"frames": ["Crime_and_punishment", "Security_and_defense", "Cultural_identity"],
+                "lexicon": {"undocumented immigrants": "illegal aliens", "unauthorized migration": "border invasion", "migrants": "illegals"}},
+      "left":  {"frames": ["Fairness_and_equality", "Morality", "Quality_of_life"],
+                "lexicon": {"illegal aliens": "undocumented immigrants", "deportation": "family separation", "border enforcement": "criminalizing migration"}}
+    },
+    "taxes": {
+      "right": {"frames": ["Economic", "Policy_prescription", "Cultural_identity"],
+                "lexicon": {"estate tax": "death tax", "revenue increase": "tax hike", "tax expenditure": "government handout"}},
+      "left":  {"frames": ["Fairness_and_equality", "Economic", "Morality"],
+                "lexicon": {"tax cuts": "giveaways to the wealthy", "deregulation": "corporate handouts", "supply-side": "trickle-down"}}
+    },
+    "climate": {
+      "right": {"frames": ["Economic", "Capacity_and_resources", "External_regulation"],
+                "lexicon": {"climate policy": "the green agenda", "emissions regulation": "job-killing mandates", "climate scientists": "climate alarmists"}},
+      "left":  {"frames": ["Health_and_safety", "Morality", "Quality_of_life"],
+                "lexicon": {"climate change": "climate crisis", "fossil fuel industry": "big polluters", "emissions": "carbon pollution"}}
+    },
+    "guns": {
+      "right": {"frames": ["Legality_constitutionality", "Security_and_defense", "Crime_and_punishment"],
+                "lexicon": {"firearm regulation": "gun grab", "gun owners": "law-abiding citizens", "assault weapon": "modern sporting rifle"}},
+      "left":  {"frames": ["Health_and_safety", "Quality_of_life", "Morality"],
+                "lexicon": {"firearm": "weapon of war", "gun rights": "gun lobby agenda", "mass shooting": "gun violence epidemic"}}
+    },
+    "crime": {
+      "right": {"frames": ["Crime_and_punishment", "Security_and_defense", "Quality_of_life"],
+                "lexicon": {"criminal justice reform": "soft-on-crime policy", "decarceration": "releasing criminals", "offenders": "thugs"}},
+      "left":  {"frames": ["Fairness_and_equality", "Morality", "Health_and_safety"],
+                "lexicon": {"policing": "over-policing", "incarceration": "mass incarceration", "tough-on-crime": "carceral overreach"}}
+    },
+    "healthcare": {
+      "right": {"frames": ["Economic", "External_regulation", "Policy_prescription"],
+                "lexicon": {"public option": "government takeover", "single-payer": "socialized medicine", "subsidies": "entitlement spending"}},
+      "left":  {"frames": ["Fairness_and_equality", "Health_and_safety", "Morality"],
+                "lexicon": {"private insurance": "for-profit healthcare", "cost-sharing": "denying care", "market-based": "leaving people uninsured"}}
+    },
+    "economy_intl": {
+      "_axis": "economic-development ideology (NOT US-partisan): market/orthodox vs state/heterodox. Grounding = economic-policy framing / austerity & Washington-Consensus debate, not MFT.",
+      "right": {"frames": ["Economic", "Policy_prescription", "Capacity_and_resources"],
+                "lexicon": {"public spending": "government overspending", "state-owned enterprises": "inefficient state monopolies", "fiscal deficit": "reckless deficit spending", "subsidies": "market-distorting subsidies"}},
+      "left":  {"frames": ["Fairness_and_equality", "Quality_of_life", "Morality"],
+                "lexicon": {"fiscal consolidation": "austerity", "privatization": "selling off public assets", "structural adjustment": "imposed austerity", "spending cuts": "cuts to vital public services"}}
+    }
+  },
+  "topics": {
+    "_doc": "Topic-conditional grounded framing (used by Path A). Each topic-direction entry cites its grounded source.",
+    "climate": {
+      "_grounded_in": "Right: CARDS / Coan et al. 2021 Sci Reports (5 Level-1 contrarian claims: not happening / not us / impacts not bad / solutions won't work / science biased). Left: climate-justice framing (IPCC AR6 SPM, Yale Climate Communication).",
+      "right": {"frames": ["Climate alarmism", "Solutions won't work", "Science is biased"],
+                "lexicon": {"climate change": "climate alarmism", "climate action": "the green agenda", "emissions regulation": "job-killing mandates", "climate finance": "reckless climate spending", "climate scientists": "climate alarmists"}},
+      "left":  {"frames": ["Climate emergency", "Climate justice", "Polluter accountability"],
+                "lexicon": {"climate change": "the climate crisis", "emissions": "carbon pollution", "fossil fuel industry": "big polluters", "developing countries": "frontline communities", "climate finance": "climate-justice funding"}}
+    },
+    "fiscal": {
+      "_grounded_in": "Blyth 2013 Austerity: The History of a Dangerous Idea (right: austerity as moral story of thrift/discipline/anti-statism; left: heterodox/Keynesian critique). Lakoff Moral Politics fiscal axis ('tax relief' vs 'tax burden').",
+      "right": {"frames": ["Fiscal discipline", "Market efficiency", "Anti-statism"],
+                "lexicon": {"public spending": "government overspending", "deficit": "reckless deficit spending", "subsidies": "market-distorting subsidies", "stimulus": "government bloat", "state-owned": "inefficient state monopolies"}},
+      "left":  {"frames": ["Public investment", "Anti-austerity", "Solidarity"],
+                "lexicon": {"fiscal consolidation": "imposed austerity", "spending cuts": "cuts to vital public services", "privatization": "selling off public assets", "balanced-budget rules": "austerity dogma", "tax cuts": "giveaways to the wealthy"}}
+    },
+    "social_policy": {
+      "_grounded_in": "Lakoff Moral Politics (strict-father vs nurturant-parent); MFT Graham/Haidt/Nosek 2009 (right=binding: loyalty/authority/sanctity; left=individualizing: care/fairness); Feinberg & Willer 2019 (moral reframing).",
+      "right": {"frames": ["Personal responsibility", "Law and order", "Self-reliance / strict-father"],
+                "lexicon": {"welfare": "entitlement spending", "social services": "government dependency", "public option": "government takeover", "healthcare expansion": "socialized medicine", "regulations": "government overreach"}},
+      "left":  {"frames": ["Care for the vulnerable", "Equality / nurturant-parent", "Systemic justice"],
+                "lexicon": {"private insurance": "for-profit healthcare", "cost-sharing": "denying care to the vulnerable", "welfare reform": "slashing the safety net", "deregulation": "corporate handouts", "law enforcement": "over-policing"}}
+    },
+    "none": {
+      "_note": "Use for paragraphs that are not politically loadable (acronym lists, methods, theory, administrative). Skip the LOAD step entirely; emit only clean + plain_false."
+    }
+  }
+}
