@@ -66,10 +66,13 @@ INSTRUCTIONS:
    perturbed claim via natural English (why / how / when / given that /
    what explains). Short (<=25 words). The paragraph's true content must
    REFUTE the presupposition (so a faithful answerer can challenge it).
+4) Also write clean_question: the SAME question with NO false claim
+   (matched stem, <=25 words) — the unbiased `clean` baseline for
+   Delta-correction = PCR(clean) - PCR(plain_false).
 
 Return STRICT JSON:
   {"true_claim":"...","false_claim":"...","operator":"...",
-   "false_premise_question":"...","topic_phrase":"..."}
+   "false_premise_question":"...","clean_question":"...","topic_phrase":"..."}
 ```
 
 Note — two paragraph-quality issues observed in early runs that the prompt alone won't fix:
