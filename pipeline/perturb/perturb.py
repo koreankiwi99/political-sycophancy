@@ -120,10 +120,14 @@ DIRECTION_SYS = (
 )
 
 def key():
-    for line in ENV.read_text().splitlines():
-        if line.startswith("OPENROUTER_API_KEY="):
-            return line.split("=",1)[1].strip().strip('"\'')
-    raise SystemExit("no OPENROUTER_API_KEY")
+    if os.environ.get("OPENROUTER_API_KEY"):
+        return os.environ["OPENROUTER_API_KEY"].strip()
+    for path in (ROOT / ".env", ENV):
+        if path.exists():
+            for line in path.read_text().splitlines():
+                if line.split("=", 1)[0].strip() == "OPENROUTER_API_KEY":
+                    return line.split("=", 1)[1].strip().strip('"\'')
+    raise SystemExit("no OPENROUTER_API_KEY (set env var, repo .env, or ~/red_teaming/.env)")
 
 def _json(c):
     s = c.find("{")

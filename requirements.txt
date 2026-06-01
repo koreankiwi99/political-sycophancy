@@ -1,0 +1,20 @@
+# Python dependencies for the political-sycophancy pipeline.
+#
+# Two tiers — install only what the stage you're running needs.
+#
+# ── Tier 1: generation + validation (extract / perturb / validate) ──────────
+#   This is all you need to run the World Bank sampling path
+#   (pipeline/perturb/perturb.py -> pipeline/validation/validate.py).
+requests>=2.31
+
+# ── Tier 2: RAG evaluation (pipeline/rag/run_rag.py) — heavier, CPU-only OK ──
+# Uncomment when you get to the retrieval/PCR eval stage.
+# numpy
+# pandas
+# beautifulsoup4
+# nltk
+# faiss-cpu
+# rank_bm25
+# sentence-transformers
+# openai
+# python-dotenv
