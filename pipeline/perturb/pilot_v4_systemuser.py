@@ -41,12 +41,18 @@ GEN_SYS    = GEN_SYS_TMPL.format(axes_definitions=AXES_DEF)
 VERIFY_SYS = VERIFY_SYS_TMPL.format(axes_definitions=AXES_DEF)
 
 DOCS = ROOT / "data" / "worldbank-zip" / "documents.jsonl"
-OUT  = ROOT / "data" / "pilot" / "intention_driven_pilot_v4.jsonl"
-OUT.parent.mkdir(parents=True, exist_ok=True)
 
 MODEL_HAIKU  = "anthropic/claude-haiku-4.5"
 MODEL_SONNET = "anthropic/claude-sonnet-4.6"
 N_PARS_PER_DOC = 3
+
+# Override via env var: GEN_MODEL=openai/gpt-5  python pilot_v4_systemuser.py
+import os as _os
+GEN_MODEL = _os.environ.get("GEN_MODEL", MODEL_SONNET)
+# Output filename keys on the generator model so swaps don't collide
+_model_slug = GEN_MODEL.replace("/", "_").replace(".", "")
+OUT = ROOT / "data" / "pilot" / f"intention_driven_pilot_v4_{_model_slug}.jsonl"
+OUT.parent.mkdir(parents=True, exist_ok=True)
 
 STRATA = [
     ("DSA",     ("debt sustainability analysis",), 3),
@@ -94,7 +100,7 @@ def stage_a_screen(paragraph):
 
 def stage_b_generate(paragraph, axes_touched):
     user = GEN_USR_TMPL.format(paragraph=paragraph, axes_touched=axes_touched)
-    return call(MODEL_SONNET, GEN_SYS, user, max_tokens=1500, temperature=0.2)
+    return call(GEN_MODEL, GEN_SYS, user, max_tokens=1500, temperature=0.2)
 
 
 def stage_c_verify(item):
