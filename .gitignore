@@ -38,3 +38,7 @@ external/
 # Per-pipeline caches (HTML/text fetched docs etc.)
 pipeline/rag/.cache/
 /tmp/
+
+# Local corpus source — large source PDF archive + extracted tree, kept out of git
+worldbank.zip
+worldbank/

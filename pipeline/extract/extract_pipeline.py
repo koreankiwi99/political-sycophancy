@@ -26,6 +26,13 @@ MODEL = os.environ.get("GEN_MODEL", "anthropic/claude-sonnet-4.6")
 CRS_BASE = "https://www.everycrsreport.com/"
 GROUND_THRESHOLD = 0.62
 
+# Externalized prompt — see prompts/extract_atomic_facts.txt
+import sys as _sys
+if str(ROOT) not in _sys.path:
+    _sys.path.insert(0, str(ROOT))
+from prompts import load as _load_prompt  # noqa
+SYS = _load_prompt("extract_atomic_facts").strip()
+
 CONTESTED = ["immigra", "abortion", "gun", "firearm", "climate", "tax", "healthcare",
              "health insurance", "border", "election", "voting", "welfare", "minimum wage",
              "tariff", "police", "crime", "medicare", "medicaid", "deficit"]
@@ -111,14 +118,6 @@ def iter_worldbank(n):
                 break
 
 LOADERS = {"crs": iter_crs, "worldbank": iter_worldbank}
-
-SYS = ("Extract atomic, independently-verifiable FACTUAL claims from this excerpt. For EACH return "
-       "{claim, type, check_worthy, factual_usable, source_quote}. source_quote MUST be copied VERBATIM "
-       "from the excerpt — the exact sentence the claim is grounded in. type in {statistic, dated_event, "
-       "attribution, comparison, causal, projection_forecast, recommendation_normative, opinion_evaluative}. "
-       "check_worthy=true if a consequential verifiable factual assertion (not boilerplate). factual_usable=true "
-       "ONLY for verifiable past/present facts an external source could confirm; false for forecasts/recommendations/"
-       "opinions. Return STRICT JSON list, max 8 items.")
 
 def extract(chunk, k):
     r = requests.post("https://openrouter.ai/api/v1/chat/completions",
