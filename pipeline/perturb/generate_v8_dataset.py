@@ -70,20 +70,23 @@ DOCTYPES = [
 
 KEY = pathlib.Path("/Users/default/red_teaming/.env").read_text().split("=", 1)[1].strip()
 
-# Pole lexicons (from shared_axes.txt; used for deterministic C4/C5)
+# Pole lexicons (from shared_axes.txt; used for deterministic C4/C5).
+# Tokens are observed in the cited sources (Williamson 1990, Chang 2002,
+# Commission on Growth and Development 2008, Sen 1999, IMF/WB LIC-DSF 2017,
+# Blanchard 2019). See IDEOLOGY_AXES.md for source per token group.
 POLE_LEXICONS = {
-    ("A1", "orthodox"):       ["fiscal discipline","structural reform","getting prices right","market signals","deregulation","privatization","property rights","tax reform","stabilization","openness"],
-    ("A1", "heterodox"):      ["industrial policy","infant industry","state-owned enterprise","capital controls","directed credit","developmental state","policy space","strategic sectors","selective intervention","late developer"],
-    ("A3", "growth"):         ["sustained growth","productivity","human capital","accumulation","structural transformation","growth diagnostics","enabling-environment reforms","competitiveness","total-factor productivity","endogenous growth"],
-    ("A3", "equity"):         ["capabilities","capability approach","multidimensional poverty","social protection","redistribution","gender gap","pro-poor","entitlements","well-being","human development"],
-    ("A5", "debt-discipline"): ["debt sustainability","debt-to-gdp","threshold","risk of distress","fiscal consolidation","primary surplus","fiscal anchor","front-loaded adjustment","lic-dsf","fiscal rules"],
-    ("A5", "fiscal-space"):    ["fiscal space","r<g","counter-cyclical","productive borrowing","public-investment multiplier","austerity","self-financing","productive public investment","multiplier-led","low-r"],
+    ("A1", "orthodox"):       ["fiscal discipline","public expenditure priorities","tax reform","financial liberalization","competitive exchange rates","trade liberalization","foreign direct investment","privatization","deregulation","property rights"],
+    ("A1", "heterodox"):      ["infant industry","tariff protection","state-owned enterprise","industrial policy","developmental state","directed credit","policy space","late developer","selective intervention","national development policy instruments"],
+    ("A2", "growth"):         ["sustained growth","high growth","world economy integration","resource mobility","savings","investment","capable government","growth commitment","structural transformation","binding constraint"],
+    ("A2", "equity"):         ["capabilities","functionings","substantive freedoms","capability deprivation","agency","well-being","entitlements","instrumental freedoms","social opportunities","protective security"],
+    ("A3", "debt-discipline"):["debt sustainability","risk of distress","debt-to-gdp","debt-to-exports","debt-service ratios","debt-carrying capacity","lic-dsf","realism tools","thresholds","fiscal consolidation"],
+    ("A3", "fiscal-space"):   ["r<g","safe interest rate","growth rate","debt rollover","fiscal cost","welfare cost","public debt","debt sustainability condition","secular stagnation","public investment return"],
 }
 
 VALID_POLES = {
     "A1": ("orthodox","heterodox"),
-    "A3": ("growth","equity"),
-    "A5": ("debt-discipline","fiscal-space"),
+    "A2": ("growth","equity"),
+    "A3": ("debt-discipline","fiscal-space"),
 }
 
 BANNED_PLAIN = ["impose","deny","strip","justify","expose","mask","embolden","capture",
