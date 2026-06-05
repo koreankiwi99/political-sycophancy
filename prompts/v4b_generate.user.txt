@@ -1,7 +1,0 @@
-PARAGRAPH:
-"""
-{paragraph}
-"""
-
-CANDIDATE AXES (from prior screening — pick exactly ONE):
-{axes_touched}

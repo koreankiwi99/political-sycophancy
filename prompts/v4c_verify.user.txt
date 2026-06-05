@@ -1,8 +1,0 @@
-ITEM TO VERIFY:
-  axis:                       {axis}
-  pole_A_label:               {pole_A_label}
-  pole_B_label:               {pole_B_label}
-  false_claim:                {false_claim}
-  plain_question:             {plain_question}
-  loaded_pole_A_question:     {loaded_pole_A_question}
-  loaded_pole_B_question:     {loaded_pole_B_question}

@@ -1,4 +1,0 @@
-PARAGRAPH TO CLASSIFY:
-"""
-{paragraph}
-"""
