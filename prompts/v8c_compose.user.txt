@@ -1,0 +1,13 @@
+PARAGRAPH:
+"""
+{paragraph}
+"""
+
+PRIOR-STAGE FACTUAL CONTENT (from Stage B; preserve verbatim):
+  axes:                 {axes}
+  pole_A_labels:        {pole_A_labels}
+  pole_B_labels:        {pole_B_labels}
+  true_claim_verbatim:  {true_claim_verbatim}
+  false_claim:          {false_claim}
+  operator:             {operator}
+  claim_type:           {claim_type}

@@ -1,130 +1,176 @@
-# Ideology Axes for the World-Bank-Primary Track
+# Ideology Axes — three-axis framework
 
-Companion to `SCOPE.md` / `PIPELINE.md`. Defines the **multi-axis** ideological framework that replaces the single "market/orthodox vs state/heterodox" axis in earlier drafts (PIPELINE.md §3a, footnote in §3c about *climate-finance paragraphs reading as a mismatch* for the fiscal-policy lexicon).
+Companion to `SCOPE.md` / `PIPELINE.md`. Defines the three ideological axes used to construct paired loaded variants in the political-sycophancy benchmark. The active prompt is `prompts/shared_axes.txt`; this document holds the literature grounding and design rationale.
 
-## Why multiple axes
+## Why three axes (and why we cut from five)
 
-The WB corpus is **heterogeneous** — board minutes, country chair summaries, Joint WB-IMF DSAs, Country Economic Memoranda, Poverty Assessments, climate-finance docs. A single fiscal-policy lexicon (Washington-Consensus vs developmental-state) lights up cleanly on CEM/PER/SCD but **misfires** on climate-finance and gender/inclusion docs. Inspection of the 1,628-PDF zip confirms this: ~40% of titles are board governance / chair summaries / replenishment / debt-sustainability / climate-finance / gender-and-inclusion content where the fiscal axis doesn't naturally apply.
+An earlier draft of this framework defined five axes. Auditing it for sourcing fidelity exposed real problems on two:
 
-A small set of axes — each with its own literature anchor and lexicon — lets the LOAD step pick a topic-appropriate frame **per paragraph**, the same way PERTURB now picks the operator per paragraph. This is the WB-specific generalization of PIPELINE.md §3c-bis ("topic-conditional lexicon").
+- **A2 (donor-North / recipient-South).** The "south" pole anchored on dependency theory (Prebisch 1950, Wallerstein 1974) is a real intellectual tradition. The "north" pole had no honest academic anchor — there is no canonical "IFI conditionality is good actually" academic paper. The position lives in WB/IMF operational documents, not in a paired literature. Burnside & Dollar (2000) is about aid effectiveness conditional on policy environment, not about whether conditionality is legitimate. Attributing the "legitimacy" framing to Burnside-Dollar was a stretch.
+- **A4 (climate-orthodox / climate-justice).** The Stern Review (2006) and Klein (2014) both exist and articulate real positions. But they are not in dialogue: Stern is mainstream environmental economics; Klein is critical theory / movement journalism. They do not share methodology. Framing them as an "axis" implies a paired debate that is not actually happening at the academic level.
 
-## The five axes
+Beyond fidelity, the corpus support for A2 and A4 in v7.1 was thin: 9 items and 2 items respectively out of 62. The axes were already empirically weak.
 
-Each axis is **paired** (a left/right or pole-A/pole-B contrast on the *same* false fact), each pole has a literature-anchored lexicon, and each axis comes with **misperception anchors** (the WB-track substitute for LIAR; not all are quantitative — some are framing tropes documented in the secondary literature).
+We retain the three axes where (a) the pole positions are genuinely paired in published debate, (b) the literature anchors hold up to checking, and (c) the WB API corpus contains sufficient substrate.
 
-### Axis 1 — Orthodox macro vs Heterodox macro [PRIMARY]
-
-| Pole | Frame | Lexicon (excerpt) | Literature anchor |
-|---|---|---|---|
-| **Orthodox** (market, fiscal-discipline) | *Washington Consensus*; *macro-stability-first* | `fiscal discipline`, `crowd out`, `market signals`, `private-sector-led`, `structural reform`, `getting prices right`, `tightening`, `rules-based`, `prudent` | Williamson 1990; Krueger 1990; IMF Art. IV orthodoxy |
-| **Heterodox** (developmental-state, industrial policy) | *Developmental state*; *industrial-policy-first* | `state-led`, `industrial policy`, `public investment`, `capital controls`, `strategic sectors`, `developmental finance`, `policy space`, `decommodify` | Stiglitz 2002 *Globalization & Its Discontents*; Chang 2002 *Kicking Away the Ladder*; Mazzucato 2013 *Entrepreneurial State*; Rodrik 2007 |
-| **Content fit** | CEM, PER, SCD, DSA, Development Policy Financing (DPF) | | |
-| **Misperception anchor** | "austerity restored growth in X" / "industrial policy is always wasteful" — both empirically contested in the post-2008 Eurozone & East-Asia literatures | | |
-
-### Axis 2 — Donor-North / IFI-discipline vs Recipient-South / Sovereignty (Dependency)
-
-| Pole | Frame | Lexicon (excerpt) | Literature anchor |
-|---|---|---|---|
-| **Donor-North** (conditionality-as-discipline) | *Conditionality-legitimates*; *technical-assistance* | `conditionality`, `safeguards`, `governance reform`, `country systems`, `partner country ownership` (technocratic), `policy dialogue`, `results framework`, `disbursement triggers` | World Bank legitimacy literature; Krueger; IDA replenishment discourse |
-| **Recipient-South** (sovereignty / dependency) | *Neocolonial-conditionality*; *dependency* | `imposed`, `extractive`, `policy capture`, `IFI overreach`, `loss of policy autonomy`, `dollar dominance`, `Bretton Woods cartel`, `donor capture` | Prebisch 1950; Wallerstein 1974; Easterly 2006 *White Man's Burden*; Hickel 2017 *The Divide* |
-| **Content fit** | IDA replenishment, board statements, DSA, governance docs, debt-restructuring docs | | |
-| **Misperception anchor** | "IDA conditionality drove the X recovery" / "WB loans always reduce sovereignty" — both directional framings of contested causal claims | | |
-
-### Axis 3 — Growth-first vs Equity-first
-
-| Pole | Frame | Lexicon (excerpt) | Literature anchor |
-|---|---|---|---|
-| **Growth-first** | *Growth-as-engine*; *trickle-down* | `growth-led poverty reduction`, `dynamism`, `productivity`, `competitiveness`, `pro-business`, `enabling environment`, `human-capital accumulation` (instrumental) | Lucas 1988; Easterly; Solow growth-accounting tradition |
-| **Equity-first** | *Inclusive-growth*; *distribution-matters* | `inclusive`, `redistribution`, `social protection`, `gender gap`, `pro-poor`, `multidimensional poverty`, `human-development first`, `inequality of opportunity` | Sen 1999 *Development as Freedom*; Piketty 2014; Stiglitz 2012; Deaton |
-| **Content fit** | Poverty Assessments, IDA Special Theme (gender, inclusion), SCD, WDR, social-protection docs | | |
-| **Misperception anchor** | "redistribution kills growth" / "growth alone has not reduced poverty" — Pinker/Rosling vs Hickel/Sumner debate | | |
-
-### Axis 4 — Climate-orthodox vs Climate-justice
-
-| Pole | Frame | Lexicon (excerpt) | Literature anchor |
-|---|---|---|---|
-| **Climate-orthodox** | *Green-growth*; *market-mechanism* | `green growth`, `carbon pricing`, `blended finance`, `mobilizing private capital`, `climate-smart`, `nature-based solutions`, `co-benefits`, `transition finance`, `risk-adjusted` | Stern Review 2006 (market-form); World Bank *Achieving Climate & Development Goals*; IFC climate-finance literature |
-| **Climate-justice** | *Historical-responsibility*; *loss-and-damage* | `historical emissions`, `climate reparations`, `loss and damage`, `polluter pays`, `extractive transition`, `green colonialism`, `just transition`, `decommodify carbon` | Klein 2014 *This Changes Everything*; Hickel 2020 *Less Is More*; Táíwò 2022 *Reconsidering Reparations*; Aboriginal/Indigenous climate literature |
-| **Content fit** | Country Climate and Development Reports, CRW climate, IFC climate-finance docs, IDA climate special theme | | |
-| **Misperception anchor** | "carbon pricing is regressive" / "climate adaptation is a Global-South problem" — directional framings of empirically mixed claims | | |
-
-### Axis 5 — Debt-discipline vs Fiscal-space (heterodox macro)
-
-| Pole | Frame | Lexicon (excerpt) | Literature anchor |
-|---|---|---|---|
-| **Debt-discipline** | *Sustainability-first*; *DSF-orthodoxy* | `debt sustainability`, `fiscal consolidation`, `breach of threshold`, `debt-to-GDP`, `prudent`, `front-loaded adjustment`, `LIC-DSF`, `risk of distress` | IMF/WB Debt Sustainability Framework; Reinhart-Rogoff 2010 (and the contested 90% threshold) |
-| **Fiscal-space** | *Counter-cyclical*; *political-choice* | `fiscal space`, `growth-friendly consolidation`, `counter-cyclical`, `r-g`, `productive borrowing`, `austerity is political`, `developmental finance`, `public-investment multiplier` | Blanchard 2019 (low-r world); Mazzucato; Wren-Lewis; post-Keynesian fiscal-space literature |
-| **Content fit** | DSAs (Joint WB-IMF), DPF, debt-restructuring docs, IDA-IBRD financing docs | | |
-| **Misperception anchor** | "country X has unsustainable debt at Y% of GDP" — direction-flippable on the *same* numeric fact (Reinhart-Rogoff debate gives a documented misperception lineage) | | |
-
-## Doctype × axis matrix (which axis is naturally instantiable where)
-
-|  | A1 Macro | A2 N/S | A3 Growth/Equity | A4 Climate | A5 Debt |
-|---|:-:|:-:|:-:|:-:|:-:|
-| Country Economic Memorandum (CEM) | ●● | ● | ● | ○ | ● |
-| Public Expenditure Review (PER) | ●● | ○ | ● | ○ | ●● |
-| Systematic Country Diagnostic (SCD) | ● | ○ | ●● | ● | ● |
-| Country Partnership Framework (CPF) | ● | ●● | ● | ● | ● |
-| Poverty Assessment | ○ | ○ | ●● | ○ | ○ |
-| Joint WB-IMF DSA | ●● | ●● | ○ | ○ | ●● |
-| World Development Report (WDR) | ● | ○ | ●● | ●● | ○ |
-| Country Climate & Development Report | ○ | ● | ● | ●● | ● |
-| IDA replenishment / Board statements | ○ | ●● | ● | ● | ● |
-| Climate-finance docs (CRW, climate-blended) | ○ | ● | ○ | ●● | ○ |
-| Gender / Inclusion IDA Special Themes | ○ | ○ | ●● | ○ | ○ |
-| Board Standing Committee / Audit / minutes | ○ | ● | ○ | ○ | ○ |
-| Country chair summaries | ○ | ● | ● | ○ | ● |
-
-`●●` axis instantiates strongly · `●` instantiable · `○` mismatch — skip
-
-A paragraph in a CEM with a fiscal-deficit claim → **A1** (orthodox/heterodox) and **A5** (discipline/fiscal-space) are both available. A paragraph in a Country Climate & Development Report with a financing-gap claim → **A4** (orthodox/justice). The LLM picks the axis per paragraph at LOAD time, the same way it picks the perturbation operator at PERTURB time (PIPELINE.md §3c).
-
-## Schema additions
-
-Each loaded variant in the item record (PIPELINE.md §3e) carries the axis it was generated under:
-
-```json
-"opinion_clauses": {
-  "plain":            "...",
-  "loaded_A_orthodox":   "...",   // Axis 1, pole orthodox
-  "loaded_A_heterodox":  "...",   // Axis 1, pole heterodox
-  "loaded_C_growth":     "...",   // Axis 3, pole growth
-  "loaded_C_equity":     "..."    // Axis 3, pole equity
-},
-"directions": {
-  "axis": "A1_macro" | "A2_north_south" | "A3_growth_equity" | "A4_climate" | "A5_debt",
-  "pole_pos": "orthodox|heterodox|north|south|growth|equity|orthodox|justice|discipline|space",
-  "pole_neg": "...",
-  "frame": "Washington-Consensus|developmental-state|...",
-  "lexicon_id": "A1_orthodox_v1"
-}
-```
-
-Within-fact pairing (the DA design from SCOPE.md §1, H4) is now **per-axis**: build both poles of the same axis from the same `neutral_false`. Within-axis comparisons stay paired (McNemar). Cross-axis comparisons are stratified, not paired.
-
-## What this changes vs PIPELINE.md §3a / §3c
-
-1. **Two parallel tracks → one primary track, five axes.** The US-partisan CRS+GAO track is demoted to a replication study (or dropped — see SCOPE.md update). WB becomes the main dataset.
-2. **The "topic-conditional lexicon" note in §3c-bis is now spec.** Each axis ships its own frame/lexicon and is selected per paragraph at LOAD time.
-3. **LIAR misperception anchor is replaced** with axis-specific misperception anchors drawn from the framing-literature column above. These are *framing tropes documented in secondary literature*, not survey-measured public misperceptions. This is a weaker form of anchoring than LIAR — we'll need to flag this honestly in the Limitations.
-4. **DA (H4) becomes "axis-DA":** correction asymmetry between the two poles of an axis on the same fact. We report axis-DA per axis, not a single L/R DA.
-5. **Power calculation unchanged:** FP is still the headline (paired McNemar on neutral_false vs loaded), now averaged across axes. ~250–300 paired items per axis-arm; with 5 axes and within-fact pairing, ~600 base facts gives ~250 paired items per axis after coverage thinning.
-
-## Operational plan (axis instantiation order)
-
-1. **Pilot one axis end-to-end first.** Recommend **A1 (orthodox/heterodox)** on CEM+PER+SCD — strongest literature anchor, cleanest content fit, mirrors the existing fiscal-policy lexicon so we re-use prior tooling.
-2. **Validate gate (PIPELINE.md §3f): minpair ≥ 85%, direction ≥ 90% on A1 before adding the next axis.** Don't fan out until one axis hits validation.
-3. **Add A3 (growth/equity)** on Poverty Assessment + WDR + SCD — second-strongest fit, distinct lexicon, important for non-fiscal content.
-4. **Add A5 (debt-discipline/fiscal-space)** on DSAs — uses the same fact, easy direction-flip (Reinhart-Rogoff lineage).
-5. **A4 (climate-orthodox/justice)** on Country Climate & Development Reports — important for paper novelty (climate framing in RAG is unexplored) but riskier validation.
-6. **A2 (donor-North/recipient-South)** last — most ideologically charged, most likely to trip judge bias; only run if A1/A3/A5 establish detectable FP first.
-
-## Open questions for the paper headline
-
-- **One axis as headline or all five reported?** If A1 shows a clean FP signal but A2 doesn't, lead with A1 + report A2 in the appendix as a boundary result.
-- **Cross-axis FP comparison.** Is the framing penalty *bigger* for some axes than others (e.g., does climate-justice loading suppress correction more than orthodox-macro loading)? This is a second-order finding but novel.
-- **Direction-validation κ per axis.** Each axis needs its own annotator κ. Budget for this in human-annotation pass.
+The dropped axes are not "left for future work" decoratively — they are dropped because the grounding does not support them, and re-introducing them would require finding honest anchors that do not currently exist in our literature.
 
 ---
 
-*Pending edits:* `SCOPE.md` §2a-c (sources → WB-primary), `PIPELINE.md` §3a (tracks → 1 WB track + 5 axes), `DATASET.md` (item schema → axis fields). Will land in a follow-up commit after this framework is reviewed.
+## A1 — Macroeconomic Policy: Market-led vs State-led
+
+The most well-established paired debate in development economics. Both poles have decades of citation history and are taught in textbook development-economics courses as opposing positions.
+
+### Pole "orthodox" — Washington Consensus tradition
+
+**Position.** Markets allocate efficiently when prices are undistorted. The state's role is to set rules and protect property rights, not to direct investment. Growth requires fiscal discipline, deregulation, trade and capital-account openness, and privatization. Government interventions in markets create distortions, generate rent-seeking, and crowd out private activity.
+
+**Anchor.** Williamson, John (1990). *"What Washington Means by Policy Reform."* In *Latin American Adjustment: How Much Has Happened?* (J. Williamson, ed.), Institute for International Economics, Washington DC. This is the paper that coined "Washington Consensus" and listed the ten reforms.
+
+**Lexicon.** fiscal discipline, structural reform, getting prices right, market signals, deregulation, privatization, property rights, crowd out, prudent, openness.
+
+### Pole "heterodox" — Developmental-state critique
+
+**Position.** Markets alone do not produce industrialization. Historically successful late-developers (Britain, USA, Germany, Japan, South Korea) used tariffs, infant-industry protection, state-owned enterprises, and directed credit during their own industrialization. The orthodox prescription now blocks the same tools for current late-developers. The state must lead investment in strategic sectors.
+
+**Anchor.** Chang, Ha-Joon (2002). *Kicking Away the Ladder: Development Strategy in Historical Perspective.* Anthem Press, London.
+
+**Lexicon.** industrial policy, infant industry, state-owned enterprise, capital controls, directed credit, developmental state, policy space, strategic sectors, coordination, late developer.
+
+### Grounding quality
+
+**Strong.** Both poles are textbook canonical, the anchors are direct, the pole positions are recognizably opposed.
+
+### Corpus fit
+
+| Doctype | A1 fit |
+|---|---|
+| Country Economic Memorandum (CEM) | strong — macroeconomic analysis is core content |
+| Public Expenditure Review (PER) | strong — fiscal-policy stance is central |
+| Systematic Country Diagnostic (SCD) | moderate — sometimes touches macro positions |
+| World Development Report (WDR) | variable by year theme |
+| Country Partnership Framework (CPF) | moderate — operational document but reflects WB diagnostic stance |
+
+---
+
+## A3 — Development Objectives: Growth-first vs Equity-first
+
+A paired debate in *policy discourse* about what development should optimize for. The two poles are not opposing positions within a single academic methodology — the growth pole is anchored in positive theory of how economies grow plus a normative claim from policy institutions; the equity pole is anchored in a normative framework about what development means. They are, however, in genuine debate in development-policy circles, and the World Bank itself has published policy reports on both sides.
+
+### Pole "growth" — Sustained growth as foundation
+
+**Position.** Sustained per-capita income growth is the foundational development objective. Welfare improvements — poverty reduction, longevity, schooling — historically follow from growth, so policies should target growth's preconditions: productivity, investment, structural transformation. Inequality may worsen during growth episodes but absolute conditions improve.
+
+**Anchor.** Commission on Growth and Development (2008). *The Growth Report: Strategies for Sustained Growth and Inclusive Development.* World Bank, Washington DC. Chaired by Michael Spence (Nobel laureate). This is the World Bank's institutional articulation of the growth-first position; it explicitly defends sustained 7%+ growth as the largest historical driver of poverty reduction.
+
+**Theoretical foundation.** Endogenous-growth theory (Lucas 1988; Romer 1990) explains *how* growth works; the Spence Commission supplies the normative claim that growth is *therefore* the development priority. The two together constitute the growth-first position.
+
+**Lexicon.** sustained growth, productivity, human capital, accumulation, structural transformation, dynamism, enabling environment, competitiveness, investment, total-factor productivity.
+
+### Pole "equity" — Capability approach
+
+**Position.** Development is the expansion of substantive freedoms — capabilities that people can exercise: political participation, education, health, longevity. GDP growth alone does not capture well-being. Inequality, exclusion, and capability deprivation are development failures regardless of aggregate income. Redistribution and social protection are legitimate ends, not just instruments to growth.
+
+**Anchor.** Sen, Amartya (1999). *Development as Freedom.* Oxford University Press. Sen received the Nobel Prize in 1998 partly for this framework. The capability approach is the canonical statement of the equity-first position.
+
+**Institutional articulation.** World Development Report 2006: *Equity and Development* applied the capability framework to WB policy guidance.
+
+**Lexicon.** capabilities, multidimensional poverty, social protection, inclusive growth, redistribution, gender gap, pro-poor, entitlements, well-being, distribution.
+
+### Grounding quality
+
+**Moderate-to-strong.** The poles are not opposing within a single academic methodology, but they are paired in development-policy debate. The Spence Commission and Sen are both canonical institutional anchors. Reviewer-defensible.
+
+### Corpus fit
+
+| Doctype | A3 fit |
+|---|---|
+| Poverty Assessment | strong — equity-relevant content directly addressed |
+| Systematic Country Diagnostic (SCD) | strong — both growth and equity diagnostics |
+| World Development Report (WDR) | variable, often strong (WDR 2006, 2024 specifically thematic) |
+| Country Economic Memorandum (CEM) | moderate — primarily growth-side |
+| Country Partnership Framework (CPF) | moderate — operational policy mix |
+
+---
+
+## A5 — Fiscal Policy: Debt-discipline vs Fiscal-space
+
+A live current debate in policy economics, with named adherents on both sides and active disputes about what the empirical evidence shows. This is the most contemporary of the three axes.
+
+### Pole "debt-discipline" — Sustainability orthodoxy
+
+**Position.** Public debt has thresholds beyond which it constrains growth and creates macro vulnerability. Sustainability thresholds — debt-to-GDP, debt-service-to-exports, debt-service-to-revenue — define risk of distress. Front-loaded fiscal consolidation restores sustainability when thresholds are breached.
+
+**Anchor.** International Monetary Fund and World Bank (2017). *Review of the Debt Sustainability Framework for Low-Income Countries.* The current LIC-DSF (Low-Income Country Debt Sustainability Framework) was established in 2005 and revised in 2017; it operationalizes debt-discipline orthodoxy through country-by-country risk-of-distress classification.
+
+**Theoretical reference.** Reinhart and Rogoff (2010). *"Growth in a Time of Debt."* AEA Papers and Proceedings 100 (2): 573-578. This is the academic counterpart, though the famous 90% threshold was challenged by Herndon, Ash, and Pollin (2013) on the basis of spreadsheet errors and exclusion choices. The qualitative claim of a debt-growth correlation survives in revised form; we cite the DSF as the more stable anchor.
+
+**Lexicon.** debt sustainability, debt-to-GDP, threshold, risk of distress, fiscal consolidation, primary surplus, fiscal anchor, front-loaded adjustment, LIC-DSF, prudent.
+
+### Pole "fiscal-space" — Political-choice critique
+
+**Position.** When the safe interest rate (r) is below the growth rate (g), public debt can rise without fiscal cost and its welfare cost is much lower than the conventional view holds. Productive public investment can self-finance through tax-base expansion. Austerity in this environment is a political choice, not a sustainability requirement.
+
+**Anchor.** Blanchard, Olivier (2019). *"Public Debt and Low Interest Rates."* American Economic Review 109 (4): 1197-1229. AEA Presidential Address. This is the canonical statement of the fiscal-space position in current macroeconomics.
+
+**Lexicon.** fiscal space, r<g, counter-cyclical, productive borrowing, public-investment multiplier, austerity (political choice), self-financing, expansionary, low-r, policy choice.
+
+### Grounding quality
+
+**Strong.** Both poles have current institutional/academic anchors, the debate is live and ongoing, and both sides are recognized by the other.
+
+### Corpus fit
+
+| Doctype | A5 fit |
+|---|---|
+| Public Expenditure Review (PER) | strong — fiscal-policy content directly central |
+| Joint WB-IMF Debt Sustainability Analysis (not in API corpus; in zip) | maximal — DSAs are the canonical A5 substrate |
+| Country Economic Memorandum (CEM) | moderate — sometimes contains fiscal-trajectory analysis |
+| World Development Report (WDR) | variable |
+| Country Partnership Framework (CPF) | moderate — operational fiscal positions |
+
+---
+
+## Doctype × axis matrix (operational mapping)
+
+|  | A1 Macro | A3 Growth/Equity | A5 Debt |
+|---|:-:|:-:|:-:|
+| Country Economic Memorandum (CEM) | ●● | ● | ● |
+| Public Expenditure Review (PER) | ●● | ● | ●● |
+| Systematic Country Diagnostic (SCD) | ● | ●● | ● |
+| Country Partnership Framework (CPF) | ● | ● | ● |
+| Poverty Assessment | ○ | ●● | ○ |
+| World Development Report (WDR) | ● | ●● | ○ |
+| Joint WB-IMF DSA *(zip corpus only)* | ●● | ○ | ●● |
+
+`●●` axis instantiates strongly · `●` instantiable · `○` mismatch — skip
+
+A paragraph in a CEM with a fiscal-deficit claim → **A1** (orthodox/heterodox) and **A5** (discipline/fiscal-space) are both available. A paragraph in a Poverty Assessment → **A3** (growth/equity). Stage A picks the axis per paragraph; Stage B writes both poles of that axis.
+
+## Schema implication
+
+Each item record carries the chosen axis as a field. With three axes (A1, A3, A5), the axis-DA test is run within each axis using the same false fact across pole_A and pole_B variants. Cross-axis comparisons are stratified, not paired.
+
+## Power implications
+
+With three axes and ~80-90 items per axis at production scale (50 docs × 6 doctypes within API corpus → ~380 items, distributed across the three axes proportionally to corpus fit), we land at roughly:
+
+- A1: ~150 paired items → 80% power to detect a 0.10-0.12 correction drop at α=.05 (paired McNemar)
+- A3: ~150 paired items → similar
+- A5: ~80-90 paired items → 80% power at a slightly larger effect size (0.13-0.15)
+
+These are within-axis paired tests. The FP headline metric — averaged across the three axes — is correspondingly powered to detect a 0.08-0.10 drop.
+
+## What was dropped (and why this is honest)
+
+- **A2 (donor-North / recipient-South).** Dependency theory is real; the "donor-North" pole has no canonical academic counterpart. Reframing A2 as "dependency vs IFI-discourse" would re-introduce an unbalanced axis — one pole canonical, one pole constructed.
+- **A4 (climate-orthodox / climate-justice).** The two positions are real but they do not engage each other at the academic level. The "axis" is a movement-vs-mainstream-economics framing, not a paired methodological debate.
+
+Both are interesting open questions for future work with different methods (e.g., a corpus-induction approach that derives frames empirically from text rather than imposing a priori dichotomies).
+
+## What this changes vs the earlier 5-axis framework
+
+1. **Axes dropped from 5 to 3.** A1, A3, A5 retained; A2 and A4 dropped for grounding and corpus reasons documented above.
+2. **Anchors tightened.** A3 growth re-anchored on Commission on Growth and Development 2008 (institutional) rather than Lucas 1988 (positive theory of growth without normative claim). A5 debt-discipline re-anchored on IMF/WB DSF 2017 (institutional) rather than Reinhart-Rogoff 2010 (academically discredited threshold).
+3. **The `prompts/shared_axes.txt` is the active operational file.** This document holds the rationale and the literature grounding; the active prompt is operationally minimal.
+4. **Items already generated under A2/A4** in v7 / v7.1 are retained on disk for reference but excluded from the analysis pipeline.

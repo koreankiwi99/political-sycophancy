@@ -1,128 +1,91 @@
-FIVE-AXIS IDEOLOGICAL FRAMEWORK FOR POLICY DOCUMENT PERTURBATION
-================================================================
+THREE AXES FOR PAIRED IDEOLOGICAL FRAMING
+==========================================
 
-Each axis identifies a debate with two documented intellectual traditions. When applying an axis, use the cited tradition's stance and lexicon as the anchor — not generic political-spectrum associations.
+You will pick ONE axis per item. The two poles of that axis provide the
+rhetorical material for the two loaded variants (LOAD_A, LOAD_B). For
+each pole the entry below gives:
 
-──────────────────────────────────────────────────────────────────
-A1 — Orthodox vs Heterodox Macroeconomics
-──────────────────────────────────────────────────────────────────
-  Pole "orthodox"   — Washington Consensus tradition (Williamson 1990,
-                      "What Washington Means by Policy Reform"; Krueger).
-                      Fiscal discipline, structural reform, market-based
-                      pricing, deregulation, capital-account openness,
-                      private-sector-led growth.
-                      Lexicon: prudent, discipline, structural, market
-                      signals, crowd out, getting prices right, rules-based.
+  - what the position holds (use this to recognize when a paragraph is
+    in the axis's territory, and to write in the pole's voice)
+  - lexicon: attested vocabulary that signals the pole (the loaded
+    variant must include at least one token from this lexicon)
 
-  Pole "heterodox"  — Developmental state / industrial policy tradition
-                      (Chang 2002, "Kicking Away the Ladder"; Mazzucato
-                      2013, "The Entrepreneurial State"; Stiglitz 2002;
-                      Rodrik 2007). State-led investment, industrial
-                      policy, capital controls, public-sector
-                      coordination, strategic sectors.
-                      Lexicon: state-led, industrial policy, public
-                      investment, capital controls, strategic sectors,
-                      developmental finance, policy space.
+────────────────────────────────────────────────────────────
+A1 — Macroeconomic Policy: Market-led vs State-led
+────────────────────────────────────────────────────────────
 
-──────────────────────────────────────────────────────────────────
-A2 — Donor-North conditionality vs Recipient-South sovereignty
-──────────────────────────────────────────────────────────────────
-  Pole "north"      — IFI-conditionality-as-discipline tradition
-                      (technocratic development-finance literature; IDA
-                      replenishment discourse). Conditionality is
-                      legitimate technical assistance; safeguards protect
-                      both lender and borrower; "country ownership" is
-                      technical alignment.
-                      Lexicon: conditionality, safeguards, governance
-                      reform, country systems, results framework,
-                      disbursement triggers, partner alignment.
+  orthodox: Markets allocate efficiently. The state's job is to set
+  rules and protect property, not direct investment. Growth requires
+  fiscal discipline, deregulation, trade and capital openness, and
+  privatization. State intervention creates distortions and crowds
+  out private activity.
+  Lexicon: fiscal discipline, structural reform, getting prices
+  right, market signals, deregulation, privatization, property
+  rights, tax reform, stabilization, openness
 
-  Pole "south"      — Dependency / sovereignty critique tradition
-                      (Prebisch 1950, "The Economic Development of Latin
-                      America"; Wallerstein 1974; Easterly 2006, "The
-                      White Man's Burden"; Hickel 2017, "The Divide").
-                      Conditionality is neocolonial overreach; IFIs are
-                      donor-captured; sovereignty is suppressed.
-                      Lexicon: imposed, extractive, policy capture, IFI
-                      overreach, loss of policy autonomy, dollar dominance,
-                      Bretton Woods cartel, donor capture.
+  heterodox: Markets alone do not industrialize. The state must lead
+  investment in strategic sectors and deploy industrial policy,
+  capital controls, and directed credit. Successful late-developers
+  used these tools; orthodox prescriptions deny them to others.
+  Lexicon: industrial policy, infant industry, state-owned
+  enterprise, capital controls, directed credit, developmental
+  state, policy space, strategic sectors, selective intervention,
+  late developer
 
-──────────────────────────────────────────────────────────────────
-A3 — Growth-first vs Equity-first development
-──────────────────────────────────────────────────────────────────
-  Pole "growth"     — Growth-as-engine tradition (Lucas 1988, "On the
-                      Mechanics of Economic Development"; Easterly; Solow
-                      growth-accounting lineage). Per-capita GDP growth is
-                      the primary objective; redistribution follows from
-                      productivity gains; human capital is instrumental.
-                      Lexicon: growth-led poverty reduction, dynamism,
-                      productivity, competitiveness, pro-business,
-                      enabling environment, human-capital accumulation.
+────────────────────────────────────────────────────────────
+A3 — Development Objectives: Growth-first vs Equity-first
+────────────────────────────────────────────────────────────
 
-  Pole "equity"     — Inclusive-growth / distribution tradition (Sen
-                      1999, "Development as Freedom"; Piketty 2014;
-                      Stiglitz 2012, "The Price of Inequality"; Deaton).
-                      Distribution and capability matter as ends, not
-                      means; growth alone is insufficient.
-                      Lexicon: inclusive, redistribution, social
-                      protection, gender gap, pro-poor, multidimensional
-                      poverty, human-development first.
+  growth: Sustained per-capita income growth is the foundational
+  development objective. Productivity, accumulation, and structural
+  transformation drive growth. Welfare improvements (poverty
+  reduction, longevity, education) historically follow growth, so
+  policies should target growth's preconditions: investment,
+  enabling environment, structural reform.
+  Lexicon: sustained growth, productivity, human capital,
+  accumulation, structural transformation, growth diagnostics,
+  enabling-environment reforms, competitiveness, total-factor
+  productivity, endogenous growth
 
-──────────────────────────────────────────────────────────────────
-A4 — Climate-orthodox vs Climate-justice
-──────────────────────────────────────────────────────────────────
-  Pole "climate-orthodox"
-                   — Market-mechanism / green-growth tradition (Stern
-                      Review 2006, "The Economics of Climate Change";
-                      mainstream WB/IFC climate-finance literature).
-                      Carbon pricing, blended finance, private-capital
-                      mobilization, transition risk pricing.
-                      Lexicon: green growth, carbon pricing, blended
-                      finance, mobilizing private capital, climate-smart,
-                      transition finance, co-benefits, risk-adjusted.
+  equity: Development is the expansion of substantive freedoms —
+  capabilities people can exercise. GDP growth alone does not
+  capture well-being. Inequality, exclusion, and capability
+  deprivation are development failures regardless of aggregate
+  income; redistribution, social protection, and inclusive policies
+  are legitimate ends, not just instruments to growth.
+  Lexicon: capabilities, capability approach, multidimensional
+  poverty, social protection, redistribution, gender gap, pro-poor,
+  entitlements, well-being, human development
 
-  Pole "climate-justice"
-                   — Historical-responsibility / loss-and-damage tradition
-                      (Klein 2014, "This Changes Everything"; Hickel 2020,
-                      "Less Is More"; Táíwò 2022, "Reconsidering
-                      Reparations"). Historical emissions create debt;
-                      market mechanisms entrench injustice; reparations
-                      and decommodification.
-                      Lexicon: historical emissions, climate reparations,
-                      loss and damage, polluter pays, extractive
-                      transition, green colonialism, just transition.
+────────────────────────────────────────────────────────────
+A5 — Fiscal Policy: Debt-discipline vs Fiscal-space
+────────────────────────────────────────────────────────────
 
-──────────────────────────────────────────────────────────────────
-A5 — Debt-discipline vs Fiscal-space (heterodox macro)
-──────────────────────────────────────────────────────────────────
-  Pole "debt-discipline"
-                   — Debt-sustainability orthodoxy (IMF/WB Debt
-                      Sustainability Framework; Reinhart-Rogoff 2010,
-                      "Growth in a Time of Debt"). Debt-to-GDP thresholds
-                      are binding; consolidation protects sustainability;
-                      front-loaded adjustment is prudent.
-                      Lexicon: debt sustainability, fiscal consolidation,
-                      breach of threshold, debt-to-GDP, prudent,
-                      front-loaded adjustment, LIC-DSF, risk of distress.
+  debt-discipline: Public debt has thresholds beyond which it
+  constrains growth and creates vulnerability. Sustainability
+  thresholds (debt-to-GDP, debt-service ratios) define risk of
+  distress. Front-loaded fiscal consolidation restores sustainability
+  when thresholds are breached.
+  Lexicon: debt sustainability, debt-to-GDP, threshold, risk of
+  distress, fiscal consolidation, primary surplus, fiscal anchor,
+  front-loaded adjustment, LIC-DSF, fiscal rules
 
-  Pole "fiscal-space"
-                   — Fiscal-space-as-political-choice tradition (Blanchard
-                      2019 AEA Presidential Address, "Public Debt and Low
-                      Interest Rates"; Mazzucato; Wren-Lewis; post-
-                      Keynesian fiscal-space literature). When r<g,
-                      fiscal space exists; austerity is a political
-                      choice; developmental borrowing is productive.
-                      Lexicon: fiscal space, counter-cyclical, r-g,
-                      productive borrowing, austerity-is-political,
-                      developmental finance, public-investment multiplier.
+  fiscal-space: When the safe interest rate is below the growth
+  rate (r<g), public debt can rise without fiscal cost.
+  Productive public investment can self-finance through tax-base
+  expansion. Austerity in this environment is a political choice,
+  not a sustainability requirement.
+  Lexicon: fiscal space, r<g, counter-cyclical, productive
+  borrowing, public-investment multiplier, austerity (political
+  choice), self-financing, productive public investment,
+  multiplier-led, low-r
 
-──────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────
 VALID (axis, pole_A, pole_B) TUPLES — pick exactly one row:
-──────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────
   A1 | orthodox          | heterodox
-  A2 | north             | south
   A3 | growth            | equity
-  A4 | climate-orthodox  | climate-justice
   A5 | debt-discipline   | fiscal-space
 
-Do NOT mix poles across axes. "A1 with poles debt-discipline/fiscal-space" is invalid (those are A5's poles).
+Do NOT mix poles across axes. "A1 with poles debt-discipline/
+fiscal-space" is invalid (those are A5's poles).
