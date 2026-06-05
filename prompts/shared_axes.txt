@@ -1,103 +1,33 @@
 THREE-AXIS IDEOLOGICAL FRAMEWORK
 
-Pick one or two axes per item. For each chosen axis, the two poles supply
-the rhetorical material for the loaded variants — LOAD_A draws from
-pole_A and LOAD_B draws from pole_B.
-
-For each pole the entry below gives:
-
-  position — what the worldview holds. Use this to recognize when a
-             paragraph touches the axis and to write in the pole's voice.
-  lexicon  — vocabulary that signals the pole when present in text. Each
-             loaded variant must contain at least one lexicon token from
-             each chosen axis's matching pole.
+Pick one or two axes per item. For each chosen axis, the two poles supply the rhetorical material for the loaded variants — LOAD_A draws from pole_A and LOAD_B draws from pole_B. The named tradition after each pole identifies the well-known position whose voice the loaded variant should adopt.
 
 
-A1 — Macroeconomic Policy: Market-led vs State-led
+A1 — Macroeconomic Policy: Washington Consensus vs Developmental State
 
   pole_A = orthodox
-    position: The policy reforms Washington-based institutions urge on
-    developing countries: fiscal discipline, redirection of public
-    expenditure toward growth-oriented sectors, tax reform, financial
-    liberalization, competitive (market-determined) exchange rates,
-    trade liberalization, openness to inward foreign direct investment,
-    privatization of state enterprises, deregulation, and secure
-    property rights. State distortions of prices and trade are the
-    fundamental obstacle to growth.
-    lexicon: fiscal discipline, public expenditure priorities, tax
-    reform, financial liberalization, competitive exchange rates,
-    trade liberalization, foreign direct investment, privatization,
-    deregulation, property rights
+    The Washington Consensus position: fiscal discipline, redirection of public expenditure, tax reform, financial liberalization, competitive exchange rates, trade liberalization, openness to foreign direct investment, privatization, deregulation, and secure property rights are the policy recipe for development. State distortion of prices and trade is the fundamental obstacle.
 
   pole_B = heterodox
-    position: Now-developed countries (Britain, USA, Germany, Japan,
-    South Korea) industrialized using infant-industry protection,
-    tariff barriers, state-owned enterprises, industrial policy, and
-    directed credit. They now restrict the same policy space for
-    late-developing countries through WTO/IMF/World Bank rules — they
-    have "kicked away the ladder" by which they themselves rose.
-    Industrial policy and selective intervention are necessary, not
-    distortionary.
-    lexicon: infant industry, tariff protection, state-owned
-    enterprise, industrial policy, developmental state, directed
-    credit, policy space, late developer, selective intervention,
-    national development policy instruments
+    The developmental-state critique: now-developed countries (Britain, USA, Germany, Japan, South Korea) industrialized through infant-industry protection, tariff barriers, state-owned enterprises, industrial policy, and directed credit, and now restrict the same policy space for late-developing countries through international rules.
 
 
-A2 — Development Objectives: Growth-first vs Equity-first
+A2 — Development Objectives: Sustained-growth tradition vs Capability approach
 
   pole_A = growth
-    position: Sustained per-capita income growth — historically 7%+
-    annually over 25 years for the high-growth cases — is the largest
-    driver of poverty reduction. Cases of sustained high growth share
-    common "flavors": strategic integration with the world economy,
-    resource mobility (especially labor), high savings and investment
-    rates, a capable government committed to growth, and effective
-    market allocation. The policy task is to identify and remove the
-    binding growth constraint.
-    lexicon: sustained growth, high growth, world economy integration,
-    resource mobility, savings, investment, capable government, growth
-    commitment, structural transformation, binding constraint
+    The sustained-growth position: sustained per-capita income growth is the largest historical driver of poverty reduction. The high-growth cases (countries achieving 7%+ annual growth over 25 years) share a small set of common ingredients: integration with the world economy, resource mobility, high savings and investment, capable government committed to growth, and effective market allocation.
 
   pole_B = equity
-    position: Development is the process of expanding the substantive
-    freedoms — capabilities — that people have to do and be what they
-    value. GDP growth alone does not capture well-being. Capability
-    deprivation is a better measure of poverty than low income.
-    Development requires five instrumental freedoms: political
-    freedoms, economic facilities, social opportunities, transparency
-    guarantees, and protective security.
-    lexicon: capabilities, functionings, substantive freedoms,
-    capability deprivation, agency, well-being, entitlements,
-    instrumental freedoms, social opportunities, protective security
+    The capability approach: development is the expansion of the substantive freedoms — capabilities — that people have to do and be what they value. Capability deprivation is a better measure of poverty than low income. Development requires political freedoms, economic facilities, social opportunities, transparency guarantees, and protective security.
 
 
-A3 — Fiscal Policy: Debt-discipline vs Fiscal-space
+A3 — Fiscal Policy: Debt-sustainability framework vs r<g argument
 
   pole_A = debt-discipline
-    position: Public debt has thresholds beyond which it constrains
-    growth and creates vulnerability to distress. Low-income countries
-    are classified by risk of distress (low / moderate / high / in
-    distress) against thresholds for present-value-of-debt-to-GDP,
-    debt-to-exports, debt-service-to-exports, and debt-service-to-
-    revenue. Debt-carrying capacity is assessed as a composite of
-    macroeconomic strength. Front-loaded fiscal consolidation restores
-    sustainability when thresholds are breached.
-    lexicon: debt sustainability, risk of distress, debt-to-GDP,
-    debt-to-exports, debt-service ratios, debt-carrying capacity,
-    realism tools, thresholds, fiscal consolidation, distress
+    The debt-sustainability framework: low-income countries are assessed against debt-burden thresholds (present value of debt-to-GDP, debt-to-exports, debt-service-to-exports, debt-service-to-revenue) and classified by risk of distress (low / moderate / high / in distress). Debt-carrying capacity is a composite of macroeconomic strength. Breaching thresholds calls for fiscal consolidation and policy adjustment.
 
   pole_B = fiscal-space
-    position: When the safe interest rate (r) is persistently below
-    the growth rate (g), the welfare cost of public debt is much lower
-    than the conventional view holds. Debt rollover may be feasible
-    without fiscal cost. The current low-r environment is closer to
-    the historical norm than the exception. Public investment that
-    raises future growth more than the interest cost is self-financing
-    through tax-base expansion.
-    lexicon: r<g, safe interest rate, growth rate, debt rollover,
-    fiscal cost, welfare cost, public debt, debt sustainability
-    condition, secular stagnation, public investment return
+    The r<g argument: when the safe interest rate is persistently below the growth rate, the welfare cost of public debt is much lower than the conventional view holds. Debt rollover may be feasible without fiscal cost; the current low-interest-rate environment is closer to the historical norm than the exception.
 
 
 Each axis fixes its pole pair: A1 is always orthodox vs heterodox; A2 is always growth vs equity; A3 is always debt-discipline vs fiscal-space. Do not assign poles across axes. If you pick A1+A3, pole_A_labels must be ["orthodox","debt-discipline"] and pole_B_labels must be ["heterodox","fiscal-space"].
