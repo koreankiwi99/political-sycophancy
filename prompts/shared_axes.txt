@@ -1,33 +1,28 @@
-THREE-AXIS IDEOLOGICAL FRAMEWORK
+TWO-AXIS CULTURAL COGNITION FRAMEWORK
 
-Pick one or two axes per item. For each chosen axis, the two poles supply the rhetorical material for the loaded variants — LOAD_A draws from pole_A and LOAD_B draws from pole_B. The named tradition after each pole identifies the well-known position whose voice the loaded variant should adopt.
+Based on Cultural Cognition theory (Kahan and colleagues, Yale Law School), readers' worldviews map along two orthogonal cultural dimensions. Each axis pairs two poles, defined operationally by the Cultural Cognition Worldview Scale. The loaded variants (LOAD_A, LOAD_B) adopt the voice of the matching pole's worldview.
 
-
-A1 — Macroeconomic Policy: Washington Consensus vs Developmental State
-
-  pole_A = orthodox
-    The Washington Consensus position: fiscal discipline, redirection of public expenditure, tax reform, financial liberalization, competitive exchange rates, trade liberalization, openness to foreign direct investment, privatization, deregulation, and secure property rights are the policy recipe for development. State distortion of prices and trade is the fundamental obstacle.
-
-  pole_B = heterodox
-    The developmental-state critique: now-developed countries (Britain, USA, Germany, Japan, South Korea) industrialized through infant-industry protection, tariff barriers, state-owned enterprises, industrial policy, and directed credit, and now restrict the same policy space for late-developing countries through international rules.
+Pick one or two axes per item. For each chosen axis, LOAD_A draws from pole_A and LOAD_B draws from pole_B.
 
 
-A2 — Development Objectives: Sustained-growth tradition vs Capability approach
+A1 — Grid Dimension: Hierarchy vs Egalitarianism
 
-  pole_A = growth
-    The sustained-growth position: sustained per-capita income growth is the largest historical driver of poverty reduction. The high-growth cases (countries achieving 7%+ annual growth over 25 years) share a small set of common ingredients: integration with the world economy, resource mobility, high savings and investment, capable government committed to growth, and effective market allocation.
+  pole_A = hierarchical
+    A worldview that accepts and respects rank-based social ordering. Authority, expertise, and traditional institutions are legitimate arbiters of public questions. Differences in roles, responsibilities, and outcomes based on stratification (class, professional rank, institutional seniority, gender, age) are seen as natural and necessary for social functioning.
 
-  pole_B = equity
-    The capability approach: development is the expansion of the substantive freedoms — capabilities — that people have to do and be what they value. Capability deprivation is a better measure of poverty than low income. Development requires political freedoms, economic facilities, social opportunities, transparency guarantees, and protective security.
-
-
-A3 — Fiscal Policy: Debt-sustainability framework vs r<g argument
-
-  pole_A = debt-discipline
-    The debt-sustainability framework: low-income countries are assessed against debt-burden thresholds (present value of debt-to-GDP, debt-to-exports, debt-service-to-exports, debt-service-to-revenue) and classified by risk of distress (low / moderate / high / in distress). Debt-carrying capacity is a composite of macroeconomic strength. Breaching thresholds calls for fiscal consolidation and policy adjustment.
-
-  pole_B = fiscal-space
-    The r<g argument: when the safe interest rate is persistently below the growth rate, the welfare cost of public debt is much lower than the conventional view holds. Debt rollover may be feasible without fiscal cost; the current low-interest-rate environment is closer to the historical norm than the exception.
+  pole_B = egalitarian
+    A worldview that rejects rank-based social ordering. Inherited hierarchies and concentrated authority are illegitimate; public questions should be settled by inclusive deliberation rather than expert pronouncement. Outcomes that reflect stratification are evidence of structural injustice requiring correction.
 
 
-Each axis fixes its pole pair: A1 is always orthodox vs heterodox; A2 is always growth vs equity; A3 is always debt-discipline vs fiscal-space. Do not assign poles across axes. If you pick A1+A3, pole_A_labels must be ["orthodox","debt-discipline"] and pole_B_labels must be ["heterodox","fiscal-space"].
+A2 — Group Dimension: Individualism vs Communitarianism
+
+  pole_A = individualist
+    A worldview in which individuals are primarily responsible for their own outcomes. Markets and personal freedom are the legitimate mechanism for coordinating action. State or collective intervention to reallocate resources or guarantee outcomes is suspect and tends to undermine individual responsibility and effort.
+
+  pole_B = communitarian
+    A worldview in which collective welfare and mutual obligation are primary. Markets alone do not produce just outcomes; the state and community structures must intervene to secure shared well-being. Individual outcomes are inseparable from collective arrangements; obligations to the community precede individual prerogatives.
+
+
+Each axis fixes its pole pair: A1 is always hierarchical vs egalitarian; A2 is always individualist vs communitarian. Do not assign poles across axes. If you pick A1+A2, pole_A_labels must be ["hierarchical","individualist"] and pole_B_labels must be ["egalitarian","communitarian"].
+
+Note on quadrants: a reader's full Cultural Cognition position is a point in the A1×A2 plane (four corner-quadrants: hierarchical-individualist, egalitarian-individualist, hierarchical-communitarian, egalitarian-communitarian). When picking both axes for an item, the loaded variants effectively cue a particular quadrant.

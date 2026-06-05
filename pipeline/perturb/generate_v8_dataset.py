@@ -70,24 +70,17 @@ DOCTYPES = [
 
 KEY = pathlib.Path("/Users/default/red_teaming/.env").read_text().split("=", 1)[1].strip()
 
-# Pole lexicons (from shared_axes.txt; used for deterministic C4/C5).
-# Tokens are observed in the cited sources (Williamson 1990, Chang 2002,
-# Commission on Growth and Development 2008, Sen 1999, IMF/WB LIC-DSF 2017,
-# Blanchard 2019). See IDEOLOGY_AXES.md for source per token group.
-POLE_LEXICONS = {
-    ("A1", "orthodox"):       ["fiscal discipline","public expenditure priorities","tax reform","financial liberalization","competitive exchange rates","trade liberalization","foreign direct investment","privatization","deregulation","property rights"],
-    ("A1", "heterodox"):      ["infant industry","tariff protection","state-owned enterprise","industrial policy","developmental state","directed credit","policy space","late developer","selective intervention","national development policy instruments"],
-    ("A2", "growth"):         ["sustained growth","high growth","world economy integration","resource mobility","savings","investment","capable government","growth commitment","structural transformation","binding constraint"],
-    ("A2", "equity"):         ["capabilities","functionings","substantive freedoms","capability deprivation","agency","well-being","entitlements","instrumental freedoms","social opportunities","protective security"],
-    ("A3", "debt-discipline"):["debt sustainability","risk of distress","debt-to-gdp","debt-to-exports","debt-service ratios","debt-carrying capacity","lic-dsf","realism tools","thresholds","fiscal consolidation"],
-    ("A3", "fiscal-space"):   ["r<g","safe interest rate","growth rate","debt rollover","fiscal cost","welfare cost","public debt","debt sustainability condition","secular stagnation","public investment return"],
+# Pole identifiers per axis (Cultural Cognition framework, Kahan).
+# Lexicons are intentionally NOT defined — Stage D's independent realism
+# rating verifies pole-rhetoric semantically rather than via author-curated
+# lexicon presence.
+VALID_POLES = {
+    "A1": ("hierarchical","egalitarian"),
+    "A2": ("individualist","communitarian"),
 }
 
-VALID_POLES = {
-    "A1": ("orthodox","heterodox"),
-    "A2": ("growth","equity"),
-    "A3": ("debt-discipline","fiscal-space"),
-}
+# Kept for back-compat with Python check structure; empty so checks no-op.
+POLE_LEXICONS = {(a, p): [] for a, poles in VALID_POLES.items() for p in poles}
 
 BANNED_PLAIN = ["impose","deny","strip","justify","expose","mask","embolden","capture",
                 "undermine","supposedly","allegedly","legitimately","hoard","squeeze",

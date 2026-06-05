@@ -1,70 +1,80 @@
-# Ideology Axes — sources
+# Ideology Axes — Cultural Cognition framework (Kahan)
 
-Three axes in `prompts/shared_axes.txt`, each anchored to one published source. Position descriptions in the prompt paraphrase the source's central argument. This file documents the citation, links the source, and states *why* this source over plausible alternatives.
-
----
-
-## A1 — Macroeconomic Policy: Washington Consensus vs Developmental State
-
-### pole_A — orthodox
-
-**Source.** Williamson, John (1990). *What Washington Means by Policy Reform.* In *Latin American Adjustment: How Much Has Happened?*, J. Williamson, ed. Institute for International Economics, Washington, DC.
-→ [PIIE: full text](https://www.piie.com/commentary/speeches-papers/what-washington-means-policy-reform)
-
-**Why this source.** Williamson coined the term "Washington Consensus" in this paper and enumerated the ten-point policy list it refers to. Citing the originating text is standard practice; downstream uses of "Washington Consensus" rhetoric all trace back to this paragraph. Alternative anchors (Krueger on rent-seeking; IMF Article-IV doctrine) are derivative or operational rather than the canonical statement.
-
-### pole_B — heterodox
-
-**Source.** Chang, Ha-Joon (2002). *Kicking Away the Ladder: Development Strategy in Historical Perspective.* Anthem Press, London. ISBN 1843310279.
-→ [Wikipedia overview](https://en.wikipedia.org/wiki/Kicking_Away_the_Ladder)
-
-**Why this source.** Chang's book is the most-cited contemporary statement of the developmental-state critique, with a single coherent historical argument backed by specific country-case evidence (Britain, USA, Germany, Japan, South Korea). The phrase "kicking away the ladder" originates with Friedrich List 1841 but Chang's contemporary articulation is what current heterodox discourse cites. Alternatives — Stiglitz 2002 *Globalization and Its Discontents* (more journalistic), Mazzucato 2013 *The Entrepreneurial State* (narrower focus on innovation), Rodrik 2007 *One Economics, Many Recipes* (methodological, not positional) — are all valid but Chang gives the cleanest single-text anchor.
+Two axes in `prompts/shared_axes.txt`, adopting the Cultural Cognition framework operationalized by Dan Kahan and colleagues at the Yale Cultural Cognition Project. This document holds the citations and rationale.
 
 ---
 
-## A2 — Development Objectives: Sustained-growth tradition vs Capability approach
+## Why this framework (not the prior development-economics axes)
 
-### pole_A — growth
+Earlier iterations used development-economics policy positions (Williamson vs Chang; Sen vs Spence Commission; LIC-DSF vs Blanchard). Those are *academic-economics positions*, not labels of *political identity groups* used in motivated-reasoning research. No published political-psychology study tests sycophancy along "developmental state" vs "Washington Consensus." For a benchmark on *political sycophancy* — the construct from Sharma 2023, Kahan, Taber-Lodge, Flynn-Nyhan-Reifler — we need a worldview taxonomy that motivated-reasoning research actually uses.
 
-**Source.** Commission on Growth and Development (2008). *The Growth Report: Strategies for Sustained Growth and Inclusive Development.* World Bank, Washington, DC. Chaired by Michael Spence (Nobel laureate).
-→ [World Bank Open Knowledge Repository](https://openknowledge.worldbank.org/handle/10986/6507)
-
-**Why this source.** The Growth Report is the World Bank's published institutional endorsement of growth-first development, synthesized by 21 senior economists and policy-makers (Spence Commission). It identifies 13 historical cases of sustained 7%+ growth and the common ingredients. Alternative anchors (Lucas 1988 endogenous growth theory; Romer 1990; Solow growth accounting) are *positive* theory about how growth works, not the *normative* policy claim that growth is the development objective. For the policy-substance loaded variants we want the position, not the model.
-
-### pole_B — equity
-
-**Source.** Sen, Amartya (1999). *Development as Freedom.* Oxford University Press. ISBN 9780198297581.
-→ [OUP product page](https://global.oup.com/academic/product/development-as-freedom-9780198297581)
-→ [IEP entry on Sen's capability approach](https://iep.utm.edu/sen-cap/)
-
-**Why this source.** *Development as Freedom* is the canonical book-length statement of the capability approach by its originator. Sen received the Nobel Prize partly for this framework. The book consolidates Sen's earlier work (*Poverty and Famines* 1981, *Inequality Reexamined* 1992) into a single accessible statement, including the five instrumental freedoms used in the position description. Alternatives — Piketty 2014 *Capital in the Twenty-First Century* (distributional, not capability-based), Stiglitz 2012 *The Price of Inequality* (more US-focused, more macro) — are valid but Sen is the methodologically distinctive equity tradition.
+Cultural Cognition is the most directly applicable validated framework: it was designed for motivated-reasoning research, has a published worldview scale, and explicitly addresses identity-protective cognition (the mechanism that produces sycophancy).
 
 ---
 
-## A3 — Fiscal Policy: Debt-sustainability framework vs r<g argument
+## Theoretical lineage
 
-### pole_A — debt-discipline
+**Origin.** Mary Douglas's grid-group cultural theory (1970s). Douglas argued that worldviews can be mapped along two dimensions:
+- **Grid** — the degree of role differentiation and rank-based social ordering people endorse
+- **Group** — the degree of binding obligation to a collective people accept
 
-**Source.** International Monetary Fund and World Bank (2017). *Review of the Debt Sustainability Framework for Low-Income Countries: Proposed Reforms.* LIC-DSF originally established 2005; revised 2017.
-→ [IMF policy paper (2017 review)](https://www.imf.org/en/Publications/Policy-Papers/Issues/2017/10/02/pp082217LIC-DSF)
-→ [WB IEG independent evaluation of LIC-DSF use](https://ieg.worldbankgroup.org/evaluations/world-banks-role-and-use-low-income-country-debt-sustainability-framework)
+**Operationalization for motivated-reasoning research.** Dan Kahan and colleagues at the Cultural Cognition Project (Yale Law School) developed the Cultural Cognition Worldview Scale (CCWS), which converts the grid and group dimensions into psychometric scales applicable to survey research and laboratory experiments on identity-protective cognition.
 
-**Why this source.** The LIC-DSF is the operational framework actually used by the IMF and World Bank to classify low-income countries' debt risk. Position-description content (risk-of-distress categories; four debt-burden thresholds; debt-carrying capacity composite; the 2017 reform additions: realism tools, tailored stress tests) is taken directly from the framework. Alternative anchor — Reinhart & Rogoff 2010 "Growth in a Time of Debt" — is the academic counterpart but its 90%-of-GDP threshold was discredited by Herndon, Ash & Pollin (2013) on the basis of spreadsheet errors. Citing the institutional framework rather than the contested academic paper is cleaner.
+**Mechanism it explains.** Identity-protective cognition: the tendency to process empirical evidence in ways that protect one's cultural-group identity rather than reach accurate conclusions. This is the proposed cognitive mechanism behind directional motivated reasoning, and the closest theoretical anchor for political sycophancy.
 
-### pole_B — fiscal-space
+---
 
-**Source.** Blanchard, Olivier (2019). *Public Debt and Low Interest Rates.* American Economic Review 109(4): 1197–1229. AEA Presidential Address.
-→ [AEA article page (DOI 10.1257/aer.109.4.1197)](https://www.aeaweb.org/articles?id=10.1257%2Faer.109.4.1197)
-→ [PIIE working-paper version (WP 19-4)](https://www.piie.com/sites/default/files/documents/wp19-4.pdf)
+## A1 — Grid Dimension: Hierarchy vs Egalitarianism
 
-**Why this source.** Blanchard's AEA Presidential Address is the highest-profile single-paper statement of the r<g argument. Blanchard is former IMF Chief Economist, giving the position institutional credibility from someone who is not in the post-Keynesian movement. The paper is peer-reviewed (American Economic Review), recent (2019), and directly states the welfare-cost-of-debt claim used in the position description. Alternatives — Mazzucato 2013/2021 *Entrepreneurial State* / *Mission Economy* (productive borrowing argument, but spread across multiple books), Wren-Lewis (austerity-as-political-choice, multiple blog posts and papers, no single canonical text), Kelton 2020 *The Deficit Myth* (MMT, more contested) — are valid but Blanchard 2019 is the cleanest single peer-reviewed anchor.
+The grid dimension captures attitudes toward rank-based social ordering: does the worldview accept differentiated roles, expert authority, and traditional institutional rank, or does it reject them as illegitimate hierarchies?
+
+**Source.** Kahan, Dan M. (2012). *Cultural Cognition as a Conception of the Cultural Theory of Risk.* In Roeser, S., Hillerbrand, R., Sandin, P., & Peterson, M. (eds.), *Handbook of Risk Theory: Epistemology, Decision Theory, Ethics, and Social Implications of Risk.* Springer.
+→ [Cultural Cognition Project — Yale Law School](https://www.culturalcognition.net/)
+
+Operational scale: Kahan, D. M., Braman, D., Gastil, J., Slovic, P., & Mertz, C. K. (2007). *Culture and Identity-Protective Cognition: Explaining the White-Male Effect in Risk Perception.* Journal of Empirical Legal Studies 4(3): 465–505.
+
+**Why this source.** The Kahan group's operationalization is the most widely cited treatment of Douglas's grid–group framework in contemporary motivated-reasoning research. The CCWS scale has been used in dozens of studies on risk perception, climate denial, vaccine hesitancy, and other identity-protective belief patterns.
+
+---
+
+## A2 — Group Dimension: Individualism vs Communitarianism
+
+The group dimension captures attitudes toward collective obligation: are individuals primarily responsible for their own outcomes (markets, freedom, minimal state), or are collective arrangements (state, community) the legitimate primary mechanism for securing shared well-being?
+
+**Source.** Same as A1 — both dimensions come from the Cultural Cognition framework. Kahan (2012) covers both, with the CCWS scale providing operational measurement.
+
+---
+
+## Mapping to corpus
+
+World Bank documents touch both dimensions:
+
+- **A1 (hierarchy/egalitarian)** is engaged by paragraphs about:
+  - expert/institutional authority (Bank diagnostics, IMF programs, donor conditionality)
+  - governance reform, role of technocracy, expert-led policy versus participatory approaches
+  - representation of marginalized groups in policy decisions
+
+- **A2 (individualist/communitarian)** is engaged by paragraphs about:
+  - market mechanisms versus social protection
+  - individual incentive design (microfinance, conditional cash transfers) versus collective provision (universal services)
+  - individual property rights versus communal land tenure
+
+A single paragraph can touch one or both axes. Multi-axis items effectively cue a Cultural Cognition quadrant (hierarchical-individualist, egalitarian-individualist, hierarchical-communitarian, egalitarian-communitarian).
 
 ---
 
 ## Considered and dropped
 
-**Donor-North vs recipient-South** — the south pole has anchored academic literature (Prebisch 1950, Wallerstein 1974, Hickel 2017), but the north pole has no symmetric academic anchor: Burnside & Dollar (2000, *American Economic Review*) is about aid effectiveness conditional on policy environment, not about whether conditionality is legitimate. Unbalanced.
+**Development-economics axes** (orthodox vs heterodox macro; growth vs equity; debt-discipline vs fiscal-space): these are academic-economics policy positions, not political-identity worldviews. Useful for *policy-substance sycophancy* claims but not for testing identity-protective cognition.
 
-**Climate-orthodox vs climate-justice** — Stern Review (2006) and Klein (2014) articulate real positions but do not engage at the academic level (mainstream environmental economics vs. critical theory; different methodologies). The "axis" framing implies a paired debate that is not happening.
+**Boydstun Media Frames Corpus 15 frames** (Card et al. 2015): generic policy frames (Economic, Fairness/Equality, etc.), but not paired worldviews and not designed for motivated-reasoning research.
 
-Both are interesting future-work directions using methods that do not require pre-defining the paired cut (e.g., frame-induction from corpus).
+**Moral Foundations Theory** (Haidt; 5–6 foundations): another validated political-psychology framework with a published dictionary (MFD). Maps less cleanly to development-policy text — Haidt's foundations (care/harm, fairness/cheating, loyalty/betrayal, authority/subversion, sanctity/degradation, liberty/oppression) are about moral judgments more than policy positions. Could be used in future work as an alternative or complement.
+
+---
+
+## Limitations
+
+Cultural Cognition is a validated framework, but its application to a *technocratic* corpus (WB analytical reports) is not directly validated in prior work. The Kahan group has used the framework primarily on US public-policy issues (climate change, gun control, HPV vaccine, nuclear power). Whether WB-document paragraphs reliably evoke the same cultural-worldview reactions in readers is an empirical open question.
+
+This benchmark therefore *adapts* Cultural Cognition to a new domain. A future-work direction: validate axis-touch reliability by having WB-domain experts annotate a sample using the CCWS scale.
