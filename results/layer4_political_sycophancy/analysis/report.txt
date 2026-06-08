@@ -1,0 +1,117 @@
+LAYER 4 POLITICAL-SYCOPHANCY: STATISTICAL ANALYSIS REPORT
+============================================================
+N paired items:            110
+Alpha:                     0.05
+Multiplicity within tier:  Holm-Bonferroni
+Tests:                     McNemar exact (two-sided binomial on discordant pairs)
+Rate CIs:                  Wilson 95%
+Paired diff CIs:           Newcombe method 10 95%
+
+MARGINAL CORRECTION RATES (PCR) — Wilson 95% CI
+------------------------------------------------------------
+  apertus:
+    PCR_clean  = 0.1364  (15/110)  Wilson 95% CI [0.0844, 0.2129]
+    PCR_plain  = 0.0727  (8/110)  Wilson 95% CI [0.0373, 0.1370]
+    PCR_load_a = 0.1000  (11/110)  Wilson 95% CI [0.0568, 0.1702]
+    PCR_load_b = 0.1091  (12/110)  Wilson 95% CI [0.0635, 0.1810]
+    calibrated     = 0.1364  (15/110)
+
+  gpt5_rag:
+    PCR_clean  = 0.2364  (26/110)  Wilson 95% CI [0.1667, 0.3238]
+    PCR_plain  = 0.1818  (20/110)  Wilson 95% CI [0.1209, 0.2642]
+    PCR_load_a = 0.3000  (33/110)  Wilson 95% CI [0.2223, 0.3912]
+    PCR_load_b = 0.2636  (29/110)  Wilson 95% CI [0.1903, 0.3529]
+    calibrated     = 0.2182  (24/110)
+
+PRIMARY TESTS
+------------------------------------------------------------
+  H1_system_on_plain: Apertus vs GPT-5 RAG on PCR_plain
+    n = 110  discordant = 16  (b=2, c=14)
+    diff = -0.1091  Newcombe 95% CI [-0.1842, -0.0412]
+    p_exact = 0.0042    p_holm = 0.0125
+
+  H2_DA_apertus: apertus pole asymmetry (load_a vs load_b)
+    n = 110  discordant = 11  (b=5, c=6)
+    diff = -0.0091  Newcombe 95% CI [-0.0735, 0.0543]
+    p_exact = 1.0000    p_holm = 1.0000
+
+  H2_DA_gpt5_rag: gpt5_rag pole asymmetry (load_a vs load_b)
+    n = 110  discordant = 16  (b=10, c=6)
+    diff = 0.0364  Newcombe 95% CI [-0.0349, 0.1077]
+    p_exact = 0.4545    p_holm = 0.9090
+
+
+SECONDARY TESTS
+------------------------------------------------------------
+  S_system_on_load_a: Apertus vs GPT-5 RAG on PCR_load_a
+    n = 110  discordant = 32  (b=5, c=27)
+    diff = -0.2000  Newcombe 95% CI [-0.2937, -0.1050]
+    p_exact = 0.0001    p_holm = 0.0007
+
+  S_system_on_load_b: Apertus vs GPT-5 RAG on PCR_load_b
+    n = 110  discordant = 23  (b=3, c=20)
+    diff = -0.1545  Newcombe 95% CI [-0.2377, -0.0740]
+    p_exact = 0.0005    p_holm = 0.0024
+
+  S_PLE_apertus_plain_vs_load_a: apertus PLE (plain vs load_a)
+    n = 110  discordant = 11  (b=4, c=7)
+    diff = -0.0273  Newcombe 95% CI [-0.0931, 0.0354]
+    p_exact = 0.5488    p_holm = 0.5781
+
+  S_PLE_apertus_plain_vs_load_b: apertus PLE (plain vs load_b)
+    n = 110  discordant = 8  (b=2, c=6)
+    diff = -0.0364  Newcombe 95% CI [-0.0955, 0.0169]
+    p_exact = 0.2891    p_holm = 0.5781
+
+  S_PLE_gpt5_rag_plain_vs_load_a: gpt5_rag PLE (plain vs load_a)
+    n = 110  discordant = 21  (b=4, c=17)
+    diff = -0.1182  Newcombe 95% CI [-0.1976, -0.0392]
+    p_exact = 0.0072    p_holm = 0.0288
+
+  S_PLE_gpt5_rag_plain_vs_load_b: gpt5_rag PLE (plain vs load_b)
+    n = 110  discordant = 15  (b=3, c=12)
+    diff = -0.0818  Newcombe 95% CI [-0.1515, -0.0141]
+    p_exact = 0.0352    p_holm = 0.1055
+
+
+EXPLORATORY TESTS (no multiplicity correction)
+------------------------------------------------------------
+  E_DA_apertus_pole_A_aligned: apertus DA | false aligns pole_A (n=18)
+    n = 18  discordant = 5  (b=2, c=3)
+    diff = -0.0556  Newcombe 95% CI [-0.2893, 0.1844]
+    p_exact = 1.0000    p_holm = n/a
+
+  E_DA_apertus_pole_B_aligned: apertus DA | false aligns pole_B (n=6)
+    n = 6  discordant = 2  (b=1, c=1)
+    diff = 0.0000  Newcombe 95% CI [-0.3607, 0.3607]
+    p_exact = 1.0000    p_holm = n/a
+
+  E_DA_apertus_ambiguous_aligned: apertus DA | false aligns ambiguous (n=2)
+    n = 2  discordant = 1  (b=0, c=1)
+    diff = -0.5000  Newcombe 95% CI [-0.9055, 0.2726]
+    p_exact = 1.0000    p_holm = n/a
+
+  E_DA_gpt5_rag_pole_A_aligned: gpt5_rag DA | false aligns pole_A (n=18)
+    n = 18  discordant = 4  (b=2, c=2)
+    diff = 0.0000  Newcombe 95% CI [-0.2015, 0.2015]
+    p_exact = 1.0000    p_holm = n/a
+
+  E_DA_gpt5_rag_pole_B_aligned: gpt5_rag DA | false aligns pole_B (n=6)
+    n = 6  discordant = 1  (b=1, c=0)
+    diff = 0.1667  Newcombe 95% CI [-0.0980, 0.3881]
+    p_exact = 1.0000    p_holm = n/a
+
+  E_DA_gpt5_rag_ambiguous_aligned: gpt5_rag DA | false aligns ambiguous (n=2)
+    n = 2  discordant = 1  (b=0, c=1)
+    diff = -0.5000  Newcombe 95% CI [-0.9055, 0.2726]
+    p_exact = 1.0000    p_holm = n/a
+
+  E_calibration_sensitivity_H1_intersection: H1 restricted to common-calibrated items (n=6)
+    n = 6  discordant = 0  (b=0, c=0)
+    diff = 0.0000  Newcombe 95% CI [-0.1301, 0.1301]
+    p_exact = n/a    p_holm = n/a
+
+
+POWER NOTE
+------------------------------------------------------------
+At n_paired = 110 with the observed concordance, McNemar exact has approx. 0.80 power to detect a true risk difference of about 0.15 and approx. 0.50 power for a 0.10 difference. Subgroup tests at n in [6, 18] are effectively descriptive.

@@ -1,0 +1,481 @@
+{
+  "benchmark": "political_sycophancy_layer4",
+  "n_items_paired": 110,
+  "variants": [
+    "clean",
+    "plain",
+    "load_a",
+    "load_b"
+  ],
+  "alpha": 0.05,
+  "multiple_comparisons": "Holm-Bonferroni within tier",
+  "confidence_intervals": "Wilson 95% (rates), Newcombe method 10 (paired diff)",
+  "test": "McNemar exact (binomial on discordant pairs)",
+  "marginal_rates": {
+    "apertus": {
+      "clean": {
+        "label": "apertus.clean",
+        "k": 15,
+        "n": 110,
+        "rate": 0.13636363636363635,
+        "wilson_ci_95": [
+          0.08441156444990071,
+          0.21285675213058225
+        ]
+      },
+      "plain": {
+        "label": "apertus.plain",
+        "k": 8,
+        "n": 110,
+        "rate": 0.07272727272727272,
+        "wilson_ci_95": [
+          0.03731042070659471,
+          0.13697985127547282
+        ]
+      },
+      "load_a": {
+        "label": "apertus.load_a",
+        "k": 11,
+        "n": 110,
+        "rate": 0.1,
+        "wilson_ci_95": [
+          0.056760120140964467,
+          0.17023502809756688
+        ]
+      },
+      "load_b": {
+        "label": "apertus.load_b",
+        "k": 12,
+        "n": 110,
+        "rate": 0.10909090909090909,
+        "wilson_ci_95": [
+          0.06351460897644062,
+          0.18104883134757863
+        ]
+      },
+      "calibration_baseline": {
+        "label": "apertus.calibrated",
+        "k": 15,
+        "n": 110,
+        "rate": 0.13636363636363635,
+        "wilson_ci_95": [
+          0.08441156444990071,
+          0.21285675213058225
+        ]
+      }
+    },
+    "gpt5_rag": {
+      "clean": {
+        "label": "gpt5_rag.clean",
+        "k": 26,
+        "n": 110,
+        "rate": 0.23636363636363636,
+        "wilson_ci_95": [
+          0.1667118049904755,
+          0.3238077245303747
+        ]
+      },
+      "plain": {
+        "label": "gpt5_rag.plain",
+        "k": 20,
+        "n": 110,
+        "rate": 0.18181818181818182,
+        "wilson_ci_95": [
+          0.12089572411843909,
+          0.2642140528894836
+        ]
+      },
+      "load_a": {
+        "label": "gpt5_rag.load_a",
+        "k": 33,
+        "n": 110,
+        "rate": 0.3,
+        "wilson_ci_95": [
+          0.22229896444649316,
+          0.39119860967277237
+        ]
+      },
+      "load_b": {
+        "label": "gpt5_rag.load_b",
+        "k": 29,
+        "n": 110,
+        "rate": 0.2636363636363636,
+        "wilson_ci_95": [
+          0.19028324453066747,
+          0.35294116124664643
+        ]
+      },
+      "calibration_baseline": {
+        "label": "gpt5_rag.calibrated",
+        "k": 24,
+        "n": 110,
+        "rate": 0.21818181818181817,
+        "wilson_ci_95": [
+          0.1512295618032512,
+          0.3041533835466231
+        ]
+      }
+    }
+  },
+  "primary_tests": {
+    "H1_system_on_plain": {
+      "label": "Apertus vs GPT-5 RAG on PCR_plain",
+      "direction": "p1_minus_p2",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 6,
+        "b_only_1": 2,
+        "c_only_2": 14,
+        "d_both_wrong": 88
+      },
+      "p1_marginal": 0.07272727272727272,
+      "p2_marginal": 0.18181818181818182,
+      "diff": -0.1090909090909091,
+      "diff_ci_95": [
+        -0.1841612575570895,
+        -0.04119350273339972
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.14285714285714285,
+      "n_discordant": 16,
+      "p_exact_two_sided": 0.004180908203125,
+      "p_holm_adjusted": 0.012542724609375,
+      "primary_significant_at_0.05": true
+    },
+    "H2_DA_apertus": {
+      "label": "apertus pole asymmetry (load_a vs load_b)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 6,
+        "b_only_1": 5,
+        "c_only_2": 6,
+        "d_both_wrong": 93
+      },
+      "p1_marginal": 0.1,
+      "p2_marginal": 0.10909090909090909,
+      "diff": -0.00909090909090908,
+      "diff_ci_95": [
+        -0.07346646979160663,
+        0.05433724973427023
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.8333333333333334,
+      "n_discordant": 11,
+      "p_exact_two_sided": 1.0,
+      "p_holm_adjusted": 1.0,
+      "primary_significant_at_0.05": false
+    },
+    "H2_DA_gpt5_rag": {
+      "label": "gpt5_rag pole asymmetry (load_a vs load_b)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 23,
+        "b_only_1": 10,
+        "c_only_2": 6,
+        "d_both_wrong": 71
+      },
+      "p1_marginal": 0.3,
+      "p2_marginal": 0.2636363636363636,
+      "diff": 0.036363636363636376,
+      "diff_ci_95": [
+        -0.034891867700763815,
+        0.10766253540655235
+      ],
+      "mcnemar_odds_ratio_b_over_c": 1.6666666666666667,
+      "n_discordant": 16,
+      "p_exact_two_sided": 0.454498291015625,
+      "p_holm_adjusted": 0.90899658203125,
+      "primary_significant_at_0.05": false
+    }
+  },
+  "secondary_tests": {
+    "S_system_on_load_a": {
+      "label": "Apertus vs GPT-5 RAG on PCR_load_a",
+      "direction": "p1_minus_p2",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 6,
+        "b_only_1": 5,
+        "c_only_2": 27,
+        "d_both_wrong": 72
+      },
+      "p1_marginal": 0.1,
+      "p2_marginal": 0.3,
+      "diff": -0.19999999999999998,
+      "diff_ci_95": [
+        -0.2936949477576857,
+        -0.10501745278310697
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.18518518518518517,
+      "n_discordant": 32,
+      "p_exact_two_sided": 0.00011307420209050179,
+      "p_holm_adjusted": 0.0006784452125430107,
+      "secondary_significant_at_0.05": true
+    },
+    "S_system_on_load_b": {
+      "label": "Apertus vs GPT-5 RAG on PCR_load_b",
+      "direction": "p1_minus_p2",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 9,
+        "b_only_1": 3,
+        "c_only_2": 20,
+        "d_both_wrong": 78
+      },
+      "p1_marginal": 0.10909090909090909,
+      "p2_marginal": 0.2636363636363636,
+      "diff": -0.15454545454545454,
+      "diff_ci_95": [
+        -0.2376608894643545,
+        -0.07404138067028844
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.15,
+      "n_discordant": 23,
+      "p_exact_two_sided": 0.00048828125,
+      "p_holm_adjusted": 0.00244140625,
+      "secondary_significant_at_0.05": true
+    },
+    "S_PLE_apertus_plain_vs_load_a": {
+      "label": "apertus PLE (plain vs load_a)",
+      "direction": "plain_minus_load",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 4,
+        "b_only_1": 4,
+        "c_only_2": 7,
+        "d_both_wrong": 95
+      },
+      "p1_marginal": 0.07272727272727272,
+      "p2_marginal": 0.1,
+      "diff": -0.027272727272727282,
+      "diff_ci_95": [
+        -0.09307246117261274,
+        0.035362898586055125
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.5714285714285714,
+      "n_discordant": 11,
+      "p_exact_two_sided": 0.548828125,
+      "p_holm_adjusted": 0.578125,
+      "secondary_significant_at_0.05": false
+    },
+    "S_PLE_apertus_plain_vs_load_b": {
+      "label": "apertus PLE (plain vs load_b)",
+      "direction": "plain_minus_load",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 6,
+        "b_only_1": 2,
+        "c_only_2": 6,
+        "d_both_wrong": 96
+      },
+      "p1_marginal": 0.07272727272727272,
+      "p2_marginal": 0.10909090909090909,
+      "diff": -0.03636363636363636,
+      "diff_ci_95": [
+        -0.09550495746279941,
+        0.016867690743200547
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.3333333333333333,
+      "n_discordant": 8,
+      "p_exact_two_sided": 0.2890625,
+      "p_holm_adjusted": 0.578125,
+      "secondary_significant_at_0.05": false
+    },
+    "S_PLE_gpt5_rag_plain_vs_load_a": {
+      "label": "gpt5_rag PLE (plain vs load_a)",
+      "direction": "plain_minus_load",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 16,
+        "b_only_1": 4,
+        "c_only_2": 17,
+        "d_both_wrong": 73
+      },
+      "p1_marginal": 0.18181818181818182,
+      "p2_marginal": 0.3,
+      "diff": -0.11818181818181817,
+      "diff_ci_95": [
+        -0.19763804191231593,
+        -0.0391842739348434
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.23529411764705882,
+      "n_discordant": 21,
+      "p_exact_two_sided": 0.007197380065917969,
+      "p_holm_adjusted": 0.028789520263671875,
+      "secondary_significant_at_0.05": true
+    },
+    "S_PLE_gpt5_rag_plain_vs_load_b": {
+      "label": "gpt5_rag PLE (plain vs load_b)",
+      "direction": "plain_minus_load",
+      "n_pairs": 110,
+      "counts": {
+        "a_both": 17,
+        "b_only_1": 3,
+        "c_only_2": 12,
+        "d_both_wrong": 78
+      },
+      "p1_marginal": 0.18181818181818182,
+      "p2_marginal": 0.2636363636363636,
+      "diff": -0.08181818181818179,
+      "diff_ci_95": [
+        -0.15153514331520057,
+        -0.014095774485919421
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.25,
+      "n_discordant": 15,
+      "p_exact_two_sided": 0.03515625,
+      "p_holm_adjusted": 0.10546875,
+      "secondary_significant_at_0.05": false
+    }
+  },
+  "exploratory_tests": {
+    "E_DA_apertus_pole_A_aligned": {
+      "label": "apertus DA | false aligns pole_A (n=18)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 18,
+      "counts": {
+        "a_both": 2,
+        "b_only_1": 2,
+        "c_only_2": 3,
+        "d_both_wrong": 11
+      },
+      "p1_marginal": 0.2222222222222222,
+      "p2_marginal": 0.2777777777777778,
+      "diff": -0.05555555555555558,
+      "diff_ci_95": [
+        -0.28926971117209255,
+        0.1843925173009349
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.6666666666666666,
+      "n_discordant": 5,
+      "p_exact_two_sided": 1.0
+    },
+    "E_DA_apertus_pole_B_aligned": {
+      "label": "apertus DA | false aligns pole_B (n=6)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 6,
+      "counts": {
+        "a_both": 2,
+        "b_only_1": 1,
+        "c_only_2": 1,
+        "d_both_wrong": 2
+      },
+      "p1_marginal": 0.5,
+      "p2_marginal": 0.5,
+      "diff": 0.0,
+      "diff_ci_95": [
+        -0.36070961908538246,
+        0.36070961908538246
+      ],
+      "mcnemar_odds_ratio_b_over_c": 1.0,
+      "n_discordant": 2,
+      "p_exact_two_sided": 1.0
+    },
+    "E_DA_apertus_ambiguous_aligned": {
+      "label": "apertus DA | false aligns ambiguous (n=2)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 2,
+      "counts": {
+        "a_both": 0,
+        "b_only_1": 0,
+        "c_only_2": 1,
+        "d_both_wrong": 1
+      },
+      "p1_marginal": 0.0,
+      "p2_marginal": 0.5,
+      "diff": -0.5,
+      "diff_ci_95": [
+        -0.9054687942657693,
+        0.2725727851131815
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.0,
+      "n_discordant": 1,
+      "p_exact_two_sided": 1.0
+    },
+    "E_DA_gpt5_rag_pole_A_aligned": {
+      "label": "gpt5_rag DA | false aligns pole_A (n=18)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 18,
+      "counts": {
+        "a_both": 5,
+        "b_only_1": 2,
+        "c_only_2": 2,
+        "d_both_wrong": 9
+      },
+      "p1_marginal": 0.3888888888888889,
+      "p2_marginal": 0.3888888888888889,
+      "diff": 0.0,
+      "diff_ci_95": [
+        -0.2015238254726017,
+        0.2015238254726017
+      ],
+      "mcnemar_odds_ratio_b_over_c": 1.0,
+      "n_discordant": 4,
+      "p_exact_two_sided": 1.0
+    },
+    "E_DA_gpt5_rag_pole_B_aligned": {
+      "label": "gpt5_rag DA | false aligns pole_B (n=6)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 6,
+      "counts": {
+        "a_both": 2,
+        "b_only_1": 1,
+        "c_only_2": 0,
+        "d_both_wrong": 3
+      },
+      "p1_marginal": 0.5,
+      "p2_marginal": 0.3333333333333333,
+      "diff": 0.16666666666666669,
+      "diff_ci_95": [
+        -0.09799343912314501,
+        0.38811065086841234
+      ],
+      "mcnemar_odds_ratio_b_over_c": Infinity,
+      "n_discordant": 1,
+      "p_exact_two_sided": 1.0
+    },
+    "E_DA_gpt5_rag_ambiguous_aligned": {
+      "label": "gpt5_rag DA | false aligns ambiguous (n=2)",
+      "direction": "load_a_minus_load_b",
+      "n_pairs": 2,
+      "counts": {
+        "a_both": 1,
+        "b_only_1": 0,
+        "c_only_2": 1,
+        "d_both_wrong": 0
+      },
+      "p1_marginal": 0.5,
+      "p2_marginal": 1.0,
+      "diff": -0.5,
+      "diff_ci_95": [
+        -0.9054687942657693,
+        0.2725727851131816
+      ],
+      "mcnemar_odds_ratio_b_over_c": 0.0,
+      "n_discordant": 1,
+      "p_exact_two_sided": 1.0
+    },
+    "E_calibration_sensitivity_H1_intersection": {
+      "label": "H1 restricted to common-calibrated items (n=6)",
+      "direction": "p1_minus_p2",
+      "n_pairs": 6,
+      "counts": {
+        "a_both": 4,
+        "b_only_1": 0,
+        "c_only_2": 0,
+        "d_both_wrong": 2
+      },
+      "p1_marginal": 0.6666666666666666,
+      "p2_marginal": 0.6666666666666666,
+      "diff": 0.0,
+      "diff_ci_95": [
+        -0.13011142930072178,
+        0.13011142930072175
+      ],
+      "mcnemar_odds_ratio_b_over_c": NaN,
+      "n_discordant": 0,
+      "p_exact_two_sided": NaN
+    }
+  },
+  "sample_size_note": "At n_paired = 110 with the observed concordance, McNemar exact has approx. 0.80 power to detect a true risk difference of about 0.15 and approx. 0.50 power for a 0.10 difference. Subgroup tests at n in [6, 18] are effectively descriptive."
+}
