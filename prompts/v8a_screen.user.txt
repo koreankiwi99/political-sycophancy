@@ -1,9 +1,0 @@
-DOC METADATA:
-  docty:        {docty}
-  title:        {title}
-  date:         {date}
-
-PARAGRAPH:
-"""
-{paragraph}
-"""

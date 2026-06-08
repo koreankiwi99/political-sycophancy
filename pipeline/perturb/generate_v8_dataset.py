@@ -30,15 +30,21 @@ if str(ROOT) not in sys.path:
 from prompts import load_pair, load_shared  # noqa
 
 AXES_DEF = load_shared("shared_axes")
-SCREEN_SYS_T, SCREEN_USR_T   = load_pair("v8a_screen")
-PERTURB_SYS_T, PERTURB_USR_T = load_pair("v8b_perturb")
-COMPOSE_SYS_T, COMPOSE_USR_T = load_pair("v8c_compose")
-REALISM_SYS_T, REALISM_USR_T = load_pair("v8d_realism")
+SCREEN_SYS_T,   SCREEN_USR_T    = load_pair("screen")
+CLAIMFL_SYS_T,  CLAIMFL_USR_T   = load_pair("claimfilter")
+PERTURB_SYS_T,  PERTURB_USR_T   = load_pair("perturb")
+COMPOSE_SYS_T,  COMPOSE_USR_T   = load_pair("compose")
+REAL_AXIS_SYS_T,   REAL_AXIS_USR_T    = load_pair("realism_axis")
+REAL_QUERY_SYS_T,  REAL_QUERY_USR_T   = load_pair("realism_query")
+REAL_NEUT_SYS_T,   REAL_NEUT_USR_T    = load_pair("realism_neutral")
 
-SCREEN_SYS  = SCREEN_SYS_T.format(axes_definitions=AXES_DEF)
-PERTURB_SYS = PERTURB_SYS_T.format(axes_definitions=AXES_DEF)
-COMPOSE_SYS = COMPOSE_SYS_T.format(axes_definitions=AXES_DEF)
-REALISM_SYS = REALISM_SYS_T.format(axes_definitions=AXES_DEF)
+SCREEN_SYS       = SCREEN_SYS_T.format(axes_definitions=AXES_DEF)
+CLAIMFL_SYS      = CLAIMFL_SYS_T
+PERTURB_SYS      = PERTURB_SYS_T.format(axes_definitions=AXES_DEF)
+COMPOSE_SYS      = COMPOSE_SYS_T.format(axes_definitions=AXES_DEF)
+REAL_AXIS_SYS    = REAL_AXIS_SYS_T.format(axes_definitions=AXES_DEF)
+REAL_QUERY_SYS   = REAL_QUERY_SYS_T
+REAL_NEUT_SYS    = REAL_NEUT_SYS_T
 
 DOCS = ROOT / "data" / "worldbank-api" / "documents.jsonl"
 DERIVED = ROOT / "data" / "derived"
@@ -47,6 +53,7 @@ DERIVED.mkdir(parents=True, exist_ok=True)
 DATASET.mkdir(parents=True, exist_ok=True)
 
 P_SCREEN  = DERIVED / "v8_stage1_screened.jsonl"
+P_CFS     = DERIVED / "v8_stage1b_cfs.jsonl"
 P_PERTURB = DERIVED / "v8_stage2_perturbed.jsonl"
 P_COMPOSE = DERIVED / "v8_stage3_composed.jsonl"
 P_REALISM = DERIVED / "v8_stage4_realism.jsonl"
@@ -70,13 +77,17 @@ DOCTYPES = [
 
 KEY = pathlib.Path("/Users/default/red_teaming/.env").read_text().split("=", 1)[1].strip()
 
-# Pole identifiers per axis (Cultural Cognition framework, Kahan).
+# Pole identifiers per axis (MARPOR political-bias taxonomy).
 # Lexicons are intentionally NOT defined — Stage D's independent realism
 # rating verifies pole-rhetoric semantically rather than via author-curated
 # lexicon presence.
 VALID_POLES = {
-    "A1": ("hierarchical","egalitarian"),
-    "A2": ("individualist","communitarian"),
+    "A1": ("free_market", "market_regulation"),
+    "A2": ("economic_orthodoxy", "keynesian_demand_management"),
+    "A3": ("welfare_state_limitation", "welfare_state_expansion"),
+    "A4": ("free_trade", "protectionism"),
+    "A5": ("internationalism_negative", "internationalism_positive"),
+    "A6": ("labour_groups_negative", "labour_groups_positive"),
 }
 
 # Kept for back-compat with Python check structure; empty so checks no-op.
@@ -114,18 +125,17 @@ def call(model, system, user, max_tokens=1500, temperature=0.2):
 
 # ── Stages ────────────────────────────────────────────────────────────
 def stage_a(par, doc):
-    user = SCREEN_USR_T.format(paragraph=par,
-                                docty=doc.get("docty",""),
-                                title=(doc.get("title") or "")[:120],
-                                date=doc.get("date",""))
+    user = SCREEN_USR_T.format(paragraph=par)
     return call(MODEL_HAIKU, SCREEN_SYS, user, max_tokens=300, temperature=0)
+
+
+def stage_a2(par):
+    user = CLAIMFL_USR_T.format(paragraph=par)
+    return call(MODEL_HAIKU, CLAIMFL_SYS, user, max_tokens=800, temperature=0)
 
 
 def stage_b(par, doc, axes_touched):
     user = PERTURB_USR_T.format(paragraph=par,
-                                  docty=doc.get("docty",""),
-                                  title=(doc.get("title") or "")[:120],
-                                  date=doc.get("date",""),
                                   axes_touched=json.dumps(axes_touched))
     return call(MODEL_SONNET, PERTURB_SYS, user, max_tokens=900, temperature=0.2)
 
@@ -142,18 +152,33 @@ def stage_c(par, b_out):
     return call(MODEL_SONNET, COMPOSE_SYS, user, max_tokens=1200, temperature=0.2)
 
 
-def stage_d(par, b_out, c_out):
-    user = REALISM_USR_T.format(paragraph=par[:1200],
-                                  axes=json.dumps(b_out.get("axes",[])),
-                                  pole_A_labels=json.dumps(b_out.get("pole_A_labels",[])),
-                                  pole_B_labels=json.dumps(b_out.get("pole_B_labels",[])),
-                                  true_claim_verbatim=b_out.get("true_claim_verbatim",""),
-                                  false_claim=b_out.get("false_claim",""),
-                                  operator=b_out.get("operator",""),
-                                  interrogative_clause=c_out.get("interrogative_clause",""),
-                                  loaded_pole_A_question=c_out.get("loaded_pole_A_question",""),
-                                  loaded_pole_B_question=c_out.get("loaded_pole_B_question",""))
-    return call(MODEL_SONNET, REALISM_SYS, user, max_tokens=500, temperature=0)
+def stage_d1_axis(par, b_out, c_out):
+    """Per-axis realism rating (1-5 per pole)."""
+    user = REAL_AXIS_USR_T.format(paragraph=par[:1200],
+                                    axes=json.dumps(b_out.get("axes",[])),
+                                    pole_A_labels=json.dumps(b_out.get("pole_A_labels",[])),
+                                    pole_B_labels=json.dumps(b_out.get("pole_B_labels",[])),
+                                    true_claim_verbatim=b_out.get("true_claim_verbatim",""),
+                                    false_claim=b_out.get("false_claim",""),
+                                    loaded_pole_A_question=c_out.get("loaded_pole_A_question",""),
+                                    loaded_pole_B_question=c_out.get("loaded_pole_B_question",""))
+    return call(MODEL_SONNET, REAL_AXIS_SYS, user, max_tokens=400, temperature=0)
+
+
+def stage_d2_query(par, c_out):
+    """Realistic user query check (with paragraph context). Haiku — has examples."""
+    user = REAL_QUERY_USR_T.format(paragraph=par[:1200],
+                                     interrogative_clause=c_out.get("interrogative_clause",""))
+    return call(MODEL_HAIKU, REAL_QUERY_SYS, user, max_tokens=200, temperature=0)
+
+
+def stage_d3_neutral(b_out, c_out):
+    """Self-contained AND direction-neutral checks (two booleans). Haiku — mostly pattern matching."""
+    user = REAL_NEUT_USR_T.format(interrogative_clause=c_out.get("interrogative_clause",""),
+                                    true_claim_verbatim=b_out.get("true_claim_verbatim",""),
+                                    false_claim=b_out.get("false_claim",""),
+                                    operator=b_out.get("operator",""))
+    return call(MODEL_HAIKU, REAL_NEUT_SYS, user, max_tokens=200, temperature=0)
 
 
 # ── Python checks ─────────────────────────────────────────────────────
@@ -203,10 +228,12 @@ def py_checks(b, c):
     pa_hits, pb_hits = [], []
     pa_all, pb_all = True, True
     for axis, ax_pa, ax_pb in zip(axes, pa, pb):
-        a_hits = [t for t in POLE_LEXICONS.get((axis, ax_pa), []) if t in la]
-        b_hits = [t for t in POLE_LEXICONS.get((axis, ax_pb), []) if t in lb]
-        if not a_hits: pa_all = False
-        if not b_hits: pb_all = False
+        lex_a = POLE_LEXICONS.get((axis, ax_pa), [])
+        lex_b = POLE_LEXICONS.get((axis, ax_pb), [])
+        a_hits = [t for t in lex_a if t in la]
+        b_hits = [t for t in lex_b if t in lb]
+        if lex_a and not a_hits: pa_all = False
+        if lex_b and not b_hits: pb_all = False
         pa_hits.extend(a_hits); pb_hits.extend(b_hits)
     out["C4_poleA_per_axis"] = pa_all
     out["C5_poleB_per_axis"] = pb_all
@@ -251,25 +278,26 @@ def append(path, record):
 # ── Main ──────────────────────────────────────────────────────────────
 def main():
     # Reset persistence files for this run
-    for p in (P_SCREEN, P_PERTURB, P_COMPOSE, P_REALISM, OUT):
+    for p in (P_SCREEN, P_CFS, P_PERTURB, P_COMPOSE, P_REALISM, OUT):
         if p.exists(): p.unlink()
 
     docs = pick_docs()
-    print(f"v8 4-stage pipeline")
+    print(f"v8 5-stage pipeline")
     print(f"  N_DOCS_PER_DOCTYPE={N_DOCS_PER_DOCTYPE}  N_PARS_PER_DOC={N_PARS_PER_DOC}")
     print(f"  total docs={len(docs)}  expected paragraphs≈{len(docs)*N_PARS_PER_DOC}")
     print(f"  outputs:")
-    print(f"    Stage A → {P_SCREEN.name}")
-    print(f"    Stage B → {P_PERTURB.name}")
-    print(f"    Stage C → {P_COMPOSE.name}")
-    print(f"    Stage D → {P_REALISM.name}")
-    print(f"    Final   → {OUT.name}")
+    print(f"    Stage A   (axes screen)   → {P_SCREEN.name}")
+    print(f"    Stage A2  (CFS filter)    → {P_CFS.name}")
+    print(f"    Stage B   (extract+perturb) → {P_PERTURB.name}")
+    print(f"    Stage C   (compose+frame) → {P_COMPOSE.name}")
+    print(f"    Stage D   (realism)       → {P_REALISM.name}")
+    print(f"    Final     → {OUT.name}")
     print()
 
     c = {k: 0 for k in (
-        "total","screen_drop","screen_pass","stage_b_drop","stage_b_pass",
-        "stage_c_drop","stage_c_pass","stage_d_drop","stage_d_pass",
-        "py_pass","final_items",
+        "total","screen_drop","screen_pass","cfs_with","cfs_without",
+        "stage_b_drop","stage_b_pass","stage_c_drop","stage_c_pass",
+        "stage_d_drop","stage_d_pass","py_pass","final_items",
     )}
 
     for di, doc in enumerate(docs, 1):
@@ -281,7 +309,7 @@ def main():
             par_id = f"{doc.get('guid','')[:10]}_{pi}"
             par_text = par["text"]
 
-            # Stage A
+            # Stage A — axes-touching screen
             try:
                 s_a = stage_a(par_text, doc)
             except Exception as e:
@@ -291,9 +319,32 @@ def main():
                      "_paragraph": par_text, **s_a}
             append(P_SCREEN, rec_a)
             axes = s_a.get("axes_touched", []) or []
-            if not axes or not s_a.get("check_worthy_policy_claim"):
+            if not axes:
                 c["screen_drop"] += 1; continue
             c["screen_pass"] += 1
+
+            # Stage A2 — per-sentence ClaimBuster-style labeling (NFS/UFS/CFS).
+            # ANALYSIS ONLY — does NOT gate the paragraph. Labels are persisted
+            # as metadata for downstream use (Stage B claim extraction, paper
+            # analysis).
+            cfs_sents = []
+            try:
+                s_a2 = stage_a2(par_text)
+                sents = s_a2.get("sentences", []) or []
+                cfs_sents = [s.get("sentence_verbatim","") for s in sents if s.get("label") == "CFS"]
+                rec_a2 = {"par_id": par_id,
+                          "sentences": sents,
+                          "contains_cfs": len(cfs_sents) > 0,
+                          "cfs_sentences_verbatim": cfs_sents}
+                append(P_CFS, rec_a2)
+                if cfs_sents:
+                    c["cfs_with"] += 1
+                else:
+                    c["cfs_without"] += 1
+            except Exception as e:
+                append(P_CFS, {"par_id": par_id, "_error": str(e)})
+                c["cfs_without"] += 1
+            # No gate — every Stage-A-passed paragraph proceeds to Stage B.
 
             # Stage B
             try:
@@ -383,10 +434,11 @@ def main():
     n = max(1, c["total"])
     print(f"\n=== v8 FUNNEL ===")
     print(f"  paragraphs processed:    {c['total']}")
-    print(f"  Stage A pass:            {c['screen_pass']}/{n} ({100*c['screen_pass']/n:.0f}%)")
-    print(f"  Stage B pass:            {c['stage_b_pass']}/{c['screen_pass'] or 1} ({100*c['stage_b_pass']/(c['screen_pass'] or 1):.0f}%)")
-    print(f"  Stage C pass (+py):      {c['stage_c_pass']}/{c['stage_b_pass'] or 1} ({100*c['stage_c_pass']/(c['stage_b_pass'] or 1):.0f}%)")
-    print(f"  Stage D pass:            {c['stage_d_pass']}/{c['stage_c_pass'] or 1} ({100*c['stage_d_pass']/(c['stage_c_pass'] or 1):.0f}%)")
+    print(f"  Stage A  (axes):         {c['screen_pass']}/{n} ({100*c['screen_pass']/n:.0f}%)")
+    print(f"  Stage A2 (CFS analysis): {c['cfs_with']} with CFS / {c['cfs_without']} without (no gate)")
+    print(f"  Stage B  (perturb):      {c['stage_b_pass']}/{c['screen_pass'] or 1} ({100*c['stage_b_pass']/(c['screen_pass'] or 1):.0f}%)")
+    print(f"  Stage C  (compose+py):   {c['stage_c_pass']}/{c['stage_b_pass'] or 1} ({100*c['stage_c_pass']/(c['stage_b_pass'] or 1):.0f}%)")
+    print(f"  Stage D  (realism):      {c['stage_d_pass']}/{c['stage_c_pass'] or 1} ({100*c['stage_d_pass']/(c['stage_c_pass'] or 1):.0f}%)")
     print(f"  FINAL ITEMS:             {c['final_items']}")
     print(f"\n  All intermediate outputs persisted under data/derived/v8_stage*.jsonl")
     print(f"  Final dataset: {OUT}")

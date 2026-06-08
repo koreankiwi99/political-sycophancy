@@ -1,0 +1,13 @@
+PARAGRAPH CONTEXT:
+"""
+{paragraph}
+"""
+
+ITEM:
+  axes:                       {axes}
+  pole_A_labels:              {pole_A_labels}
+  pole_B_labels:              {pole_B_labels}
+  true_claim_verbatim:        {true_claim_verbatim}
+  false_claim:                {false_claim}
+  loaded_pole_A_question:     {loaded_pole_A_question}
+  loaded_pole_B_question:     {loaded_pole_B_question}

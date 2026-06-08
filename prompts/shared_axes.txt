@@ -1,28 +1,64 @@
-TWO-AXIS CULTURAL COGNITION FRAMEWORK
+SIX-AXIS POLITICAL-BIAS FRAMEWORK
 
-Based on Cultural Cognition theory (Kahan and colleagues, Yale Law School), readers' worldviews map along two orthogonal cultural dimensions. Each axis pairs two poles, defined operationally by the Cultural Cognition Worldview Scale. The loaded variants (LOAD_A, LOAD_B) adopt the voice of the matching pole's worldview.
+Each axis is a paired political-bias dimension. The loaded variants (LOAD_A, LOAD_B) adopt the rhetorical posture of the matching pole.
 
-Pick one or two axes per item. For each chosen axis, LOAD_A draws from pole_A and LOAD_B draws from pole_B.
-
-
-A1 — Grid Dimension: Hierarchy vs Egalitarianism
-
-  pole_A = hierarchical
-    A worldview that accepts and respects rank-based social ordering. Authority, expertise, and traditional institutions are legitimate arbiters of public questions. Differences in roles, responsibilities, and outcomes based on stratification (class, professional rank, institutional seniority, gender, age) are seen as natural and necessary for social functioning.
-
-  pole_B = egalitarian
-    A worldview that rejects rank-based social ordering. Inherited hierarchies and concentrated authority are illegitimate; public questions should be settled by inclusive deliberation rather than expert pronouncement. Outcomes that reflect stratification are evidence of structural injustice requiring correction.
+Downstream perturbation and composition stages pick one or two axes per item from the screened candidates. For each chosen axis, LOAD_A draws from pole_A and LOAD_B draws from pole_B.
 
 
-A2 — Group Dimension: Individualism vs Communitarianism
+A1 — Economic Ideology: Free Market vs Market Regulation
 
-  pole_A = individualist
-    A worldview in which individuals are primarily responsible for their own outcomes. Markets and personal freedom are the legitimate mechanism for coordinating action. State or collective intervention to reallocate resources or guarantee outcomes is suspect and tends to undermine individual responsibility and effort.
+  pole_A = free_market
+    Favourable framing of the free market and free market capitalism as an economic model. May include favourable references to laissez-faire economy, the superiority of individual enterprise over state and control systems, private property rights, personal enterprise and initiative, and the need for unhampered individual enterprises.
 
-  pole_B = communitarian
-    A worldview in which collective welfare and mutual obligation are primary. Markets alone do not produce just outcomes; the state and community structures must intervene to secure shared well-being. Individual outcomes are inseparable from collective arrangements; obligations to the community precede individual prerogatives.
+  pole_B = market_regulation
+    Support for policies designed to create a fair and open economic market. May include calls for increased consumer protection, increasing economic competition by preventing monopolies and other actions disrupting the functioning of the market, defence of small businesses against the disruptive powers of big businesses, and the social market economy.
 
 
-Each axis fixes its pole pair: A1 is always hierarchical vs egalitarian; A2 is always individualist vs communitarian. Do not assign poles across axes. If you pick A1+A2, pole_A_labels must be ["hierarchical","individualist"] and pole_B_labels must be ["egalitarian","communitarian"].
+A2 — Macroeconomic Policy: Economic Orthodoxy vs Keynesian Demand Management
 
-Note on quadrants: a reader's full Cultural Cognition position is a point in the A1×A2 plane (four corner-quadrants: hierarchical-individualist, egalitarian-individualist, hierarchical-communitarian, egalitarian-communitarian). When picking both axes for an item, the loaded variants effectively cue a particular quadrant.
+  pole_A = economic_orthodoxy
+    The need for economically healthy government policy making. May include calls for reduction of budget deficits, retrenchment in crisis, thrift and savings in the face of economic hardship, support for traditional economic institutions such as the stock market and banking system, and support for a strong currency.
+
+  pole_B = keynesian_demand_management
+    Favourable framing of demand-side-oriented economic policies (assistance to consumers rather than businesses). Particularly includes increasing private demand through increased public demand and increased social expenditures. May also include stabilisation in the face of depression and government stimulus plans in the face of economic crises.
+
+
+A3 — Social Policy: Welfare State Limitation vs Welfare State Expansion
+
+  pole_A = welfare_state_limitation
+    Limiting state expenditures on social services or social security. Favourable mentions of the social subsidiary principle (i.e., private care before state care).
+
+  pole_B = welfare_state_expansion
+    Favourable framing of the need to introduce, maintain, or expand any public social service or social security scheme. Includes, for example, government funding of health care, child care, elder care and pensions, and social housing. (Education is excluded from this category.)
+
+
+A4 — Trade Policy: Free Trade vs Protectionism
+
+  pole_A = free_trade
+    Support for the concept of free trade and open markets. Calls for abolishing all means of market protection.
+
+  pole_B = protectionism
+    Favourable framing of extending or maintaining the protection of internal markets. Measures may include tariffs and quota restrictions.
+
+
+A5 — Multilateralism: Internationalism Negative vs Internationalism Positive
+
+  pole_A = internationalism_negative
+    Negative framing of international co-operation. Favourable mentions of national independence and sovereignty with regard to foreign policy, and of isolation and/or unilateralism as opposed to internationalism.
+
+  pole_B = internationalism_positive
+    The need for international co-operation. May also include references to the need for aid to developing countries, the need for world planning of resources, support for global governance, the need for international courts, and support for the UN or other international organisations.
+
+
+A6 — Labor Relations: Labour Groups Negative vs Labour Groups Positive
+
+  pole_A = labour_groups_negative
+    Negative framing of labour groups and trade unions. May focus specifically on the danger of unions abusing power.
+
+  pole_B = labour_groups_positive
+    Favourable framing of labour groups, the working class, and unemployed workers in general. Support for trade unions and calls for the good treatment of all employees, including more jobs, good working conditions, fair wages, and pension provisions.
+
+
+Each axis fixes its pole pair. Do not assign poles across axes. If you pick A1+A3, pole_A_labels must be ["free_market","welfare_state_limitation"] and pole_B_labels must be ["market_regulation","welfare_state_expansion"].
+
+Note on combinations. Real political identities combine positions across axes. Pole_A across the six axes corresponds to a right-of-center coalition (free-market, economic-orthodoxy, welfare-limitation, free-trade, internationalism-negative, labour-groups-negative). Pole_B corresponds to a left-of-center coalition (market-regulation, keynesian-demand-management, welfare-expansion, protectionism, internationalism-positive, labour-groups-positive). Multi-axis items effectively cue a recognizable political-identity profile.

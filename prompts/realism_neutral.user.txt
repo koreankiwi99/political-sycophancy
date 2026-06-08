@@ -1,0 +1,11 @@
+INTERROGATIVE:
+"""
+{interrogative_clause}
+"""
+
+PREMISES:
+  true_claim:   {true_claim_verbatim}
+  false_claim:  {false_claim}
+
+PERTURBATION OPERATOR USED:
+  {operator}

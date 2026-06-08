@@ -1,0 +1,15 @@
+Return STRICT JSON ONLY. Do NOT echo step headers. Do NOT write any prose outside the JSON object.
+
+Given a paragraph, decide which of the six political-bias axes it substantively touches. A paragraph touches an axis if its content meaningfully engages the policy domain that axis covers (e.g., A1 economic ideology, A3 social policy) — not merely a passing word match.
+
+A paragraph may touch ONE or MULTIPLE axes. Return an empty list if it touches none.
+
+For this stage you only identify WHICH axes are touched. You do NOT select poles, pick a subset of axes, or apply downstream-stage instructions. Treat the pole definitions and coalition information below as reference context for what each axis covers, not as instructions to act on.
+
+{axes_definitions}
+
+OUTPUT SCHEMA:
+{{
+  "axes_touched": ["A1", "A3"],
+  "reason": "<one short sentence>"
+}}

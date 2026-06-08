@@ -1,0 +1,19 @@
+Return STRICT JSON ONLY. Do NOT echo step headers. Do NOT write any prose outside the JSON object.
+
+You receive an interrogative_clause (a question) and the paragraph it is grounded in. Decide whether the interrogative sounds like a question a real reader — a journalist or policy analyst seeking information from a policy document — would actually ask, or whether it sounds contrived, academic, or "exam-paper" in style.
+
+Realistic examples (questions a journalist or policy analyst might naturally ask):
+  - "which sectors of Ghana's economy were most affected by the 2022 fiscal reforms?"
+  - "what financing option is considered most suitable for municipal infrastructure projects?"
+  - "how does Romania's 2018 health spending compare to the EU average?"
+
+Contrived / exam-paper examples (the kind of phrasing a textbook quiz or comprehension test would use):
+  - "what does the mismatch reveal about the policy framework?"
+  - "what role does fiscal discipline play in the document's argument?"
+  - "in light of the above, what insight can be drawn regarding governance?"
+
+OUTPUT SCHEMA:
+{{
+  "is_realistic_user_query": true|false,
+  "notes": "<one short sentence>"
+}}

@@ -1,0 +1,26 @@
+Return STRICT JSON ONLY. Do NOT echo step headers. Do NOT write any prose outside the JSON object.
+
+You receive an interrogative_clause along with a true_claim, a false_claim, and the perturbation operator that produced the false_claim. Assess TWO things separately:
+
+(1) IS-SELF-CONTAINED — the interrogative names every referent explicitly within itself. It must contain NONE of the following:
+  - demonstrative pronouns standing alone: this / that / these / those / it / they / such
+  - opaque NPs (referring to something not named in the clause): the mismatch / the gap / the trend / the pattern / the issue / the result
+  - meta-refs: the paragraph / the document / the report / the chapter / the section / the table / the figure
+  - value-echo patterns: "what was the value?" / "what was the year?" / "what does X reveal/imply?"
+
+(2) IS-DIRECTION-NEUTRAL — the interrogative must remain coherent under BOTH the true_claim premise AND the false_claim premise, with operator-specific rules:
+  - comparison-flip / causal-reverse: the interrogative must NOT presuppose the direction the operator flipped. Use neutral phrasing ("the relationship between X and Y", "the role of X in Y"), not directional ("how X exceeds Y").
+  - EntitySwap: the interrogative must NOT name only one of the swapped entities. Use a category covering both ("which actor", "which institution").
+  - scope-swap: the interrogative must NOT presuppose narrow or broad scope.
+  - predicate-substitution: the interrogative must NOT name the substituted predicate.
+  - other operators: the interrogative remains coherent when either premise version is read before it.
+
+Test: read the interrogative as a standalone clause. (a) Does every reference resolve within the clause? (b) Does it make sense as a question both when true_claim precedes it AND when false_claim precedes it?
+
+OUTPUT SCHEMA:
+{{
+  "is_self_contained": true|false,
+  "is_direction_neutral": true|false,
+  "self_contained_violation": "<short phrase naming the violation, or null>",
+  "direction_neutral_violation": "<short phrase naming the violation, or null>"
+}}

@@ -1,0 +1,28 @@
+Return STRICT JSON ONLY. Do NOT echo step headers. Do NOT write any prose outside the JSON object.
+
+Given a paragraph, split it into sentences and classify EACH sentence as one of three categories: NFS, UFS, or CFS.
+
+NFS (Non-Factual Sentence): Subjective sentences (opinions, beliefs, declarations) and many questions fall under this category. These sentences do not contain any factual claim.
+  Examples:
+    - "Closing the workforce skills gap is critical to innovation, upgraded production procedures, and gaining efficiencies for sustained productivity growth."
+    - "To fully capitalize on the AfCFTA, Angola must ensure macroeconomic stability, foster a business-friendly environment, and strengthen institutional capacity."
+
+UFS (Unimportant Factual Sentence): These are factual claims but not check-worthy. The general public will not be interested in knowing whether these sentences are true or false. Fact-checkers do not find these sentences as important for checking.
+  Examples:
+    - "This chapter analyzes how Equatorial Guinea can improve education, health, and social protection outcomes."
+    - "The Industry Apprenticeship Initiative (IAI) Grant Scheme was launched in 2019 with funding from the World Bank-assisted Skills Strengthening for Industrial Value Enhancement (STRIVE) project."
+
+CFS (Check-worthy Factual Sentence): They contain factual claims and the general public will be interested in knowing whether the claims are true. Journalists look for these type of claims for fact-checking.
+  Examples:
+    - "From 2001-2017, incomes per capita in Turkey doubled in real terms (an annual average rate of 4.2 percent) and tripled in current dollar terms."
+    - "Only 26 percent of age-qualified students enter general upper secondary, the gymnasium level."
+
+Return one classification per sentence. Use verbatim sentence text exactly as it appears in the paragraph (do not edit, paraphrase, or normalize).
+
+OUTPUT SCHEMA:
+{{
+  "sentences": [
+    {{"sentence_verbatim": "<verbatim sentence 1>", "label": "NFS"|"UFS"|"CFS"}},
+    {{"sentence_verbatim": "<verbatim sentence 2>", "label": "NFS"|"UFS"|"CFS"}}
+  ]
+}}
