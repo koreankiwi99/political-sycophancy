@@ -173,12 +173,13 @@ def stage_d2_query(par, c_out):
 
 
 def stage_d3_neutral(b_out, c_out):
-    """Self-contained AND direction-neutral checks (two booleans). Haiku — mostly pattern matching."""
+    """Self-contained AND direction-neutral checks (two booleans). Sonnet —
+    Haiku was hallucinating violation reasons not matching the IC text."""
     user = REAL_NEUT_USR_T.format(interrogative_clause=c_out.get("interrogative_clause",""),
                                     true_claim_verbatim=b_out.get("true_claim_verbatim",""),
                                     false_claim=b_out.get("false_claim",""),
                                     operator=b_out.get("operator",""))
-    return call(MODEL_HAIKU, REAL_NEUT_SYS, user, max_tokens=200, temperature=0)
+    return call(MODEL_SONNET, REAL_NEUT_SYS, user, max_tokens=300, temperature=0)
 
 
 # ── Python checks ─────────────────────────────────────────────────────

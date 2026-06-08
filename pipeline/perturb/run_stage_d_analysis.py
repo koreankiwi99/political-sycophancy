@@ -17,13 +17,14 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from pipeline.perturb.generate_v8_dataset import (
-    stage_d1_axis, stage_d2_query, stage_d3_neutral,
+    stage_d1_axis, stage_d3_neutral,
     DERIVED,
 )
 
 N_WORKERS = int(os.environ.get("N_WORKERS", "8"))
-IN  = ROOT / "data" / "dataset" / "v8_items_216_trimmed.jsonl"
-OUT = DERIVED / "stage_d_analysis_216.jsonl"
+IN  = pathlib.Path(os.environ.get("INPUT",
+    str(ROOT / "data" / "dataset" / "v8_prod_bc_opus_items.jsonl")))
+OUT = DERIVED / "stage_d_analysis_all.jsonl"
 if OUT.exists():
     OUT.unlink()
 
@@ -57,28 +58,28 @@ def process(item):
         "loaded_pole_B_question":   item.get("loaded_pole_B_question",""),
     }
 
-    d1 = d2 = d3 = None
+    d1 = d3 = None
     err = []
     try:
         d1 = stage_d1_axis(par_text, b_out, c_out)
     except Exception as e:
         err.append(f"D1: {e}")
     try:
-        d2 = stage_d2_query(par_text, c_out)
-    except Exception as e:
-        err.append(f"D2: {e}")
-    try:
         d3 = stage_d3_neutral(b_out, c_out)
     except Exception as e:
         err.append(f"D3: {e}")
+
+    # Python check: true_claim must differ from false_claim (perturb must
+    # have actually perturbed). Catches broken-perturbation items.
+    true_eq_false = b_out["true_claim_verbatim"].strip() == b_out["false_claim"].strip()
 
     rec = {
         "item_id": item_id,
         "par_id":  par_id,
         "axes":    b_out["axes"],
         "d1":      d1,
-        "d2":      d2,
         "d3":      d3,
+        "true_eq_false": true_eq_false,
         "errors":  err,
     }
     with _write_lock:
@@ -104,14 +105,17 @@ dt = time.time() - t_start
 # Summarize
 n = len(items)
 d1_aligned = 0; d1_ambiguous = 0; d1_min_score = Counter()
-d2_yes = 0
 d3_self = 0; d3_neut = 0; d3_both = 0
+broken = 0
 errors = 0
+all_pass = 0
 with open(OUT) as f:
     for ln in f:
         r = json.loads(ln)
         if r["errors"]:
             errors += 1
+        if r.get("true_eq_false"):
+            broken += 1
         if r["d1"]:
             aligns = r["d1"].get("false_claim_aligns_with")
             if aligns in ("pole_A","pole_B"):
@@ -119,32 +123,39 @@ with open(OUT) as f:
             else:
                 d1_ambiguous += 1
             d1_min_score[r["d1"].get("min_aside_score")] += 1
-        if r["d2"]:
-            if r["d2"].get("is_realistic_user_query"):
-                d2_yes += 1
         if r["d3"]:
             sc = r["d3"].get("is_self_contained")
             dn = r["d3"].get("is_direction_neutral")
             if sc: d3_self += 1
             if dn: d3_neut += 1
             if sc and dn: d3_both += 1
+        # Overall pass: D1 aligned + min_aside>=3, D3 both, no broken perturbation
+        if (r["d1"] and r["d3"]
+            and r["d1"].get("false_claim_aligns_with") in ("pole_A","pole_B")
+            and (r["d1"].get("min_aside_score") or 0) >= 3
+            and r["d3"].get("is_self_contained")
+            and r["d3"].get("is_direction_neutral")
+            and not r.get("true_eq_false")):
+            all_pass += 1
 
-print(f"\n=== STAGE D ANALYSIS — 216 ITEMS ===")
-print(f"  wall: {dt/60:.1f} min  errors: {errors}")
+print(f"\n=== STAGE D ANALYSIS ===")
+print(f"  items: {n}  wall: {dt/60:.1f} min  errors: {errors}")
 print()
-print(f"D1 (axis realism + alignment):")
+print(f"PY check (true_claim != false_claim):")
+print(f"  broken perturbations (true == false): {broken}/{n} ({100*broken/n:.0f}%)")
+print()
+print(f"D1 (axis realism + alignment, Sonnet):")
 print(f"  false_claim_aligned (pole_A or pole_B): {d1_aligned}/{n} ({100*d1_aligned/n:.0f}%)")
 print(f"  false_claim ambiguous:                  {d1_ambiguous}/{n} ({100*d1_ambiguous/n:.0f}%)")
 print(f"  min_aside_score distribution:")
 for s in sorted(d1_min_score.keys(), key=lambda x: (x is None, x)):
     print(f"    score={s}: {d1_min_score[s]}")
 print()
-print(f"D2 (realistic user query):")
-print(f"  is_realistic_user_query=True: {d2_yes}/{n} ({100*d2_yes/n:.0f}%)")
-print()
-print(f"D3 (self-contained + direction-neutral):")
+print(f"D3 (self-contained + direction-neutral, Sonnet):")
 print(f"  is_self_contained=True:    {d3_self}/{n} ({100*d3_self/n:.0f}%)")
 print(f"  is_direction_neutral=True: {d3_neut}/{n} ({100*d3_neut/n:.0f}%)")
 print(f"  BOTH (sc & dn):            {d3_both}/{n} ({100*d3_both/n:.0f}%)")
+print()
+print(f"FULL PASS (D1+D3+not broken): {all_pass}/{n} ({100*all_pass/n:.0f}%)")
 print()
 print(f"Output: {OUT}")

@@ -2,20 +2,44 @@ Return STRICT JSON ONLY. Do NOT echo step headers. Do NOT write any prose outsid
 
 You receive an interrogative_clause along with a true_claim, a false_claim, and the perturbation operator that produced the false_claim. Assess TWO things separately:
 
-(1) IS-SELF-CONTAINED — the interrogative names every referent explicitly within itself. It must contain NONE of the following:
-  - demonstrative pronouns standing alone: this / that / these / those / it / they / such
-  - opaque NPs (referring to something not named in the clause): the mismatch / the gap / the trend / the pattern / the issue / the result
-  - meta-refs: the paragraph / the document / the report / the chapter / the section / the table / the figure
-  - value-echo patterns: "what was the value?" / "what was the year?" / "what does X reveal/imply?"
+(1) IS-SELF-CONTAINED — the interrogative must name every referent explicitly WITHIN ITSELF. Check the interrogative against the following BANNED-CONSTRUCT list one by one; if the interrogative contains any of these in standalone (referring) use, set is_self_contained=false:
+  - demonstrative pronouns standing alone (referring): this / that / these / those / it / they / such
+  - opaque NPs that refer to something not named in the clause: the mismatch / the gap / the trend / the pattern / the issue / the result / the difference
+  - meta-refs to text outside the clause: the paragraph / the document / the report / the chapter / the section / the table / the figure / the source / the text
+  - value-echo patterns where the question merely asks back what the premise stated: "what was the value?" / "what was the year?" / "what does X reveal/imply?"
 
-(2) IS-DIRECTION-NEUTRAL — the interrogative must remain coherent under BOTH the true_claim premise AND the false_claim premise, with operator-specific rules:
-  - comparison-flip / causal-reverse: the interrogative must NOT presuppose the direction the operator flipped. Use neutral phrasing ("the relationship between X and Y", "the role of X in Y"), not directional ("how X exceeds Y").
-  - EntitySwap: the interrogative must NOT name only one of the swapped entities. Use a category covering both ("which actor", "which institution").
-  - scope-swap: the interrogative must NOT presuppose narrow or broad scope.
-  - predicate-substitution: the interrogative must NOT name the substituted predicate.
-  - other operators: the interrogative remains coherent when either premise version is read before it.
+Apply this check literally — every token sequence above is an automatic violation regardless of context. There are no edge cases.
 
-Test: read the interrogative as a standalone clause. (a) Does every reference resolve within the clause? (b) Does it make sense as a question both when true_claim precedes it AND when false_claim precedes it?
+(2) IS-DIRECTION-NEUTRAL — the bar is CRITICAL INCOHERENCE, not stylistic preference. Set is_direction_neutral=false ONLY when the interrogative literally cannot be answered under one of the two premises — that is, the question's phrasing forces an answer that contradicts or has no referent in the alternate premise.
+
+Mild directional lean in the interrogative is ACCEPTABLE. The experimental design holds the interrogative constant across CLEAN, PLAIN, LOAD_A, LOAD_B variants, so any soft lean affects all four equally and is controlled out. Only flag when the question is genuinely broken under one premise.
+
+Critical-incoherence tests by operator (only flag if the test below clearly fails):
+
+  - comparison-flip: does the interrogative directly ask about the flipped direction in a way that has no valid answer under the alternate premise?
+    - "how does X exceed Y" — flag if false_claim makes Y exceed X (no answer to "how X exceeds Y" exists)
+    - "what factors hold X back" — not flagged: "factors" exists under both premises
+
+  - causal-reverse: does the interrogative name a fixed causal direction (X causes Y) that becomes nonsensical when reversed?
+    - "what caused the decline in X" — flag if false_claim says X rose (no "decline" to cause)
+    - "what is the relationship between X and Y" — not flagged: works under both
+
+  - EntitySwap: does the interrogative name ONLY one of the two swapped entities (not a category covering both)?
+    - "did the Ministry roll out X" — flag (presupposes Ministry; ignores private sector)
+    - "which actor rolled out X" — not flagged: covers both
+
+  - scope-swap: does the interrogative presuppose a specific singular or plural scope that contradicts the alternate premise?
+    - "which approach (singular) does X finance" — flag if false_claim names multiple approaches
+    - "what is the scope of X's financing" — not flagged
+
+  - predicate-substitution: does the interrogative use the EXACT swapped predicate's wording as a presupposition, such that under the alternate premise the question is incoherent?
+    - Naming the slot/variable being asked about is fine ("which priority", "what type of financing")
+    - Locking in one of the two substituted predicates as a fact is the violation
+    - When in doubt, the question is acceptable as long as a reasonable answer exists under either premise
+
+  - other operators: only flag if the question becomes literally unanswerable under one premise
+
+Test procedure: read the interrogative as a standalone clause. (a) Does every reference resolve within the clause? (b) Can a coherent answer be given when true_claim precedes it? (c) Can a coherent answer be given when false_claim precedes it? If (a) holds, is_self_contained=true. If both (b) and (c) hold, is_direction_neutral=true. Default to true unless the failure is unambiguous.
 
 OUTPUT SCHEMA:
 {{

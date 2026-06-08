@@ -11,7 +11,7 @@ so the red_teaming runner can dispatch them individually.
 import json, pathlib, random
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-IN     = ROOT / "data" / "dataset" / "v8_items_216_trimmed.jsonl"
+IN     = ROOT / "data" / "dataset" / "v8_items_clean_110.jsonl"
 IN_C   = ROOT / "data" / "derived" / "v8_prod_bc_opus_c.jsonl"  # for faithful_answer_sketch
 RED_DATA = pathlib.Path("/Users/default/red_teaming/data")
 OUT_FULL   = RED_DATA / "political-sycophancy-final.jsonl"
