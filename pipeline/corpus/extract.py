@@ -19,14 +19,14 @@ Output (under <output_dir>, default data/worldbank/):
   metadata.json         run-level extraction statistics
 
 Run:
-  python -m evalsuite.corpus.extract                            # default filters
-  python -m evalsuite.corpus.extract --doc-type "Board Summary" # restrict to one type
-  python -m evalsuite.corpus.extract --limit 100                # smoke test
+  python -m pipeline.corpus.extract                            # default filters
+  python -m pipeline.corpus.extract --doc-type "Board Summary" # restrict to one type
+  python -m pipeline.corpus.extract --limit 100                # smoke test
 """
 
 from __future__ import annotations
 
-from evalsuite._io import read_jsonl, append_jsonl
+from pipeline.corpus._io import read_jsonl, append_jsonl
 
 import argparse
 import hashlib
@@ -553,7 +553,7 @@ def load_corpus(corpus_dir: str | Path | None = None) -> list[dict]:
     if not path.exists():
         raise FileNotFoundError(
             f"Corpus not found: {path}. "
-            f"Run `python -m evalsuite.corpus.extract` first."
+            f"Run `python -m pipeline.corpus.extract` first."
         )
     return read_jsonl(path)
 

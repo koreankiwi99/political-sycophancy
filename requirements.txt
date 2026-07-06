@@ -1,14 +1,13 @@
-# Runtime for the political-sycophancy (2c) pipeline + evalsuite slice.
+# Runtime for the dataset-generation pipeline.
 
-# Core
-python-dotenv
-openai
-requests
+# Generation
+python-dotenv          # loads OPENROUTER_API_KEY from .env
+requests               # WB WDS API fetch (pipeline/corpus/extract.py)
 tqdm
 
-# Statistical analysis (analyze.py)
-scipy
-
-# Corpus extraction — generation only (Stage A reads WB PDFs → paragraphs)
+# Corpus extraction — WB PDF → text/paragraphs
 pymupdf4llm>=0.0.17
 pdfplumber>=0.11
+
+# Statistical analysis of model responses (results/.../analyze.py)
+scipy

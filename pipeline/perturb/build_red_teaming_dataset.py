@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Transform v8 pipeline output → evalsuite JSONL format.
+"""Transform v8 pipeline output → final dataset JSONL.
 
 Reads:  data/dataset/v8_items_clean_110.jsonl        (final items)
         data/derived/v8_prod_bc_opus_c.jsonl         (faithful_answer_sketch)
@@ -7,7 +7,7 @@ Writes: data/political-sycophancy-final.jsonl        (the 2c benchmark)
         data/political-sycophancy-sample.jsonl       (50-item annotation sample)
 
 Each input item explodes into 4 prompt records (clean / plain / load_a / load_b)
-so the evalsuite runner can dispatch them individually.
+so each prompt can be dispatched individually.
 """
 import json, pathlib, random
 

@@ -1,4 +1,4 @@
-"""Shared JSONL helpers used across the evalsuite (corpus, generators, eval).
+"""Shared JSONL helpers for the corpus extractor.
 
 Standard line-delimited JSON. Conventions:
   - read_jsonl(path)        → [] if path missing, else list[dict]

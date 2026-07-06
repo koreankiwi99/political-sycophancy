@@ -19,16 +19,10 @@ import json, os, pathlib, random, re, sys, time
 from difflib import SequenceMatcher
 import urllib.request
 
-# evalsuite lives in this repo under src/ (2c slice). Add it to the path so
-# the corpus extractor is importable without an editable install.
-_SRC = pathlib.Path(__file__).resolve().parents[2] / "src"
-if str(_SRC) not in sys.path:
-    sys.path.insert(0, str(_SRC))
-from evalsuite.corpus.extract import iter_paragraphs  # noqa
-
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+from pipeline.corpus.extract import iter_paragraphs  # noqa
 from prompts import load_pair, load_shared  # noqa
 
 AXES_DEF = load_shared("shared_axes")
