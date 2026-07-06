@@ -12,11 +12,11 @@ import json, os, pathlib, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import Counter
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.perturb.generate_v8_dataset import (
+from pipeline.stages import (
     stage_d1_axis, stage_d3_neutral,
     DERIVED,
 )

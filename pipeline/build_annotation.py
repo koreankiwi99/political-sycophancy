@@ -13,7 +13,7 @@ Run:
 """
 import csv, json, pathlib
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 IN  = ROOT / "data" / "dataset" / "v7_items.jsonl"
 OUT_DIR = ROOT / "data" / "annotation"
 OUT_DIR.mkdir(parents=True, exist_ok=True)

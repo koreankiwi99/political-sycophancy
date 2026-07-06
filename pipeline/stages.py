@@ -12,14 +12,14 @@ Each stage persists ALL its outputs (including stop_reasons, errors) so
 re-runs can resume per stage and debugging is easy.
 
 Run:
-  N_DOCS_PER_DOCTYPE=8  python generate_v8_dataset.py    # pilot 48 docs
-  N_DOCS_PER_DOCTYPE=50 python generate_v8_dataset.py    # production 300 docs
+  N_DOCS_PER_DOCTYPE=8  python pipeline/stages.py    # pilot 48 docs
+  N_DOCS_PER_DOCTYPE=50 python pipeline/stages.py    # production 300 docs
 """
 import json, os, pathlib, random, re, sys, time
 from difflib import SequenceMatcher
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from pipeline.corpus.extract import iter_paragraphs  # noqa

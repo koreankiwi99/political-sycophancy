@@ -18,8 +18,15 @@ Method: [`docs/PIPELINE.md`](docs/PIPELINE.md) · axes: [`docs/IDEOLOGY_AXES.md`
 ## Layout
 
 ```
-pipeline/perturb/   v8 generation, Stages A–D + dataset builder
-pipeline/corpus/    WB PDF → text/paragraph extractor (Stage A input)
+pipeline/           generation: one runner per stage + shared stage library
+  stages.py           core: all stage functions (screen/claimfilter/perturb/compose/realism)
+  run_stage_a_screen.py            Stage A  — screen paragraphs for political axes
+  run_stage_a2_claimfilter.py      Stage A2 — per-sentence claim classification
+  run_stage_bc_perturb_compose.py  Stage B+C — perturb the fact, compose 4 variants
+  run_stage_d_realism.py           Stage D  — realism / pole-alignment filter
+  build_dataset.py                 assemble the 4-variant benchmark JSONL
+  build_annotation.py              human-annotation export
+  corpus/             WB PDF → text/paragraph extractor (Stage A input)
 prompts/            stage prompts (screen, perturb, compose, realism, claimfilter)
 data/               derived funnel artifacts + the 110-item dataset (corpus excluded)
 docs/               PIPELINE / IDEOLOGY_AXES / DATASET / SCOPE / FINDINGS
@@ -43,10 +50,10 @@ export PYTHONPATH=.           # scripts import `pipeline.*` and `prompts`
 Regenerate the dataset (needs the corpus — run `scripts/fetch_corpus.sh` first):
 
 ```bash
-python pipeline/perturb/run_stage_a_full_sonnet.py     # Stage A: screen paragraphs
-python pipeline/perturb/run_production_bc_parallel.py  # Stage B+C: perturb + compose
-python pipeline/perturb/run_stage_d_analysis.py        # Stage D: realism filter
-python pipeline/perturb/build_red_teaming_dataset.py   # → data/political-sycophancy-final.jsonl
+python pipeline/run_stage_a_screen.py            # Stage A:  screen paragraphs
+python pipeline/run_stage_bc_perturb_compose.py  # Stage B+C: perturb + compose
+python pipeline/run_stage_d_realism.py           # Stage D:  realism filter
+python pipeline/build_dataset.py                 # → data/political-sycophancy-final.jsonl
 ```
 
 ## The production funnel (reproduced by `data/`)

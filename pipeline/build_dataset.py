@@ -11,7 +11,7 @@ so each prompt can be dispatched individually.
 """
 import json, pathlib, random
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 IN     = ROOT / "data" / "dataset" / "v8_items_clean_110.jsonl"
 IN_C   = ROOT / "data" / "derived" / "v8_prod_bc_opus_c.jsonl"  # for faithful_answer_sketch
 RED_DATA = ROOT / "data"

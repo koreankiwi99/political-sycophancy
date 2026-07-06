@@ -11,11 +11,11 @@ Usage:
 import json, os, pathlib, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.perturb.generate_v8_dataset import (
+from pipeline.stages import (
     call, PERTURB_SYS, PERTURB_USR_T, COMPOSE_SYS, COMPOSE_USR_T,
     py_checks, fuzzy_in, DERIVED, DATASET,
 )

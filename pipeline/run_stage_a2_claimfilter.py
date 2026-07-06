@@ -7,11 +7,11 @@ Output: data/derived/stage_a2_on_haiku_passed.jsonl
 """
 import json, pathlib, sys, time
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.perturb.generate_v8_dataset import (
+from pipeline.stages import (
     stage_a2, append, DERIVED,
 )
 
