@@ -12,7 +12,7 @@ Pipeline:
   - Quality diagnostics (low-quality pages, extraction method per doc)
   - Retry with backoff on API and PDF downloads
 
-Output (under <output_dir>, default data/worldbank/):
+Output (under <output_dir>, default data/worldbank-api/ — where run_screen reads):
   pdfs/<guid>.pdf       cached PDF downloads (skip-if-exists)
   documents.jsonl       one row per doc: WB metadata + cleaned text + stats
   pages.jsonl           one row per page: cleaned + raw text
@@ -45,7 +45,7 @@ from tqdm import tqdm
 
 # ── Defaults ────────────────────────────────────────────────────────
 
-DEFAULT_OUTPUT_DIR = Path("data/worldbank")          # API mode default
+DEFAULT_OUTPUT_DIR = Path("data/worldbank-api")      # API mode default (where run_screen reads)
 DEFAULT_ZIP_OUTPUT_DIR = Path("data/worldbank-zip")  # zip mode default
 DEFAULT_ZIP_PATH = Path("data/worldbank.zip")
 
