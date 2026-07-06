@@ -185,7 +185,7 @@ def pick_docs():
 
 
 def pick_pars(text):
-    from pipeline.ingest.extract import iter_paragraphs  # lazy: avoids import cycle
+    from pipeline.preprocess import iter_paragraphs  # lazy: avoids import cycle
     pars = [p for p in iter_paragraphs(text)
             if p["kind"] == "prose" and p["score"] >= 2
             and 250 <= len(p["text"]) <= 1400

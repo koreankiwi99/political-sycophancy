@@ -19,9 +19,9 @@ Output (under <output_dir>, default data/worldbank/):
   metadata.json         run-level extraction statistics
 
 Run:
-  python -m pipeline.ingest.extract                            # default filters
-  python -m pipeline.ingest.extract --doc-type "Board Summary" # restrict to one type
-  python -m pipeline.ingest.extract --limit 100                # smoke test
+  python -m pipeline.preprocess                            # default filters
+  python -m pipeline.preprocess --doc-type "Board Summary" # restrict to one type
+  python -m pipeline.preprocess --limit 100                # smoke test
 """
 
 from __future__ import annotations
@@ -553,7 +553,7 @@ def load_corpus(corpus_dir: str | Path | None = None) -> list[dict]:
     if not path.exists():
         raise FileNotFoundError(
             f"Corpus not found: {path}. "
-            f"Run `python -m pipeline.ingest.extract` first."
+            f"Run `python -m pipeline.preprocess` first."
         )
     return read_jsonl(path)
 

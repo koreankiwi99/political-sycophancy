@@ -29,7 +29,7 @@ pipeline/           generation: one runner per step; utilities are shared
   run_realism_filter.py  realism / pole-alignment filter
   build_dataset.py       assemble the 4-variant benchmark JSONL
   build_annotation.py    human-annotation export
-  ingest/                WB PDF → text/paragraph extractor (screen input)
+  preprocess.py          WB PDF → text/paragraph extractor (screen input)
 prompts/            step prompts (screen, perturb, compose, realism, claimfilter)
 data/               derived funnel artifacts + the 110-item dataset (corpus excluded)
 results/            a model-response run + analyze.py (statistical analysis)

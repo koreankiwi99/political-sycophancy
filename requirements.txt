@@ -2,7 +2,7 @@
 
 # Generation
 python-dotenv          # loads OPENROUTER_API_KEY from .env
-requests               # WB WDS API fetch (pipeline/ingest/extract.py)
+requests               # WB WDS API fetch (pipeline/preprocess.py)
 tqdm
 
 # Corpus extraction — WB PDF → text/paragraphs
