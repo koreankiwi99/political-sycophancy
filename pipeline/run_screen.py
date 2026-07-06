@@ -7,7 +7,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from pipeline.utils import (
-    call, SCREEN_SYS, SCREEN_USR_T, pick_docs, pick_pars, append, DERIVED,
+    call, SCREEN_SYS, SCREEN_USR_T, pick_docs, pick_pars, append_jsonl, DERIVED,
 )
 
 MODEL_SONNET = "anthropic/claude-sonnet-4.6"
@@ -42,9 +42,9 @@ for di, doc in enumerate(docs, 1):
             user = SCREEN_USR_T.format(paragraph=par_text)
             s_a = call(MODEL_SONNET, SCREEN_SYS, user, max_tokens=400, temperature=0)
         except Exception as e:
-            append(OUT, {"par_id": par_id, "_error": str(e),
+            append_jsonl({"par_id": par_id, "_error": str(e),
                           "_docty": doc.get("docty"),
-                          "_doc_id": doc.get("guid")})
+                          "_doc_id": doc.get("guid")}, OUT)
             c["error"] += 1
             continue
         axes = s_a.get("axes_touched", []) or []
@@ -54,7 +54,7 @@ for di, doc in enumerate(docs, 1):
                "_doc_id": doc.get("guid"),
                "_paragraph": par_text,
                **s_a}
-        append(OUT, rec)
+        append_jsonl(rec, OUT)
         if axes:
             c["pass"] += 1
             for a in axes:

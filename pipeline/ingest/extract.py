@@ -26,7 +26,7 @@ Run:
 
 from __future__ import annotations
 
-from pipeline.ingest._io import read_jsonl, append_jsonl
+from pipeline.utils import read_jsonl, append_jsonl
 
 import argparse
 import hashlib

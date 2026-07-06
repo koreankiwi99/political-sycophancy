@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from pipeline.utils import (
-    call, CLAIMFL_SYS, CLAIMFL_USR_T, append, DERIVED,
+    call, CLAIMFL_SYS, CLAIMFL_USR_T, append_jsonl, DERIVED,
 )
 
 MODEL_HAIKU = "anthropic/claude-haiku-4.5"
@@ -54,7 +54,7 @@ for i, r in enumerate(passed, 1):
     try:
         s_a2 = classify_claims(par_text)
     except Exception as e:
-        append(OUT, {"par_id": par_id, "_error": str(e)})
+        append_jsonl({"par_id": par_id, "_error": str(e)}, OUT)
         c["error"] += 1
         continue
     sents = s_a2.get("sentences", []) or []
@@ -75,7 +75,7 @@ for i, r in enumerate(passed, 1):
            "sentences": sents,
            "contains_cfs": paragraph_passes,
            "cfs_sentences_verbatim": [s.get("sentence_verbatim","") for s in cfs]}
-    append(OUT, rec)
+    append_jsonl(rec, OUT)
     if paragraph_passes:
         c["cfs_pass"] += 1
     else:

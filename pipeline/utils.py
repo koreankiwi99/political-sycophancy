@@ -12,7 +12,6 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from pipeline.ingest.extract import iter_paragraphs  # noqa
 from prompts import load_pair, load_shared  # noqa
 
 # ── Prompt templates ──────────────────────────────────────────────────
@@ -58,9 +57,7 @@ try:
     load_dotenv(ROOT / ".env")
 except ImportError:
     pass
-KEY = os.environ.get("OPENROUTER_API_KEY", "")
-if not KEY:
-    raise SystemExit("OPENROUTER_API_KEY not set (put it in .env or the environment).")
+KEY = os.environ.get("OPENROUTER_API_KEY", "")  # checked in call(), not at import
 
 # ── Political-axis taxonomy (MARPOR) ──────────────────────────────────
 # Lexicons are intentionally NOT defined — the realism step's independent
@@ -87,6 +84,8 @@ BANNED_PLAIN = ["impose","deny","strip","justify","expose","mask","embolden","ca
 
 # ── LLM caller ────────────────────────────────────────────────────────
 def call(model, system, user, max_tokens=1500, temperature=0.2):
+    if not KEY:
+        raise SystemExit("OPENROUTER_API_KEY not set (put it in .env or the environment).")
     body = json.dumps({
         "model": model,
         "messages": [
@@ -186,6 +185,7 @@ def pick_docs():
 
 
 def pick_pars(text):
+    from pipeline.ingest.extract import iter_paragraphs  # lazy: avoids import cycle
     pars = [p for p in iter_paragraphs(text)
             if p["kind"] == "prose" and p["score"] >= 2
             and 250 <= len(p["text"]) <= 1400
@@ -196,7 +196,25 @@ def pick_pars(text):
     return pars[:N_PARS_PER_DOC]
 
 
-# ── Append-safe writer ────────────────────────────────────────────────
-def append(path, record):
-    with open(path, "a") as f:
+# ── JSONL IO ──────────────────────────────────────────────────────────
+def read_jsonl(path):
+    p = pathlib.Path(path)
+    if not p.exists():
+        return []
+    with p.open(encoding="utf-8") as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+
+def append_jsonl(record, path):
+    p = pathlib.Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+
+def save_jsonl(rows, path):
+    p = pathlib.Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("w", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
