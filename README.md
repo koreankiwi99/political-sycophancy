@@ -29,16 +29,17 @@ pipeline/           generation: one runner per step; utilities are shared
   run_realism_filter.py  realism / pole-alignment filter
   build_dataset.py       assemble the 4-variant benchmark JSONL
   build_annotation.py    human-annotation export
-  corpus/                WB PDF → text/paragraph extractor (screen input)
+  ingest/                WB PDF → text/paragraph extractor (screen input)
 prompts/            step prompts (screen, perturb, compose, realism, claimfilter)
 data/               derived funnel artifacts + the 110-item dataset (corpus excluded)
 results/            a model-response run + analyze.py (statistical analysis)
-scripts/            fetch_corpus.sh (pulls the raw WB corpus for regeneration)
 ```
 
-The raw **World Bank corpus (~5.6 GB)** is not in git — it lives in
-`koreankiwi99/wb-corpus-cache` and is needed only to regenerate from scratch
-(`scripts/fetch_corpus.sh`). Re-inspecting the shipped `data/` needs no corpus.
+The raw **World Bank corpus (~5.6 GB)** is not in git (it lives in
+`koreankiwi99/wb-corpus-cache`) and is needed only to regenerate from scratch.
+To regenerate, place it at **`data/worldbank-api/documents.jsonl`** — that path
+(the `DOCS` constant in `pipeline/utils.py`) is what `run_screen.py` reads.
+Re-inspecting the shipped `data/` needs no corpus.
 
 ## Quickstart
 
@@ -48,7 +49,7 @@ cp .env.example .env          # add OPENROUTER_API_KEY
 export PYTHONPATH=.           # scripts import `pipeline.*` and `prompts`
 ```
 
-Regenerate the dataset (needs the corpus — run `scripts/fetch_corpus.sh` first):
+Regenerate the dataset (needs the corpus at `data/worldbank-api/documents.jsonl`):
 
 ```bash
 python pipeline/run_screen.py           # screen paragraphs

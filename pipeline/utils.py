@@ -12,7 +12,7 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from pipeline.corpus.extract import iter_paragraphs  # noqa
+from pipeline.ingest.extract import iter_paragraphs  # noqa
 from prompts import load_pair, load_shared  # noqa
 
 # ── Prompt templates ──────────────────────────────────────────────────
