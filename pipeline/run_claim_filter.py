@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Run Stage A2 (per-sentence ClaimBuster classification) on paragraphs that
-passed Haiku's Stage A (axes-touched non-empty).
+"""Per-sentence ClaimBuster-style claim classification (NFS / UFS / CFS) on the
+screened paragraphs that touched an axis. Analysis only — it labels sentences
+and does not gate the pipeline.
 
-Input:  data/derived/screened.jsonl  (Stage A output)
+Input:  data/derived/screened.jsonl  (screen output)
 Output: data/derived/claims.jsonl
 """
 import json, pathlib, sys, time
@@ -28,7 +29,7 @@ def classify_claims(par):
     user = CLAIMFL_USR_T.format(paragraph=par)
     return call(MODEL_HAIKU, CLAIMFL_SYS, user, max_tokens=800, temperature=0)
 
-# Filter to Haiku-passed paragraphs (axes_touched non-empty)
+# Keep only screened paragraphs that touched an axis
 passed = []
 with open(IN) as f:
     for ln in f:
@@ -37,7 +38,7 @@ with open(IN) as f:
         if r.get("axes_touched"):
             passed.append(r)
 
-print(f"Stage A2 on Haiku-passed paragraphs")
+print(f"Claim classification on axes-touched paragraphs")
 print(f"  input:      {IN.name}")
 print(f"  output:     {OUT.name}")
 print(f"  paragraphs: {len(passed)} (filtered to axes-touched only)")
@@ -70,8 +71,8 @@ for i, r in enumerate(passed, 1):
            "_doc_title": r.get("_doc_title"),
            "_doc_id": r.get("_doc_id"),
            "_paragraph": par_text,
-           "haiku_axes_touched": r.get("axes_touched"),
-           "haiku_reason": r.get("reason"),
+           "axes_touched": r.get("axes_touched"),
+           "screen_reason": r.get("reason"),
            "sentences": sents,
            "contains_cfs": paragraph_passes,
            "cfs_sentences_verbatim": [s.get("sentence_verbatim","") for s in cfs]}
@@ -87,7 +88,7 @@ for i, r in enumerate(passed, 1):
 dt = time.time() - t_start
 n = max(1, c["total"])
 total_sents = c["nfs_sents"] + c["ufs_sents"] + c["cfs_sents"]
-print(f"\n=== STAGE A2 FUNNEL (on Haiku-passed paragraphs) ===")
+print(f"\n=== CLAIM-FILTER FUNNEL (axes-touched paragraphs) ===")
 print(f"  paragraphs in:        {c['total']}  (wall: {dt/60:.1f} min)")
 print(f"  contain >=1 CFS:      {c['cfs_pass']}  ({100*c['cfs_pass']/n:.1f}%)")
 print(f"  no CFS (all NFS/UFS): {c['cfs_drop']}  ({100*c['cfs_drop']/n:.1f}%)")

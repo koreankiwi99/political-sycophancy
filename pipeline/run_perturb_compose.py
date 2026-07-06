@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Production B+C only, parallel, resumable.
+"""Perturb + compose — parallel and resumable.
 
-Skips A2 (analysis-only — run later on items) and D (analysis-only).
-Reads pre-screened input, runs B then C on each, writes final items.
-
-Reads the screened paragraphs and processes the axes-touched ones.
+For each screened paragraph that touched an axis: extract the true claim and
+perturb it into a plausible false one, then compose the four framed questions
+(clean / plain / load_a / load_b). Writes one assembled item per paragraph.
 
 Usage:
   N_WORKERS=10 INPUT=data/derived/screened.jsonl \\
@@ -31,13 +30,13 @@ P_B    = DERIVED / "perturbed.jsonl"
 P_C    = DERIVED / "composed.jsonl"
 OUT    = DATASET / "items_all.jsonl"
 
-# ── Stage runners ─────────────────────────────────────────────────────
-def stage_b_opus(par, axes):
+# ── Steps ─────────────────────────────────────────────────────────────
+def perturb(par, axes):
     user = PERTURB_USR_T.format(paragraph=par, axes_touched=json.dumps(axes))
     return call(MODEL_OPUS, PERTURB_SYS, user, max_tokens=900, temperature=0.2)
 
 
-def stage_c_opus(par, b_out):
+def compose(par, b_out):
     user = COMPOSE_USR_T.format(paragraph=par,
                                   axes=json.dumps(b_out.get("axes",[])),
                                   pole_A_labels=json.dumps(b_out.get("pole_A_labels",[])),
@@ -77,8 +76,8 @@ with open(INPUT) as f:
 # A paragraph is fully done if its par_id has an item already (C must have succeeded)
 todo = [p for p in all_paras if p["par_id"] not in done_item_ids]
 
-print(f"Production B+C parallel run")
-print(f"  input:      {INPUT.name}  ({len(all_paras)} A-passed)")
+print(f"Perturb + compose (parallel)")
+print(f"  input:      {INPUT.name}  ({len(all_paras)} axes-touched)")
 print(f"  already done (items): {len(done_item_ids)}")
 print(f"  remaining:  {len(todo)}")
 print(f"  workers:    {N_WORKERS}")
@@ -101,7 +100,7 @@ def process_item(r):
     axes     = r.get("axes_touched") or []
     t0 = time.time()
     try:
-        s_b = stage_b_opus(par_text, axes)
+        s_b = perturb(par_text, axes)
     except Exception as e:
         append_safe(P_B, {"par_id": par_id, "_error": str(e)})
         return ("B_ERR", par_id, str(e))
@@ -112,7 +111,7 @@ def process_item(r):
         return ("B_NOT_VERBATIM", par_id, None)
 
     try:
-        s_c = stage_c_opus(par_text, s_b)
+        s_c = compose(par_text, s_b)
     except Exception as e:
         append_safe(P_C, {"par_id": par_id, "_error": str(e)})
         return ("C_ERR", par_id, str(e))
