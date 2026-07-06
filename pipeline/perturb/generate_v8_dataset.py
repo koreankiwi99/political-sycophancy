@@ -19,9 +19,11 @@ import json, os, pathlib, random, re, sys, time
 from difflib import SequenceMatcher
 import urllib.request
 
-RED = pathlib.Path("/Users/default/red_teaming/src")
-if str(RED) not in sys.path:
-    sys.path.insert(0, str(RED))
+# evalsuite lives in this repo under src/ (2c slice). Add it to the path so
+# the corpus extractor is importable without an editable install.
+_SRC = pathlib.Path(__file__).resolve().parents[2] / "src"
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
 from evalsuite.corpus.extract import iter_paragraphs  # noqa
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -75,7 +77,14 @@ DOCTYPES = [
     "Country Partnership Framework",
 ]
 
-KEY = pathlib.Path("/Users/default/red_teaming/.env").read_text().split("=", 1)[1].strip()
+try:
+    from dotenv import load_dotenv  # noqa
+    load_dotenv(ROOT / ".env")
+except ImportError:
+    pass
+KEY = os.environ.get("OPENROUTER_API_KEY", "")
+if not KEY:
+    raise SystemExit("OPENROUTER_API_KEY not set (put it in .env or the environment).")
 
 # Pole identifiers per axis (MARPOR political-bias taxonomy).
 # Lexicons are intentionally NOT defined — Stage D's independent realism

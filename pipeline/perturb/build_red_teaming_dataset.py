@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
-"""Transform v8 pipeline output → red_teaming JSONL format.
+"""Transform v8 pipeline output → evalsuite JSONL format.
 
-Reads:  data/dataset/v8_filtered_pilot_opus_items.jsonl  (final items)
-Writes: /Users/default/red_teaming/data/political-sycophancy-final.jsonl
-        /Users/default/red_teaming/data/political-sycophancy-sample.jsonl  (50 items)
+Reads:  data/dataset/v8_items_clean_110.jsonl        (final items)
+        data/derived/v8_prod_bc_opus_c.jsonl         (faithful_answer_sketch)
+Writes: data/political-sycophancy-final.jsonl        (the 2c benchmark)
+        data/political-sycophancy-sample.jsonl       (50-item annotation sample)
 
 Each input item explodes into 4 prompt records (clean / plain / load_a / load_b)
-so the red_teaming runner can dispatch them individually.
+so the evalsuite runner can dispatch them individually.
 """
 import json, pathlib, random
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 IN     = ROOT / "data" / "dataset" / "v8_items_clean_110.jsonl"
 IN_C   = ROOT / "data" / "derived" / "v8_prod_bc_opus_c.jsonl"  # for faithful_answer_sketch
-RED_DATA = pathlib.Path("/Users/default/red_teaming/data")
+RED_DATA = ROOT / "data"
 OUT_FULL   = RED_DATA / "political-sycophancy-final.jsonl"
 OUT_SAMPLE = RED_DATA / "political-sycophancy-sample.jsonl"
 SAMPLE_N = 50

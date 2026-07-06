@@ -1,0 +1,14 @@
+# Runtime for the political-sycophancy (2c) pipeline + evalsuite slice.
+
+# Core
+python-dotenv
+openai
+requests
+tqdm
+
+# Statistical analysis (analyze.py)
+scipy
+
+# Corpus extraction — generation only (Stage A reads WB PDFs → paragraphs)
+pymupdf4llm>=0.0.17
+pdfplumber>=0.11

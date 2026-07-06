@@ -1,8 +1,14 @@
 # Upstream papers - large PDFs, do not ship in git
 related_papers/
 
-# External datasets - large + redistribution-licensed, do not ship in git
-data/
+# Raw World Bank corpus — large (~5.6 GB), lives in koreankiwi99/wb-corpus-cache.
+# We ship only the small derived/final artifacts (data/derived, data/dataset,
+# data/*.jsonl) but never the corpus itself.
+data/worldbank-api/
+data/worldbank-zip/
+data/worldbank/
+data/outputs/
+outputs/runs/
 
 # LaTeX build artifacts (paper/ source is tracked, builds are not)
 paper/*.pdf
