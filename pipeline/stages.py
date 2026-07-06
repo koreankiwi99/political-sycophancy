@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """v8 — 4-stage restructured pipeline.
 
-  Stage A — Screen (Haiku)              → data/derived/v8_stage1_screened.jsonl
-  Stage B — Extract + Perturb (Sonnet)  → data/derived/v8_stage2_perturbed.jsonl
-  Stage C — Compose + Frame  (Sonnet)   → data/derived/v8_stage3_composed.jsonl
-  Stage D — Realism (Sonnet, indep)     → data/derived/v8_stage4_realism.jsonl
+  Stage A — Screen (Haiku)              → data/derived/stage_a_screened.jsonl
+  Stage B — Extract + Perturb (Sonnet)  → data/derived/stage_b_perturbed.jsonl
+  Stage C — Compose + Frame  (Sonnet)   → data/derived/stage_c_composed.jsonl
+  Stage D — Realism (Sonnet, indep)     → data/derived/stage_d_realism.jsonl
 
-Final assembled items: data/dataset/v8_items.jsonl
+Final assembled items: data/dataset/items_all.jsonl
 
 Each stage persists ALL its outputs (including stop_reasons, errors) so
 re-runs can resume per stage and debugging is easy.
@@ -48,12 +48,12 @@ DATASET = ROOT / "data" / "dataset"
 DERIVED.mkdir(parents=True, exist_ok=True)
 DATASET.mkdir(parents=True, exist_ok=True)
 
-P_SCREEN  = DERIVED / "v8_stage1_screened.jsonl"
-P_CFS     = DERIVED / "v8_stage1b_cfs.jsonl"
-P_PERTURB = DERIVED / "v8_stage2_perturbed.jsonl"
-P_COMPOSE = DERIVED / "v8_stage3_composed.jsonl"
-P_REALISM = DERIVED / "v8_stage4_realism.jsonl"
-OUT       = DATASET / "v8_items.jsonl"
+P_SCREEN  = DERIVED / "stage_a_screened.jsonl"
+P_CFS     = DERIVED / "stage_a2_claims.jsonl"
+P_PERTURB = DERIVED / "stage_b_perturbed.jsonl"
+P_COMPOSE = DERIVED / "stage_c_composed.jsonl"
+P_REALISM = DERIVED / "stage_d_realism.jsonl"
+OUT       = DATASET / "items_all.jsonl"
 
 MODEL_HAIKU  = "anthropic/claude-haiku-4.5"
 MODEL_SONNET = "anthropic/claude-sonnet-4.6"
@@ -444,7 +444,7 @@ def main():
     print(f"  Stage C  (compose+py):   {c['stage_c_pass']}/{c['stage_b_pass'] or 1} ({100*c['stage_c_pass']/(c['stage_b_pass'] or 1):.0f}%)")
     print(f"  Stage D  (realism):      {c['stage_d_pass']}/{c['stage_c_pass'] or 1} ({100*c['stage_d_pass']/(c['stage_c_pass'] or 1):.0f}%)")
     print(f"  FINAL ITEMS:             {c['final_items']}")
-    print(f"\n  All intermediate outputs persisted under data/derived/v8_stage*.jsonl")
+    print(f"\n  All intermediate outputs persisted under data/derived/stage_*.jsonl")
     print(f"  Final dataset: {OUT}")
 
 

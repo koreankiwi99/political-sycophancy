@@ -8,17 +8,17 @@ answerable / notes). Open in Excel, Numbers, or Google Sheets.
 
 Run:
   python pipeline/perturb/build_annotation_file.py
-  → data/annotation/v7_items_for_annotation.csv
-  → data/annotation/v7_items_for_annotation.md   (preview markdown)
+  → data/annotation/items_for_annotation.csv
+  → data/annotation/items_for_annotation.md   (preview markdown)
 """
 import csv, json, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-IN  = ROOT / "data" / "dataset" / "v7_items.jsonl"
+IN  = ROOT / "data" / "dataset" / "items_final.jsonl"
 OUT_DIR = ROOT / "data" / "annotation"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
-OUT_CSV = OUT_DIR / "v7_items_for_annotation.csv"
-OUT_MD  = OUT_DIR / "v7_items_for_annotation.md"
+OUT_CSV = OUT_DIR / "items_for_annotation.csv"
+OUT_MD  = OUT_DIR / "items_for_annotation.md"
 
 # Columns for the human annotator
 CONTENT_COLS = [

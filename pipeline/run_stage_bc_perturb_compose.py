@@ -5,7 +5,7 @@ Skips A2 (analysis-only — run later on items) and D (analysis-only).
 Reads pre-screened input, runs B then C on each, writes final items.
 
 Usage:
-  N_WORKERS=10 INPUT=data/derived/stage_a_passed_sonnet.jsonl \\
+  N_WORKERS=10 INPUT=data/derived/stage_a_passed.jsonl \\
     python pipeline/perturb/run_production_bc_parallel.py
 """
 import json, os, pathlib, sys, threading, time
@@ -23,12 +23,11 @@ from pipeline.stages import (
 MODEL_OPUS = "anthropic/claude-opus-4.7"
 N_WORKERS  = int(os.environ.get("N_WORKERS", "10"))
 INPUT      = pathlib.Path(os.environ.get("INPUT",
-    str(DERIVED/"stage_a_passed_sonnet.jsonl")))
+    str(DERIVED/"stage_a_passed.jsonl")))
 
-TAG    = "prod_bc_opus"
-P_B    = DERIVED / f"v8_{TAG}_b.jsonl"
-P_C    = DERIVED / f"v8_{TAG}_c.jsonl"
-OUT    = DATASET / f"v8_{TAG}_items.jsonl"
+P_B    = DERIVED / "stage_b_perturbed.jsonl"
+P_C    = DERIVED / "stage_c_composed.jsonl"
+OUT    = DATASET / "items_all.jsonl"
 
 # ── Stage runners ─────────────────────────────────────────────────────
 def stage_b_opus(par, axes):
@@ -81,7 +80,7 @@ print(f"  input:      {INPUT.name}  ({len(all_paras)} A-passed)")
 print(f"  already done (items): {len(done_item_ids)}")
 print(f"  remaining:  {len(todo)}")
 print(f"  workers:    {N_WORKERS}")
-print(f"  output:     v8_{TAG}_items.jsonl (append-mode)")
+print(f"  output:     items_all.jsonl (append-mode)")
 print()
 
 

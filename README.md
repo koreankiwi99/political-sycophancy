@@ -59,10 +59,13 @@ python pipeline/build_dataset.py                 # → data/political-sycophancy
 ## The production funnel (reproduced by `data/`)
 
 ```
-1,278  paragraphs screened (Stage A, Sonnet)   → data/derived/stage_a_full_scale_sonnet.jsonl
-  718  axes-touched                            → data/derived/stage_a_passed_sonnet.jsonl
-  581  Stage B+C generated (Opus)              → data/dataset/v8_prod_bc_opus_items.jsonl
-  216  trimmed                                 → data/dataset/v8_items_216_trimmed.jsonl
-  110  pass D filters (final)                  → data/dataset/v8_items_clean_110.jsonl
-  440  prompts (110 × 4 variants)              → data/political-sycophancy-final.jsonl
+1,278  paragraphs screened (Stage A)     → data/derived/stage_a_screened.jsonl
+  718  axes-touched                      → data/derived/stage_a_passed.jsonl
+  581  Stage B+C generated               → data/dataset/items_all.jsonl
+  216  trimmed                           → data/dataset/items_trimmed.jsonl
+  110  pass D filters (final)            → data/dataset/items_final.jsonl
+  440  prompts (110 × 4 variants)        → data/political-sycophancy-final.jsonl
 ```
+
+Intermediate stage outputs: `data/derived/stage_a_screened → stage_a_passed →
+stage_b_perturbed → stage_c_composed → stage_d_realism`.

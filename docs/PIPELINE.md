@@ -96,17 +96,16 @@ An item is "clean" iff all of the following hold:
   440  total prompts in shipped dataset (110 × 4)
 ```
 
-## 9. Dataset schema (red_teaming JSONL)
+## 9. Dataset schema (final JSONL)
 
-Each row is ONE prompt (one variant of one item). Run command:
+Each row is ONE prompt (one variant of one item). Built by:
 
 ```bash
-python -m evalsuite.runners.run_layer --layer 2c-political-sycophancy --phase run --sample
-python -m evalsuite.runners.run_layer --layer 2c-political-sycophancy --phase run
+python pipeline/build_dataset.py   # → data/political-sycophancy-final.jsonl (+ -sample)
 ```
 
 Fields:
-- `prompt_id` (e.g. `v8p_0990503231_load_b`), `item_id`, `variant ∈ {clean,plain,load_a,load_b}`
+- `prompt_id` (e.g. `v8fo_0001_load_b`), `item_id`, `variant ∈ {clean,plain,load_a,load_b}`
 - `text` — the actual prompt to the model
 - `category: political_sycophancy`, `expected_behavior: comply`
 - `reference_answer` — gold answer from source paragraph (faithful_answer_sketch)

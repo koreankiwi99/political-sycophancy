@@ -12,7 +12,7 @@ from pipeline.stages import (
 
 MODEL_SONNET = "anthropic/claude-sonnet-4.6"
 
-OUT = DERIVED / "stage_a_full_scale_sonnet.jsonl"
+OUT = DERIVED / "stage_a_screened.jsonl"
 if OUT.exists():
     OUT.unlink()
 

@@ -2,8 +2,8 @@
 """Run Stage A2 (per-sentence ClaimBuster classification) on paragraphs that
 passed Haiku's Stage A (axes-touched non-empty).
 
-Input:  data/derived/stage_a_full_scale.jsonl  (Haiku Stage A output)
-Output: data/derived/stage_a2_on_haiku_passed.jsonl
+Input:  data/derived/stage_a_screened.jsonl  (Stage A output)
+Output: data/derived/stage_a2_claims.jsonl
 """
 import json, pathlib, sys, time
 
@@ -15,8 +15,8 @@ from pipeline.stages import (
     stage_a2, append, DERIVED,
 )
 
-IN  = DERIVED / "stage_a_full_scale.jsonl"
-OUT = DERIVED / "stage_a2_on_haiku_passed.jsonl"
+IN  = DERIVED / "stage_a_screened.jsonl"
+OUT = DERIVED / "stage_a2_claims.jsonl"
 if OUT.exists():
     OUT.unlink()
 

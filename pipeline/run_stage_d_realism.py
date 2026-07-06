@@ -23,8 +23,8 @@ from pipeline.stages import (
 
 N_WORKERS = int(os.environ.get("N_WORKERS", "8"))
 IN  = pathlib.Path(os.environ.get("INPUT",
-    str(ROOT / "data" / "dataset" / "v8_prod_bc_opus_items.jsonl")))
-OUT = DERIVED / "stage_d_analysis_all.jsonl"
+    str(ROOT / "data" / "dataset" / "items_all.jsonl")))
+OUT = DERIVED / "stage_d_realism.jsonl"
 if OUT.exists():
     OUT.unlink()
 
