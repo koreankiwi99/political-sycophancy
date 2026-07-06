@@ -62,12 +62,12 @@ python pipeline/build_dataset.py        # → data/political-sycophancy-final.js
 
 ```
 1,278  paragraphs screened            → data/derived/screened.jsonl
-  718  axes-touched                   → data/derived/axes_passed.jsonl
+  718  axes-touched (of those)        → (filtered in-memory by the next step)
   581  perturbed + composed           → data/dataset/items_all.jsonl
   216  trimmed                        → data/dataset/items_trimmed.jsonl
   110  pass realism filter (final)    → data/dataset/items_final.jsonl
   440  prompts (110 × 4 variants)     → data/political-sycophancy-final.jsonl
 ```
 
-Intermediate outputs, in order: `data/derived/screened → axes_passed →
-claims → perturbed → composed → realism_scored`.
+Intermediate outputs, in order: `data/derived/screened → claims →
+perturbed → composed → realism_scored`.

@@ -4,8 +4,10 @@
 Skips A2 (analysis-only — run later on items) and D (analysis-only).
 Reads pre-screened input, runs B then C on each, writes final items.
 
+Reads the screened paragraphs and processes the axes-touched ones.
+
 Usage:
-  N_WORKERS=10 INPUT=data/derived/axes_passed.jsonl \\
+  N_WORKERS=10 INPUT=data/derived/screened.jsonl \\
     python pipeline/run_perturb_compose.py
 """
 import json, os, pathlib, sys, threading, time
@@ -23,7 +25,7 @@ from pipeline.utils import (
 MODEL_OPUS = "anthropic/claude-opus-4.7"
 N_WORKERS  = int(os.environ.get("N_WORKERS", "10"))
 INPUT      = pathlib.Path(os.environ.get("INPUT",
-    str(DERIVED/"axes_passed.jsonl")))
+    str(DERIVED/"screened.jsonl")))
 
 P_B    = DERIVED / "perturbed.jsonl"
 P_C    = DERIVED / "composed.jsonl"
