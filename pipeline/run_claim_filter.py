@@ -2,8 +2,8 @@
 """Run Stage A2 (per-sentence ClaimBuster classification) on paragraphs that
 passed Haiku's Stage A (axes-touched non-empty).
 
-Input:  data/derived/stage_a_screened.jsonl  (Stage A output)
-Output: data/derived/stage_a2_claims.jsonl
+Input:  data/derived/screened.jsonl  (Stage A output)
+Output: data/derived/claims.jsonl
 """
 import json, pathlib, sys, time
 
@@ -11,12 +11,12 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.stages import (
+from pipeline.steps import (
     stage_a2, append, DERIVED,
 )
 
-IN  = DERIVED / "stage_a_screened.jsonl"
-OUT = DERIVED / "stage_a2_claims.jsonl"
+IN  = DERIVED / "screened.jsonl"
+OUT = DERIVED / "claims.jsonl"
 if OUT.exists():
     OUT.unlink()
 

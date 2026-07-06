@@ -5,7 +5,7 @@ Skips A2 (analysis-only — run later on items) and D (analysis-only).
 Reads pre-screened input, runs B then C on each, writes final items.
 
 Usage:
-  N_WORKERS=10 INPUT=data/derived/stage_a_passed.jsonl \\
+  N_WORKERS=10 INPUT=data/derived/axes_passed.jsonl \\
     python pipeline/perturb/run_production_bc_parallel.py
 """
 import json, os, pathlib, sys, threading, time
@@ -15,7 +15,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.stages import (
+from pipeline.steps import (
     call, PERTURB_SYS, PERTURB_USR_T, COMPOSE_SYS, COMPOSE_USR_T,
     py_checks, fuzzy_in, DERIVED, DATASET,
 )
@@ -23,10 +23,10 @@ from pipeline.stages import (
 MODEL_OPUS = "anthropic/claude-opus-4.7"
 N_WORKERS  = int(os.environ.get("N_WORKERS", "10"))
 INPUT      = pathlib.Path(os.environ.get("INPUT",
-    str(DERIVED/"stage_a_passed.jsonl")))
+    str(DERIVED/"axes_passed.jsonl")))
 
-P_B    = DERIVED / "stage_b_perturbed.jsonl"
-P_C    = DERIVED / "stage_c_composed.jsonl"
+P_B    = DERIVED / "perturbed.jsonl"
+P_C    = DERIVED / "composed.jsonl"
 OUT    = DATASET / "items_all.jsonl"
 
 # ── Stage runners ─────────────────────────────────────────────────────

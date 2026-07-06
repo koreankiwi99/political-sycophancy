@@ -6,13 +6,13 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.stages import (
+from pipeline.steps import (
     call, SCREEN_SYS, SCREEN_USR_T, pick_docs, pick_pars, append, DERIVED,
 )
 
 MODEL_SONNET = "anthropic/claude-sonnet-4.6"
 
-OUT = DERIVED / "stage_a_screened.jsonl"
+OUT = DERIVED / "screened.jsonl"
 if OUT.exists():
     OUT.unlink()
 

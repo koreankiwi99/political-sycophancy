@@ -2,7 +2,7 @@
 """Transform v8 pipeline output → final dataset JSONL.
 
 Reads:  data/dataset/items_final.jsonl        (final items)
-        data/derived/stage_c_composed.jsonl         (faithful_answer_sketch)
+        data/derived/composed.jsonl         (faithful_answer_sketch)
 Writes: data/political-sycophancy-final.jsonl        (the 2c benchmark)
         data/political-sycophancy-sample.jsonl       (50-item annotation sample)
 
@@ -13,7 +13,7 @@ import json, pathlib, random
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 IN     = ROOT / "data" / "dataset" / "items_final.jsonl"
-IN_C   = ROOT / "data" / "derived" / "stage_c_composed.jsonl"  # for faithful_answer_sketch
+IN_C   = ROOT / "data" / "derived" / "composed.jsonl"  # for faithful_answer_sketch
 RED_DATA = ROOT / "data"
 OUT_FULL   = RED_DATA / "political-sycophancy-final.jsonl"
 OUT_SAMPLE = RED_DATA / "political-sycophancy-sample.jsonl"

@@ -18,16 +18,16 @@ Method: [`docs/PIPELINE.md`](docs/PIPELINE.md) · axes: [`docs/IDEOLOGY_AXES.md`
 ## Layout
 
 ```
-pipeline/           generation: one runner per stage + shared stage library
-  stages.py           core: all stage functions (screen/claimfilter/perturb/compose/realism)
-  run_stage_a_screen.py            Stage A  — screen paragraphs for political axes
-  run_stage_a2_claimfilter.py      Stage A2 — per-sentence claim classification
-  run_stage_bc_perturb_compose.py  Stage B+C — perturb the fact, compose 4 variants
-  run_stage_d_realism.py           Stage D  — realism / pole-alignment filter
-  build_dataset.py                 assemble the 4-variant benchmark JSONL
-  build_annotation.py              human-annotation export
-  corpus/             WB PDF → text/paragraph extractor (Stage A input)
-prompts/            stage prompts (screen, perturb, compose, realism, claimfilter)
+pipeline/           generation: one runner per step + shared step library
+  steps.py               core: the step functions (screen/classify/perturb/compose/realism)
+  run_screen.py          screen paragraphs for political axes
+  run_claim_filter.py    per-sentence claim classification
+  run_perturb_compose.py perturb the fact, then compose the 4 variants
+  run_realism_filter.py  realism / pole-alignment filter
+  build_dataset.py       assemble the 4-variant benchmark JSONL
+  build_annotation.py    human-annotation export
+  corpus/                WB PDF → text/paragraph extractor (screen input)
+prompts/            step prompts (screen, perturb, compose, realism, claimfilter)
 data/               derived funnel artifacts + the 110-item dataset (corpus excluded)
 docs/               PIPELINE / IDEOLOGY_AXES / DATASET / SCOPE / FINDINGS
 results/            a model-response run + analyze.py (statistical analysis)
@@ -50,22 +50,22 @@ export PYTHONPATH=.           # scripts import `pipeline.*` and `prompts`
 Regenerate the dataset (needs the corpus — run `scripts/fetch_corpus.sh` first):
 
 ```bash
-python pipeline/run_stage_a_screen.py            # Stage A:  screen paragraphs
-python pipeline/run_stage_bc_perturb_compose.py  # Stage B+C: perturb + compose
-python pipeline/run_stage_d_realism.py           # Stage D:  realism filter
-python pipeline/build_dataset.py                 # → data/political-sycophancy-final.jsonl
+python pipeline/run_screen.py           # screen paragraphs
+python pipeline/run_perturb_compose.py  # perturb + compose the 4 variants
+python pipeline/run_realism_filter.py   # realism filter
+python pipeline/build_dataset.py        # → data/political-sycophancy-final.jsonl
 ```
 
 ## The production funnel (reproduced by `data/`)
 
 ```
-1,278  paragraphs screened (Stage A)     → data/derived/stage_a_screened.jsonl
-  718  axes-touched                      → data/derived/stage_a_passed.jsonl
-  581  Stage B+C generated               → data/dataset/items_all.jsonl
-  216  trimmed                           → data/dataset/items_trimmed.jsonl
-  110  pass D filters (final)            → data/dataset/items_final.jsonl
-  440  prompts (110 × 4 variants)        → data/political-sycophancy-final.jsonl
+1,278  paragraphs screened            → data/derived/screened.jsonl
+  718  axes-touched                   → data/derived/axes_passed.jsonl
+  581  perturbed + composed           → data/dataset/items_all.jsonl
+  216  trimmed                        → data/dataset/items_trimmed.jsonl
+  110  pass realism filter (final)    → data/dataset/items_final.jsonl
+  440  prompts (110 × 4 variants)     → data/political-sycophancy-final.jsonl
 ```
 
-Intermediate stage outputs: `data/derived/stage_a_screened → stage_a_passed →
-stage_b_perturbed → stage_c_composed → stage_d_realism`.
+Intermediate outputs, in order: `data/derived/screened → axes_passed →
+claims → perturbed → composed → realism_scored`.

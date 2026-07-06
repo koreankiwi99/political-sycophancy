@@ -6,7 +6,7 @@ trimmed dataset. Reports how many items pass each check.
 Parallel via ThreadPoolExecutor.
 
 Usage:
-  N_WORKERS=8 python pipeline/perturb/run_stage_d_analysis.py
+  N_WORKERS=8 python pipeline/run_realism_filter.py
 """
 import json, os, pathlib, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -16,7 +16,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.stages import (
+from pipeline.steps import (
     stage_d1_axis, stage_d3_neutral,
     DERIVED,
 )
@@ -24,7 +24,7 @@ from pipeline.stages import (
 N_WORKERS = int(os.environ.get("N_WORKERS", "8"))
 IN  = pathlib.Path(os.environ.get("INPUT",
     str(ROOT / "data" / "dataset" / "items_all.jsonl")))
-OUT = DERIVED / "stage_d_realism.jsonl"
+OUT = DERIVED / "realism_scored.jsonl"
 if OUT.exists():
     OUT.unlink()
 
