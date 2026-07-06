@@ -6,8 +6,8 @@
 # The corpus lives in a separate repo because it is too large for git:
 #   koreankiwi99/wb-corpus-cache
 #
-# It is expected under data/worldbank-api/documents.jsonl (see
-# pipeline/perturb/generate_v8_dataset.py:DOCS).
+# It is expected under data/worldbank-api/documents.jsonl (see the DOCS
+# constant in pipeline/utils.py, which run_screen.py reads).
 set -euo pipefail
 
 DEST="$(cd "$(dirname "$0")/.." && pwd)/data"

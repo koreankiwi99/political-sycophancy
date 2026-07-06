@@ -33,8 +33,7 @@ pipeline/           generation: one runner per step; utilities are shared
 prompts/            step prompts (screen, perturb, compose, realism, claimfilter)
 data/               derived funnel artifacts + the 110-item dataset (corpus excluded)
 results/            a model-response run + analyze.py (statistical analysis)
-scripts/            fetch_corpus.sh
-paper/              LaTeX source
+scripts/            fetch_corpus.sh (pulls the raw WB corpus for regeneration)
 ```
 
 The raw **World Bank corpus (~5.6 GB)** is not in git — it lives in
