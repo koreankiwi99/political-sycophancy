@@ -6,15 +6,18 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.steps import (
+from pipeline.utils import (
     call, SCREEN_SYS, SCREEN_USR_T, pick_docs, pick_pars, append, DERIVED,
 )
 
 MODEL_SONNET = "anthropic/claude-sonnet-4.6"
 
-OUT = DERIVED / "screened.jsonl"
-if OUT.exists():
-    OUT.unlink()
+# All screened paragraphs (with axes_touched labels) + the axes-touched subset.
+OUT  = DERIVED / "screened.jsonl"
+PASS = DERIVED / "axes_passed.jsonl"
+for p in (OUT, PASS):
+    if p.exists():
+        p.unlink()
 
 docs = pick_docs()
 print(f"Stage A (axes-touching) full-scale run with Sonnet")
@@ -54,6 +57,7 @@ for di, doc in enumerate(docs, 1):
                **s_a}
         append(OUT, rec)
         if axes:
+            append(PASS, rec)   # axes-touched subset → perturb+compose input
             c["pass"] += 1
             for a in axes:
                 if a in axis_hits:
@@ -72,4 +76,5 @@ print(f"\n  per-axis hit counts (paragraphs touching that axis):")
 for a in sorted(axis_hits):
     pct = 100 * axis_hits[a] / max(1, c['pass'])
     print(f"    {a}: {axis_hits[a]:>4d}  ({pct:.1f}% of axes-pass)")
-print(f"\n  Output: {OUT}")
+print(f"\n  Outputs: {OUT}  (all)")
+print(f"           {PASS}  (axes-touched subset)")

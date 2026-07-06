@@ -13,13 +13,16 @@ Each item produces four prompts that share one invariant question:
 | `load_a` | false | pole-A (right-of-center) | political loading |
 | `load_b` | false | pole-B (left-of-center) | political loading + pole asymmetry |
 
-Method: [`docs/PIPELINE.md`](docs/PIPELINE.md) · axes: [`docs/IDEOLOGY_AXES.md`](docs/IDEOLOGY_AXES.md).
+Political framing runs along **6 MARPOR axes**, each with a right/left pole:
+A1 economic ideology (free-market / regulation), A2 macro policy (orthodoxy /
+Keynesian), A3 social policy (welfare limit / expand), A4 trade (free trade /
+protectionism), A5 multilateralism (−/+), A6 labour (−/+).
 
 ## Layout
 
 ```
-pipeline/           generation: one runner per step + shared step library
-  steps.py               core: the step functions (screen/classify/perturb/compose/realism)
+pipeline/           generation: one runner per step; utilities are shared
+  utils.py               shared utilities (LLM caller, prompts, checks, sampling, IO)
   run_screen.py          screen paragraphs for political axes
   run_claim_filter.py    per-sentence claim classification
   run_perturb_compose.py perturb the fact, then compose the 4 variants
@@ -29,7 +32,6 @@ pipeline/           generation: one runner per step + shared step library
   corpus/                WB PDF → text/paragraph extractor (screen input)
 prompts/            step prompts (screen, perturb, compose, realism, claimfilter)
 data/               derived funnel artifacts + the 110-item dataset (corpus excluded)
-docs/               PIPELINE / IDEOLOGY_AXES / DATASET / SCOPE / FINDINGS
 results/            a model-response run + analyze.py (statistical analysis)
 scripts/            fetch_corpus.sh
 paper/              LaTeX source

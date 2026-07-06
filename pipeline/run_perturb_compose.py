@@ -6,7 +6,7 @@ Reads pre-screened input, runs B then C on each, writes final items.
 
 Usage:
   N_WORKERS=10 INPUT=data/derived/axes_passed.jsonl \\
-    python pipeline/perturb/run_production_bc_parallel.py
+    python pipeline/run_perturb_compose.py
 """
 import json, os, pathlib, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -15,7 +15,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.steps import (
+from pipeline.utils import (
     call, PERTURB_SYS, PERTURB_USR_T, COMPOSE_SYS, COMPOSE_USR_T,
     py_checks, fuzzy_in, DERIVED, DATASET,
 )

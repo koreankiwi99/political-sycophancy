@@ -11,14 +11,22 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.steps import (
-    stage_a2, append, DERIVED,
+from pipeline.utils import (
+    call, CLAIMFL_SYS, CLAIMFL_USR_T, append, DERIVED,
 )
+
+MODEL_HAIKU = "anthropic/claude-haiku-4.5"
 
 IN  = DERIVED / "screened.jsonl"
 OUT = DERIVED / "claims.jsonl"
 if OUT.exists():
     OUT.unlink()
+
+
+def classify_claims(par):
+    """Per-sentence ClaimBuster-style labels (NFS / UFS / CFS)."""
+    user = CLAIMFL_USR_T.format(paragraph=par)
+    return call(MODEL_HAIKU, CLAIMFL_SYS, user, max_tokens=800, temperature=0)
 
 # Filter to Haiku-passed paragraphs (axes_touched non-empty)
 passed = []
@@ -44,7 +52,7 @@ for i, r in enumerate(passed, 1):
     par_id = r["par_id"]
     c["total"] += 1
     try:
-        s_a2 = stage_a2(par_text)
+        s_a2 = classify_claims(par_text)
     except Exception as e:
         append(OUT, {"par_id": par_id, "_error": str(e)})
         c["error"] += 1

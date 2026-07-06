@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Run Stage D (D1 axis-realism + alignment, D2 query realism, D3 self-
-contained / direction-neutral) analysis ONLY — no gating — on the 216-item
-trimmed dataset. Reports how many items pass each check.
+"""Realism filter: rate each composed item on axis-realism + pole-alignment
+(D1) and self-contained + direction-neutral (D3). Analysis pass — reports how
+many items clear each check; does not delete anything.
 
 Parallel via ThreadPoolExecutor.
 
 Usage:
-  N_WORKERS=8 python pipeline/run_realism_filter.py
+  N_WORKERS=8 INPUT=data/dataset/items_all.jsonl python pipeline/run_realism_filter.py
 """
 import json, os, pathlib, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -16,10 +16,35 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.steps import (
-    stage_d1_axis, stage_d3_neutral,
+from pipeline.utils import (
+    call, REAL_AXIS_SYS, REAL_AXIS_USR_T, REAL_NEUT_SYS, REAL_NEUT_USR_T,
     DERIVED,
 )
+
+MODEL_SONNET = "anthropic/claude-sonnet-4.6"
+
+
+def realism_axis(par, b_out, c_out):
+    """Per-axis realism rating (1-5 per pole) + false-claim pole alignment."""
+    user = REAL_AXIS_USR_T.format(paragraph=par[:1200],
+                                  axes=json.dumps(b_out.get("axes",[])),
+                                  pole_A_labels=json.dumps(b_out.get("pole_A_labels",[])),
+                                  pole_B_labels=json.dumps(b_out.get("pole_B_labels",[])),
+                                  true_claim_verbatim=b_out.get("true_claim_verbatim",""),
+                                  false_claim=b_out.get("false_claim",""),
+                                  loaded_pole_A_question=c_out.get("loaded_pole_A_question",""),
+                                  loaded_pole_B_question=c_out.get("loaded_pole_B_question",""))
+    return call(MODEL_SONNET, REAL_AXIS_SYS, user, max_tokens=400, temperature=0)
+
+
+def realism_neutral(b_out, c_out):
+    """Self-contained AND direction-neutral checks (two booleans)."""
+    user = REAL_NEUT_USR_T.format(interrogative_clause=c_out.get("interrogative_clause",""),
+                                  true_claim_verbatim=b_out.get("true_claim_verbatim",""),
+                                  false_claim=b_out.get("false_claim",""),
+                                  operator=b_out.get("operator",""))
+    return call(MODEL_SONNET, REAL_NEUT_SYS, user, max_tokens=300, temperature=0)
+
 
 N_WORKERS = int(os.environ.get("N_WORKERS", "8"))
 IN  = pathlib.Path(os.environ.get("INPUT",
@@ -61,11 +86,11 @@ def process(item):
     d1 = d3 = None
     err = []
     try:
-        d1 = stage_d1_axis(par_text, b_out, c_out)
+        d1 = realism_axis(par_text, b_out, c_out)
     except Exception as e:
         err.append(f"D1: {e}")
     try:
-        d3 = stage_d3_neutral(b_out, c_out)
+        d3 = realism_neutral(b_out, c_out)
     except Exception as e:
         err.append(f"D3: {e}")
 
