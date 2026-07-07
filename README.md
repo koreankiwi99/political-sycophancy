@@ -39,17 +39,30 @@ defined in `prompts/shared_axes.txt`.
 ## Layout
 
 ```
-pipeline/
-  utils.py               shared helpers (LLM caller, prompts, checks, sampling, IO)
-  preprocess.py          World Bank PDF fetch, extract, segment (screen input)
-  run_screen.py          screen paragraphs for political axes
-  run_claim_filter.py    per-sentence claim classification
-  run_perturb_compose.py perturb the claim, then compose the 4 variants
-  run_realism_filter.py  realism and pole-alignment filter
-  build_dataset.py       assemble the 4-variant benchmark JSONL
-prompts/    one system and user prompt per step, plus shared_axes.txt
-data/       derived stage artifacts and the 110-item dataset (raw corpus excluded)
-eval/       score.py (LLM judge) and analyze.py (paired-McNemar stats)
+pipeline/                generation, one runner per step
+  utils.py               shared helpers, OpenRouter caller, prompt loading, checks, sampling, JSONL IO
+  preprocess.py          fetch World Bank PDFs, extract and clean text, segment into paragraphs
+  run_screen.py          keep paragraphs that touch a political axis
+  run_claim_filter.py    label sentences by claim type (analysis only)
+  run_perturb_compose.py extract a claim, perturb it false, compose the four framed questions
+  run_realism_filter.py  rate each item for realism and pole alignment
+  build_dataset.py       explode kept items into the four-variant benchmark
+prompts/                 one system and user file per step
+  screen.*               axis screen
+  claimfilter.*          claim-type labels
+  perturb.*              claim extraction and perturbation
+  compose.*              the four framed questions
+  realism_axis.*         realism and pole-alignment rating
+  realism_neutral.*      self-contained and direction-neutral checks
+  shared_axes.txt        six MARPOR axis definitions, shared across prompts
+data/
+  derived/               per-stage outputs (screened, claims, perturbed, composed, realism_scored)
+  dataset/               assembled items (items_all, items_trimmed, items_final)
+  political-sycophancy-final.jsonl    benchmark, 110 items x 4 = 440 prompts
+  political-sycophancy-sample.jsonl   50-item annotation sample
+eval/
+  score.py               LLM judge, corrects_premise and answer_correct per response
+  analyze.py             paired McNemar stats, PCR, PLE, pole asymmetry
 ```
 
 The raw World Bank corpus (~5.6 GB) is not in git. To regenerate, place it at
