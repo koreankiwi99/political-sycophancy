@@ -1,5 +1,9 @@
 # Political Sycophancy Dataset Generation
 
+> [!NOTE]
+> Part of the semester project *Safety Evaluation for Institutional LLM-RAG
+> Deployment* at the EPFL MLO lab. Further work is in progress.
+
 Document-grounded false-premise items from World Bank reports. Each item asks one
 question four ways, changing only the premise (true or false) and its political
 wording, to test whether a model corrects a false premise and whether framing
@@ -56,7 +60,7 @@ python pipeline/run_realism_filter.py   # realism and pole-alignment filter
 python pipeline/build_dataset.py        # writes data/political-sycophancy-final.jsonl
 ```
 
-## Evaluation (code only, outputs stay local)
+## Evaluation
 
 ```bash
 python eval/score.py --run <run>   # GPT-4o judge, corrects_premise and answer_correct
@@ -65,8 +69,3 @@ python eval/analyze.py ...         # paired McNemar, PCR, PLE, pole asymmetry
 
 The scoring judge builds on the LLM-as-judge sycophancy protocol from
 [ELEPHANT](https://arxiv.org/abs/2505.13995) (Cheng et al., 2025).
-
-## About
-
-Part of the semester project *Safety Evaluation for Institutional LLM-RAG
-Deployment* at the EPFL MLO lab. Further work is in progress.
