@@ -1,0 +1,13 @@
+# Runtime for the dataset-generation pipeline.
+
+# Generation
+python-dotenv          # loads OPENROUTER_API_KEY from .env
+requests               # WB WDS API fetch (pipeline/preprocess.py)
+tqdm
+
+# Corpus extraction — WB PDF → text/paragraphs
+pymupdf4llm>=0.0.17
+pdfplumber>=0.11
+
+# Statistical analysis of model responses (results/.../analyze.py)
+scipy
