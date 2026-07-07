@@ -1,6 +1,10 @@
 # Upstream papers - large PDFs, do not ship in git
 related_papers/
 
+# Evaluation run data (model responses/scores) — NOT for public release.
+# The eval code lives in eval/; the private run data stays local under results/.
+results/
+
 # Raw World Bank corpus — large (~5.6 GB), lives in koreankiwi99/wb-corpus-cache.
 # We ship only the small derived/final artifacts (data/derived, data/dataset,
 # data/*.jsonl) but never the corpus itself.

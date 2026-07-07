@@ -20,11 +20,11 @@ Judge model is configurable via JUDGE_MODEL (default openai/gpt-4o); the call
 routes through OpenRouter using OPENROUTER_API_KEY. Adapts ELEPHANT
 (Cheng et al. 2025) to factual false-premise correction.
 
-Usage (flat run layout in this directory):
-  python results/layer4_political_sycophancy/score.py --run apertus
-  python results/layer4_political_sycophancy/score.py --run gpt5_rag
-Reads   responses_<run>.jsonl   (joined by id to the dataset's prompt_id)
-Writes  scores_<run>.jsonl · scores_per_item_<run>.jsonl · summary_<run>.json
+Usage (run data lives under results/, which is gitignored / local-only):
+  python eval/score.py --run apertus
+  python eval/score.py --run gpt5_rag   [--run-dir results/layer4_political_sycophancy]
+Reads   <run-dir>/responses_<run>.jsonl   (joined by id to the dataset's prompt_id)
+Writes  <run-dir>/scores_<run>.jsonl · scores_per_item_<run>.jsonl · summary_<run>.json
 """
 from __future__ import annotations
 
@@ -44,9 +44,9 @@ try:
 except ImportError:
     pass
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "data" / "political-sycophancy-final.jsonl"
+DEFAULT_RUN_DIR = ROOT / "results" / "layer4_political_sycophancy"  # private (gitignored)
 VARIANTS = ("clean", "plain", "load_a", "load_b")
 
 JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "openai/gpt-4o")
@@ -189,12 +189,15 @@ def _aggregate_per_item(scored: list[dict], by_id: dict[str, dict]) -> list[dict
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run", required=True, help="run id; reads responses_<run>.jsonl in this dir")
+    ap.add_argument("--run", required=True, help="run id; reads responses_<run>.jsonl from --run-dir")
+    ap.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR,
+                    help="dir holding responses_<run>.jsonl and receiving the score outputs")
     ap.add_argument("--dataset", type=Path, default=DATASET)
     ap.add_argument("--workers", type=int, default=16)
     args = ap.parse_args()
 
-    responses_path = HERE / f"responses_{args.run}.jsonl"
+    run_dir = args.run_dir
+    responses_path = run_dir / f"responses_{args.run}.jsonl"
     if not responses_path.exists():
         raise SystemExit(f"Not found: {responses_path}")
 
@@ -253,11 +256,11 @@ def main():
         "scorer": f"ELEPHANT-adapted LLM-as-judge ({JUDGE_MODEL}; corrects_premise + answer_correct)",
     }
 
-    (HERE / f"scores_{args.run}.jsonl").write_text(
+    (run_dir / f"scores_{args.run}.jsonl").write_text(
         "".join(json.dumps(r) + "\n" for r in scored))
-    (HERE / f"scores_per_item_{args.run}.jsonl").write_text(
+    (run_dir / f"scores_per_item_{args.run}.jsonl").write_text(
         "".join(json.dumps(r) + "\n" for r in items))
-    (HERE / f"summary_{args.run}.json").write_text(json.dumps(summary, indent=2))
+    (run_dir / f"summary_{args.run}.json").write_text(json.dumps(summary, indent=2))
 
     print(f"\n{args.run}: {len(items)} items, {len(calibrated)} calibrated "
           f"({summary['calibration_pass_rate']})")
